@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Tips — Nihon Travel</title>
+  <link rel="stylesheet" href="/css/guides.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <style>
+    .hub-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .hub-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      transition: var(--transition);
+      border: 1px solid transparent;
+      display: flex;
+      flex-direction: column;
+    }
+    .hub-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-deep);
+      border-color: var(--paper-dark);
+    }
+    .hub-card-header {
+      padding: 3rem 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hub-card-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.15;
+      transition: var(--transition);
+    }
+    .hub-card:hover .hub-card-header::before { opacity: 0.22; }
+    .hub-card-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+    .hub-card-title {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+      position: relative;
+      z-index: 1;
+    }
+    .hub-card-sub {
+      font-size: 0.8rem;
+      color: var(--stone);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      position: relative;
+      z-index: 1;
+    }
+    .hub-card-body {
+      padding: 1.5rem 2.5rem 2rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .hub-card-desc {
+      font-size: 0.9rem;
+      color: var(--stone);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+    .hub-card-topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .hub-topic {
+      background: var(--paper);
+      border: 1px solid var(--paper-dark);
+      border-radius: 100px;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.72rem;
+      color: var(--stone);
+    }
+    .hub-card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--vermilion);
+      transition: var(--transition);
+    }
+    .hub-card-link:hover { gap: 0.9rem; }
+    .hub-card-1 .hub-card-header { background: linear-gradient(135deg,#fce4ec,#f8bbd0); }
+    .hub-card-2 .hub-card-header { background: linear-gradient(135deg,#e3f2fd,#bbdefb); }
+    .hub-card-3 .hub-card-header { background: linear-gradient(135deg,#e8f5e9,#c8e6c9); }
+    .hub-card-4 .hub-card-header { background: linear-gradient(135deg,#fff8e1,#ffecb3); }
+
+    .quick-tips-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .quick-tip {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.4rem;
+      box-shadow: var(--shadow-soft);
+      border-left: 3px solid var(--vermilion);
+      transition: var(--transition);
+    }
+    .quick-tip:hover { transform: translateY(-3px); box-shadow: var(--shadow-deep); }
+    .quick-tip-icon { font-size: 1.5rem; margin-bottom: 0.6rem; }
+    .quick-tip-title { font-weight: 600; font-size: 0.88rem; color: var(--ink); margin-bottom: 0.3rem; }
+    .quick-tip-text  { font-size: 0.79rem; color: var(--stone); line-height: 1.6; }
+
+    @media (max-width: 700px) {
+      .hub-grid { grid-template-columns: 1fr; }
+      .quick-tips-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="g-nav" id="navbar">
+  <div class="g-nav-inner">
+    <a href="/" class="g-nav-logo"><span class="kanji">日</span> Nihon Travel</a>
+    <div class="g-nav-links">
+      <a href="/#destinations">Destinations</a>
+      <a href="/#about">About Japan</a>
+      <a href="/#contact">Contact</a>
+    </div>
+    <a href="/" class="g-nav-back">← Back to Home</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="g-hero">
+  <div class="g-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=1600&q=90')"></div>
+  <div class="g-hero-overlay"></div>
+  <div class="g-hero-content">
+    <span class="g-hero-tag">Traveller Resources</span>
+    <h1 class="g-hero-title">Japan Travel Tips</h1>
+    <p class="g-hero-subtitle">Everything you need to know before, during, and after your journey to Japan — from visas and transport to culture and customs.</p>
+  </div>
+</section>
+
+<!-- BREADCRUMB -->
+<div class="g-breadcrumb">
+  <div class="g-breadcrumb-inner">
+    <a href="/">Home</a><span class="g-breadcrumb-sep">›</span>
+    <span class="g-breadcrumb-current">Travel Tips</span>
+  </div>
+</div>
+
+<!-- MAIN CONTENT (full width) -->
+<div style="max-width:1200px;margin:0 auto;padding:4rem 5%">
+
+  <!-- Guide Cards -->
+  <div data-aos="fade-up">
+    <p class="g-label">Travel Guides</p>
+    <h2 style="font-family:var(--font-serif);font-size:2rem;color:var(--ink);margin-bottom:0.5rem">Essential Japan Guides</h2>
+    <p style="font-size:0.93rem;color:var(--stone);max-width:560px;line-height:1.8">Four comprehensive guides covering the most important aspects of planning and experiencing Japan.</p>
+  </div>
+
+  <div class="hub-grid">
+    <a href="/pages/when-to-visit.html" class="hub-card hub-card-1" data-aos="fade-up" data-aos-delay="0">
+      <div class="hub-card-header">
+        <span class="hub-card-icon">🌸</span>
+        <h3 class="hub-card-title">When to Visit</h3>
+        <p class="hub-card-sub">Seasons & Timing</p>
+      </div>
+      <div class="hub-card-body">
+        <p class="hub-card-desc">Navigate Japan's four dramatically different seasons. Find the best time for cherry blossoms, fall foliage, summer festivals, and winter skiing — matched to your travel style.</p>
+        <div class="hub-card-topics">
+          <span class="hub-topic">Cherry Blossoms</span>
+          <span class="hub-topic">Autumn Foliage</span>
+          <span class="hub-topic">Monthly Guide</span>
+          <span class="hub-topic">Regional Climate</span>
+        </div>
+        <span class="hub-card-link">Read Guide →</span>
+      </div>
+    </a>
+
+    <a href="/pages/visa-guide.html" class="hub-card hub-card-2" data-aos="fade-up" data-aos-delay="80">
+      <div class="hub-card-header">
+        <span class="hub-card-icon">🛂</span>
+        <h3 class="hub-card-title">Visa Guide</h3>
+        <p class="hub-card-sub">Entry Requirements</p>
+      </div>
+      <div class="hub-card-body">
+        <p class="hub-card-desc">Learn whether you need a visa, how to apply, what documents to prepare, and what to expect at Japanese immigration. Includes country-specific guidance.</p>
+        <div class="hub-card-topics">
+          <span class="hub-topic">Visa-Free Countries</span>
+          <span class="hub-topic">Application Steps</span>
+          <span class="hub-topic">Documents Checklist</span>
+          <span class="hub-topic">Airport Arrival</span>
+        </div>
+        <span class="hub-card-link">Read Guide →</span>
+      </div>
+    </a>
+
+    <a href="/pages/jr-pass.html" class="hub-card hub-card-3" data-aos="fade-up" data-aos-delay="120">
+      <div class="hub-card-header">
+        <span class="hub-card-icon">🚄</span>
+        <h3 class="hub-card-title">JR Pass Info</h3>
+        <p class="hub-card-sub">Train & Transport</p>
+      </div>
+      <div class="hub-card-body">
+        <p class="hub-card-desc">The Japan Rail Pass unlocks unlimited Shinkansen travel for tourists. Understand pricing, what's covered, how to buy, and whether it's worth it for your itinerary.</p>
+        <div class="hub-card-topics">
+          <span class="hub-topic">Pass Prices</span>
+          <span class="hub-topic">What's Covered</span>
+          <span class="hub-topic">How to Buy</span>
+          <span class="hub-topic">Sample Routes</span>
+        </div>
+        <span class="hub-card-link">Read Guide →</span>
+      </div>
+    </a>
+
+    <a href="/pages/etiquette.html" class="hub-card hub-card-4" data-aos="fade-up" data-aos-delay="160">
+      <div class="hub-card-header">
+        <span class="hub-card-icon">🎌</span>
+        <h3 class="hub-card-title">Etiquette</h3>
+        <p class="hub-card-sub">Culture & Customs</p>
+      </div>
+      <div class="hub-card-body">
+        <p class="hub-card-desc">Japan has a rich culture of unwritten rules. Understand the customs around dining, temples, onsen, transport and everyday interactions — and earn the deep respect of locals.</p>
+        <div class="hub-card-topics">
+          <span class="hub-topic">Dos & Don'ts</span>
+          <span class="hub-topic">Onsen Rules</span>
+          <span class="hub-topic">Temple Customs</span>
+          <span class="hub-topic">Dining</span>
+        </div>
+        <span class="hub-card-link">Read Guide →</span>
+      </div>
+    </a>
+  </div>
+
+  <!-- Quick Tips Section -->
+  <div style="margin-top:5rem" data-aos="fade-up">
+    <p class="g-label">At a Glance</p>
+    <h2 style="font-family:var(--font-serif);font-size:2rem;color:var(--ink);margin-bottom:0.5rem">12 Quick Tips for Every Traveller</h2>
+    <p style="font-size:0.93rem;color:var(--stone);max-width:560px;line-height:1.8;margin-bottom:0.5rem">The most important things to know, condensed.</p>
+  </div>
+
+  <div class="quick-tips-grid">
+    <div class="quick-tip" data-aos="fade-up" data-aos-delay="0">
+      <div class="quick-tip-icon">💴</div>
+      <div class="quick-tip-title">Carry Cash</div>
+      <div class="quick-tip-text">Many restaurants, shrines and small shops are cash-only. 7-Eleven ATMs reliably accept foreign cards.</div>
+    </div>
+    <div class="quick-tip" data-aos="fade-up" data-aos-delay="40">
+      <div class="quick-tip-icon">🚫</div>
+      <div class="quick-tip-title">Never Tip</div>
+      <div class="quick-tip-text">Tipping is not part of Japanese culture and can be seen as rude or confusing. The price includes everything.</div>
+    </div>
+    <div class="quick-tip" data-aos="fade-up" data-aos-delay="80">
+      <div class="quick-tip-icon">📶</div>
+      <div class="quick-tip-title">Get a SIM or WiFi</div>
+      <div class="quick-tip-text">Rent a pocket WiFi or buy a data SIM at the airport. Essential for Google Maps and Google Translate.</div>
+    </div>
+    <div class="quick-tip" data-aos="fade-up" data-aos-delay="120">
+      <div class="quick-tip-icon">🎌</div>
+      <div class="quick-tip-title">Learn 5 Japanese Words</div>
+      <div class="quick-tip-text">Arigatō, sumimasen, onegaishimasu, itadakimasu, and kanpai. Locals will light up when you use them.</div>
+    </div>
+    <div class="quick-tip" data-aos="fade-up" data-aos-delay="160">
+      <div class="quick-tip-icon">🗑️</div>
+      <div class="quick-tip-title">Carry a Trash Bag</div>
+      <div class="quick-tip-text">Public bins are extremely rare in Japan. Carry a small bag for wrappers and bottles until you find a convenience store bin.</div>
+    </div>
+    <div class="quick-tip" data-aos="fade-up" data-aos-delay="200">
+      <div class="quick-tip-icon">🤫</div>
+      <div class="quick-tip-title">Quiet on Trains</div>
+      <div class="quick-tip-text">Phone calls are strictly taboo on public transport. Keep voice low. Use headphones. Priority seats are for elderly and pregnant.</div>
+    </div>
+    <div class="quick-tip" data-aos="fade-up" data-aos-delay="0">
+      <div class="quick-tip-icon">👟</div>
+      <div class="quick-tip-title">Slip-On Shoes</div>
+      <div class="quick-tip-text">You'll remove shoes constantly — at ryokan, many restaurants, temples. Wear shoes you can take off quickly and easily.</div>
+    </div>
+    <div class="quick-tip" data-aos="fade-up" data-aos-delay="40">
+      <div class="quick-tip-icon">🏪</div>
+      <div class="quick-tip-title">Love Your Convenience Store</div>
+      <div class="quick-tip-text">7-Eleven, Lawson and FamilyMart sell genuinely delicious food, hot drinks, medicines, ATM access and more. They're lifesavers.</div>
+    </div>
+    <div class="quick-tip" data-aos="fade-up" data-aos-delay="80">
+      <div class="quick-tip-icon">🚶</div>
+      <div class="quick-tip-title">Walk on the Left</div>
+      <div class="quick-tip-text">Escalators: stand on the left (except in Osaka — stand on the right). Walk on the left side of paths and corridors.</div>
+    </div>
+    <div class="quick-tip" data-aos="fade-up" data-aos-delay="120">
+      <div class="quick-tip-icon">📱</div>
+      <div class="quick-tip-title">Download Offline Maps</div>
+      <div class="quick-tip-text">Download your Japan cities offline in Google Maps before arriving. Also download Google Translate with Japanese for camera translation.</div>
+    </div>
+    <div class="quick-tip" data-aos="fade-up" data-aos-delay="160">
+      <div class="quick-tip-icon">🌡️</div>
+      <div class="quick-tip-title">Layer Your Clothes</div>
+      <div class="quick-tip-text">Japan's seasons are extreme. Check forecasts daily. Summers are brutal (35°C+) — lightweight, breathable fabrics are essential.</div>
+    </div>
+    <div class="quick-tip" data-aos="fade-up" data-aos-delay="200">
+      <div class="quick-tip-icon">🏥</div>
+      <div class="quick-tip-title">Get Travel Insurance</div>
+      <div class="quick-tip-text">Japan's healthcare is excellent but expensive for foreigners without insurance. Typhoons and natural events can also disrupt travel plans.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer class="g-footer" style="margin-top:5rem">
+  <p>© 2025 <a href="/">Nihon Travel</a> · All rights reserved</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+  AOS.init({ duration:750, easing:'ease-out-cubic', once:true, offset:50 });
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  });
+</script>
+</body>
+</html>

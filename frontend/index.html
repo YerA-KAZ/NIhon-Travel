@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Discover the beauty of Japan — temples, nature, cuisine, and culture. Plan your perfect Japanese journey.">
+  <title>Nihon — Discover Japan</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <!-- AOS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+</head>
+<body>
+
+<!-- ══════════════════ NAVBAR ══════════════════ -->
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <span class="logo-kanji">日</span>
+        Nihon Travel
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#destinations">Destinations</a></li>
+        <li><a href="#about">About Japan</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="/pages/travel-tips.html">Travel Tips</a></li>
+        <li><a href="/pages/anime.html" class="nav-anime-link">✦ Anime</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions" id="nav-actions">
+        <button onclick="openModal('login-modal')" class="btn btn-outline">Sign In</button>
+        <button onclick="openModal('register-modal')" class="btn btn-primary">Join Free</button>
+      </div>
+
+      <button class="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <span class="mobile-menu-close" id="mobile-close">✕</span>
+  <a href="#destinations">Destinations</a>
+  <a href="#about">About Japan</a>
+  <a href="#gallery">Gallery</a>
+  <a href="/pages/travel-tips.html">Travel Tips</a>
+  <a href="/pages/anime.html" style="color:#e879f9">✦ Anime</a>
+  <a href="#contact">Contact</a>
+  <a href="/pages/profile.html">My Profile</a>
+</div>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section id="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-lines"></div>
+
+  <div class="hero-content" data-aos="fade-up" data-aos-duration="1200">
+    <p class="hero-eyebrow">A World Apart</p>
+    <h1 class="hero-title">
+      Discover the Soul<br>of <em>Japan</em>
+    </h1>
+    <p class="hero-desc">
+      Ancient temples meet neon cities. Sacred mountains rise above cherry blossom valleys. 
+      Begin your journey through the Land of the Rising Sun.
+    </p>
+    <div class="hero-buttons">
+      <a href="#destinations" class="btn btn-primary">Explore Destinations</a>
+      <button onclick="openModal('register-modal')" class="btn btn-outline">Plan Your Trip →</button>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ══════════════════ STATS BAR ══════════════════ -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item" data-aos="fade-up" data-aos-delay="0">
+        <span class="stat-number" data-target="47" data-suffix="+">47+</span>
+        <span class="stat-label">Prefectures</span>
+      </div>
+      <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+        <span class="stat-number" data-target="1500" data-suffix="+">1500+</span>
+        <span class="stat-label">UNESCO Sites & Temples</span>
+      </div>
+      <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+        <span class="stat-number" data-target="3776" data-suffix="m">3776m</span>
+        <span class="stat-label">Mount Fuji</span>
+      </div>
+      <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+        <span class="stat-number" data-target="4" data-suffix=" Seasons">4</span>
+        <span class="stat-label">Distinct Seasons</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ DESTINATIONS ══════════════════ -->
+<section id="destinations">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Explore</p>
+      <h2 class="section-title">Top Destinations</h2>
+      <p class="section-subtitle">
+        From the neon-lit streets of Tokyo to the serene gardens of Kyoto — 
+        every corner of Japan tells a story.
+      </p>
+
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">All</button>
+        <button class="filter-tab" data-filter="nature">Nature</button>
+        <button class="filter-tab" data-filter="temple">Temples</button>
+        <button class="filter-tab" data-filter="city">Cities</button>
+        <button class="filter-tab" data-filter="history">History</button>
+        <button class="filter-tab" data-filter="beach">Beaches</button>
+        <button class="filter-tab" data-filter="wellness">Wellness</button>
+      </div>
+    </div>
+
+    <div class="destinations-grid" id="destinations-grid">
+      <div class="loader"><div class="loader-dots"><span></span><span></span><span></span></div></div>
+    </div>
+
+    <div class="load-more-wrap">
+      <button class="btn btn-dark" id="load-more-btn" onclick="loadMoreDestinations()">
+        Load More Destinations
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ ABOUT JAPAN ══════════════════ -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text" data-aos="fade-right">
+        <p class="section-label">About Japan</p>
+        <h2 class="section-title">A Nation of Timeless Contrasts</h2>
+        <p class="section-subtitle">
+          Japan is a country where ancient tradition and cutting-edge modernity exist in perfect harmony. 
+          From misty mountain shrines to ultramodern cities, each experience is a window into a uniquely 
+          captivating civilization.
+        </p>
+
+        <div class="about-facts">
+          <div class="about-fact" data-aos="fade-up" data-aos-delay="100">
+            <div class="fact-icon"><!--⛩️--></div>
+            <h4 class="fact-title">Rich Culture</h4>
+            <p class="fact-desc">Over 2,000 years of recorded history, living traditions, and arts.</p>
+          </div>
+          <div class="about-fact" data-aos="fade-up" data-aos-delay="200">
+            <div class="fact-icon"><!--🍜--></div>
+            <h4 class="fact-title">World Cuisine</h4>
+            <p class="fact-desc">More Michelin stars than any country — a paradise for food lovers.</p>
+          </div>
+          <div class="about-fact" data-aos="fade-up" data-aos-delay="300">
+            <div class="fact-icon"><!--🚄--></div>
+            <h4 class="fact-title">Ultra-Modern</h4>
+            <p class="fact-desc">Shinkansen bullet trains connect the country at 320 km/h.</p>
+          </div>
+          <div class="about-fact" data-aos="fade-up" data-aos-delay="400">
+            <div class="fact-icon"><!--🌸--></div>
+            <h4 class="fact-title">Four Seasons</h4>
+            <p class="fact-desc">Each season transforms Japan's landscape into something magical.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-visual" data-aos="fade-left">
+        <img 
+          class="about-img-main" 
+          src="https://media.timeout.com/images/106106593/image.jpg?w=800" 
+          alt="Kyoto Gion District"
+          loading="lazy">
+        <div class="about-badge">
+          <span class="badge-num">126M</span>
+          <span class="badge-text">Population</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ GALLERY ══════════════════ -->
+<section id="gallery">
+  <div class="container">
+    <div class="section-header center">
+      <p class="section-label">Gallery</p>
+      <h2 class="section-title">Japan Through the Lens</h2>
+      <p class="section-subtitle">
+        Each photograph captures a fleeting moment in a country where beauty exists in every detail.
+      </p>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-item" data-aos="zoom-in" data-aos-delay="0"
+           data-full="https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=2000&q=95"
+           data-caption="Mount Fuji — Shizuoka Prefecture">
+        <img src="https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=900&q=80" alt="Mount Fuji">
+        <div class="gallery-overlay">
+          <span class="gallery-overlay-icon">⛶</span>
+          <span class="gallery-overlay-caption">Mount Fuji</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100"
+           data-full="https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=2000&q=95"
+           data-caption="Fushimi Inari — Kyoto">
+        <img src="https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=700&q=80" alt="Torii Gates">
+        <div class="gallery-overlay">
+          <span class="gallery-overlay-icon">⛶</span>
+          <span class="gallery-overlay-caption">Fushimi Inari</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-aos="zoom-in" data-aos-delay="150"
+           data-full="https://a-us.storyblok.com/f/1018357/1500x1000/d12f5afc3c/deer_3904413_m.jpg?w=2000&q=95"
+           data-caption="Nara Deer Park — Nara">
+        <img src="https://a-us.storyblok.com/f/1018357/1500x1000/d12f5afc3c/deer_3904413_m.jpg?w=700&q=80" alt="Nara Deer">
+        <div class="gallery-overlay">
+          <span class="gallery-overlay-icon">⛶</span>
+          <span class="gallery-overlay-caption">Nara Deer Park</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200"
+           data-full="https://travel.rakuten.com/contents/sites/contents/files/styles/max_1300x1300/public/2024-06/arashiyama-bamboo-forest_3.jpg?itok=822ih-Jp?w=2000&q=95"
+           data-caption="Arashiyama Bamboo Grove — Kyoto">
+        <img src="https://travel.rakuten.com/contents/sites/contents/files/styles/max_1300x1300/public/2024-06/arashiyama-bamboo-forest_3.jpg?itok=822ih-Jp?w=900&q=80" alt="Bamboo">
+        <div class="gallery-overlay">
+          <span class="gallery-overlay-icon">⛶</span>
+          <span class="gallery-overlay-caption">Arashiyama Bamboo</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-aos="zoom-in" data-aos-delay="250"
+           data-full="https://www.gotokyo.org/en/destinations/western-tokyo/shibuya/images/main.jpg?w=2000&q=95"
+           data-caption="Shibuya Crossing — Tokyo">
+        <img src="https://www.gotokyo.org/en/destinations/western-tokyo/shibuya/images/main.jpg?w=700&q=80" alt="Tokyo">
+        <div class="gallery-overlay">
+          <span class="gallery-overlay-icon">⛶</span>
+          <span class="gallery-overlay-caption">Shibuya Crossing</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300"
+           data-full="https://chrisandwrensworld.com/wp-content/uploads/2024/08/osaka-castle-sunset-819x1024.jpeg?w=2000&q=95"
+           data-caption="Osaka Castle — Osaka">
+        <img src="https://chrisandwrensworld.com/wp-content/uploads/2024/08/osaka-castle-sunset-819x1024.jpeg?w=700&q=80" alt="Osaka Castle">
+        <div class="gallery-overlay">
+          <span class="gallery-overlay-icon">⛶</span>
+          <span class="gallery-overlay-caption">Osaka Castle</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-aos="zoom-in" data-aos-delay="350"
+           data-full="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=2000&q=95"
+           data-caption="Gion District — Kyoto">
+        <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=900&q=80" alt="Kyoto">
+        <div class="gallery-overlay">
+          <span class="gallery-overlay-icon">⛶</span>
+          <span class="gallery-overlay-caption">Kyoto Gion</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-aos="zoom-in" data-aos-delay="400"
+           data-full="https://images.trvl-media.com/lodging/105000000/104870000/104862400/104862373/d0c139dd.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill?w=2000&q=95"
+           data-caption="Hakone Hot Springs — Kanagawa">
+        <img src="https://images.trvl-media.com/lodging/105000000/104870000/104862400/104862373/d0c139dd.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill?w=700&q=80" alt="Hot Springs">
+        <div class="gallery-overlay">
+          <span class="gallery-overlay-icon">⛶</span>
+          <span class="gallery-overlay-caption">Hakone Onsen</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ CONTACT ══════════════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info" data-aos="fade-right">
+        <p class="section-label">Get in Touch</p>
+        <h2 class="section-title">Plan Your Journey</h2>
+        <p class="section-subtitle">
+          Our Japan travel specialists are ready to help you craft an unforgettable experience. 
+          Reach out with any questions.
+        </p>
+
+        <div class="contact-detail">
+          <!-- <div class="contact-icon">📧</div> -->
+          <div class="contact-detail-text">
+            <h4>Email Us</h4>
+            <p>hello@nihontravel.com</p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <!-- <div class="contact-icon">📞</div> -->
+          <div class="contact-detail-text">
+            <h4>Call Us</h4>
+            <p>+81 3-1234-5678</p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <!-- <div class="contact-icon">📍</div> -->
+          <div class="contact-detail-text">
+            <h4>Visit Us</h4>
+            <p>Shinjuku, Tokyo, Japan</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form" data-aos="fade-left">
+        <form id="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contact-name">Your Name</label>
+              <input type="text" id="contact-name" name="name" placeholder="Tanaka Hiroshi" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Email Address</label>
+              <input type="email" id="contact-email" name="email" placeholder="you@example.com" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="contact-subject">Subject</label>
+            <select id="contact-subject" name="subject">
+              <option>Travel Planning</option>
+              <option>Hotel Recommendations</option>
+              <option>Tours & Experiences</option>
+              <option>General Inquiry</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="contact-message">Message</label>
+            <textarea id="contact-message" name="message" placeholder="Tell us about your dream Japan trip..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">
+            Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="nav-logo">
+          <span class="logo-kanji">日</span>
+          Nihon Travel
+        </a>
+        <p class="footer-desc">
+          Your trusted guide to discovering the wonders of Japan. 
+          Crafting unforgettable journeys since 2018.
+        </p>
+        <div class="footer-socials">
+          <a class="social-link" aria-label="Instagram">📸</a>
+          <a class="social-link" aria-label="Twitter">🐦</a>
+          <a class="social-link" aria-label="Facebook">👤</a>
+          <a class="social-link" aria-label="YouTube">▶️</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Destinations</h4>
+        <ul>
+          <li><a href="#destinations">Tokyo</a></li>
+          <li><a href="#destinations">Kyoto</a></li>
+          <li><a href="#destinations">Osaka</a></li>
+          <li><a href="#destinations">Hokkaido</a></li>
+          <li><a href="#destinations">Okinawa</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#about">About Japan</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="/pages/profile.html">My Profile</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4><a href="/pages/travel-tips.html">Travel Tips</a></h4>
+        <ul>
+          <li><a href="/pages/when-to-visit.html">When to Visit</a></li>
+          <li><a href="/pages/visa-guide.html">Visa Guide</a></li>
+          <li><a href="/pages/jr-pass-info.html">JR Pass Info</a></li>
+          <li><a href="/pages/etiquette.html">Etiquette</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Nihon Travel. Made with ❤️ for Japan lovers.</p>
+      <p>Privacy Policy · Terms of Service</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════ MODALS ══════════════════ -->
+
+<!-- Login Modal -->
+<div class="modal-overlay" id="login-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('login-modal')">✕</button>
+    <h2 class="modal-title">Welcome Back</h2>
+    <p class="modal-subtitle">Sign in to access your favorites and travel history</p>
+    <form id="login-form" onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" name="email" placeholder="you@example.com" required>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">
+        Sign In
+      </button>
+    </form>
+    <p class="modal-footer-text">
+      Don't have an account? 
+      <a href="#" onclick="closeModal('login-modal');openModal('register-modal')">Create one</a>
+    </p>
+  </div>
+</div>
+
+<!-- Register Modal -->
+<div class="modal-overlay" id="register-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('register-modal')">✕</button>
+    <h2 class="modal-title">Join Nihon Travel</h2>
+    <p class="modal-subtitle">Create your free account and start exploring Japan</p>
+    <form id="register-form" onsubmit="handleRegister(event)">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" name="name" placeholder="Your name" required>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" name="email" placeholder="you@example.com" required>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Min 6 characters" required>
+      </div>
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" name="confirm" placeholder="Repeat password" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">
+        Create Account
+      </button>
+    </form>
+    <p class="modal-footer-text">
+      Already have an account? 
+      <a href="#" onclick="closeModal('register-modal');openModal('login-modal')">Sign in</a>
+    </p>
+  </div>
+</div>
+
+<!-- Destination Detail Modal -->
+<div class="modal-overlay dest-detail-modal" id="dest-modal">
+  <div class="modal" style="max-width:700px;padding:0;overflow:hidden">
+    <button class="modal-close" onclick="closeModal('dest-modal')" style="z-index:1;top:1rem;right:1rem;background:rgba(255,255,255,0.9);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center">✕</button>
+    <img class="dest-detail-img" src="" alt="" style="width:100%;height:300px;object-fit:cover">
+    <div class="dest-detail-body" style="padding:2rem 2.5rem">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem">
+        <p class="dest-location dest-detail-location"></p>
+        <span class="dest-category dest-detail-category" style="position:static;margin-left:1rem"></span>
+      </div>
+      <h2 class="dest-name dest-detail-name" style="font-size:2rem;margin-bottom:1rem"></h2>
+      <p class="dest-detail-desc" style="color:var(--stone);line-height:1.8;margin-bottom:1rem"></p>
+      <div style="display:flex;align-items:center;gap:1rem">
+        <span class="dest-rating dest-detail-rating"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <!-- Backdrop -->
+  <div class="lb-backdrop" id="lb-backdrop"></div>
+
+  <!-- Close -->
+  <button class="lb-close" id="lb-close" aria-label="Close">✕</button>
+
+  <!-- Prev / Next -->
+  <button class="lb-nav lb-prev" id="lb-prev" aria-label="Previous">&#8249;</button>
+  <button class="lb-nav lb-next" id="lb-next" aria-label="Next">&#8250;</button>
+
+  <!-- Image wrapper -->
+  <div class="lb-content">
+    <div class="lb-loader" id="lb-loader">
+      <div class="lb-spinner"></div>
+    </div>
+    <img id="lb-img" src="" alt="">
+  </div>
+
+  <!-- Caption + counter -->
+  <div class="lb-footer">
+    <span class="lb-caption" id="lb-caption"></span>
+    <span class="lb-counter" id="lb-counter"></span>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>

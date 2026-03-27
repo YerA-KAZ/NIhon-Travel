@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel — Nihon Travel</title>
+  <link rel="stylesheet" href="/css/profile.css">
+  <style>
+    .admin-topbar { background: var(--vermilion); }
+    .admin-topbar .topbar-title { color: var(--white); font-size: 1.2rem; }
+    
+    .data-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-soft); }
+    .data-table th { background: var(--ink); color: var(--white); padding: 0.9rem 1.2rem; text-align: left; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; }
+    .data-table td { padding: 1rem 1.2rem; border-bottom: 1px solid var(--paper-dark); font-size: 0.85rem; color: var(--ink); vertical-align: middle; }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: var(--paper); }
+    .data-table img { width: 50px; height: 40px; object-fit: cover; border-radius: 4px; }
+
+    .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 100px; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+    .badge-nature { background: #e8f5e9; color: #2c7a5a; }
+    .badge-temple { background: #fff3e0; color: #e65100; }
+    .badge-city { background: #e3f2fd; color: #1565c0; }
+    .badge-history { background: #fce4ec; color: #880e4f; }
+    .badge-default { background: var(--paper-dark); color: var(--stone); }
+
+    .action-btns { display: flex; gap: 0.5rem; }
+    .action-btn { padding: 0.35rem 0.75rem; font-size: 0.72rem; border-radius: var(--radius); cursor: pointer; border: none; font-family: inherit; font-weight: 500; transition: var(--transition); }
+    .action-btn-edit { background: var(--paper-dark); color: var(--ink); }
+    .action-btn-edit:hover { background: var(--ink); color: var(--white); }
+    .action-btn-delete { background: #fce4ec; color: var(--vermilion); }
+    .action-btn-delete:hover { background: var(--vermilion); color: var(--white); }
+
+    .modal-overlay { position: fixed; inset: 0; background: rgba(10,10,25,0.8); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; visibility: hidden; transition: var(--transition); backdrop-filter: blur(4px); }
+    .modal-overlay.open { opacity: 1; visibility: visible; }
+    .modal { background: var(--white); border-radius: var(--radius-lg); max-width: 550px; width: 100%; padding: 2.5rem; position: relative; transform: scale(0.9); transition: var(--transition); }
+    .modal-overlay.open .modal { transform: scale(1); }
+    .modal-close { position: absolute; top: 1rem; right: 1.5rem; font-size: 1.5rem; color: var(--stone); cursor: pointer; background: none; border: none; }
+    
+    .stat-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; margin-bottom: 2rem; }
+    .stat-card { background: var(--white); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-soft); text-align: center; }
+    .stat-card-num { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 300; color: var(--vermilion); }
+    .stat-card-label { font-size: 0.72rem; color: var(--stone); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.3rem; }
+
+    .tabs-header { display: flex; gap: 0; margin-bottom: 1.5rem; background: var(--white); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-soft); }
+    .admin-tab { padding: 1rem 2rem; font-size: 0.82rem; font-weight: 500; cursor: pointer; border: none; background: none; font-family: inherit; color: var(--stone); transition: var(--transition); border-bottom: 2px solid transparent; }
+    .admin-tab.active { color: var(--vermilion); border-bottom-color: var(--vermilion); background: var(--paper); }
+    .admin-tab:hover { color: var(--ink); }
+  </style>
+</head>
+<body>
+
+<div class="profile-layout">
+  <!-- SIDEBAR -->
+  <aside class="profile-sidebar">
+    <div class="sidebar-header">
+      <a href="/" class="sidebar-logo"><span class="logo-kanji">日</span> Nihon Travel</a>
+      <div id="admin-sidebar-user">
+        <div class="loader"><div class="loader-dots"><span></span><span></span><span></span></div></div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-nav-item active" onclick="showAdminTab('dashboard', this)">
+        <span class="nav-icon">📊</span> Dashboard
+      </div>
+      <div class="sidebar-nav-item" onclick="showAdminTab('destinations', this)">
+        <span class="nav-icon">🗾</span> Destinations
+      </div>
+      <div class="sidebar-nav-item" onclick="showAdminTab('messages', this)">
+        <span class="nav-icon">📩</span> Messages
+      </div>
+      <div class="sidebar-nav-item" onclick="showAdminTab('users', this)">
+        <span class="nav-icon">👥</span> Users
+      </div>
+      <div class="sidebar-nav-item" onclick="window.location.href='/pages/profile.html'">
+        <span class="nav-icon">👤</span> My Profile
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <button onclick="logout()" class="btn btn-danger" style="width:100%;justify-content:center;padding:0.65rem 1rem">Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="profile-main">
+    <div class="profile-topbar admin-topbar">
+      <h1 class="topbar-title" id="admin-page-title">🛡️ Admin Dashboard</h1>
+      <div class="topbar-actions">
+        <a href="/" class="btn btn-outline" style="background:rgba(255,255,255,0.2);color:#fff;border-color:rgba(255,255,255,0.4)">← Back to Site</a>
+      </div>
+    </div>
+
+    <div class="profile-content">
+
+      <!-- Dashboard -->
+      <div id="admin-tab-dashboard">
+        <div class="stat-cards" id="stat-cards">
+          <div class="loader"><div class="loader-dots"><span></span><span></span><span></span></div></div>
+        </div>
+      </div>
+
+      <!-- Destinations -->
+      <div id="admin-tab-destinations" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+          <h3 style="font-family:var(--font-serif);font-size:1.3rem">Manage Destinations</h3>
+          <button class="btn btn-primary" onclick="openDestModal()">+ Add Destination</button>
+        </div>
+        <div id="admin-dest-table">
+          <div class="loader"><div class="loader-dots"><span></span><span></span><span></span></div></div>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div id="admin-tab-messages" style="display:none">
+        <h3 style="font-family:var(--font-serif);font-size:1.3rem;margin-bottom:1.5rem">All Contact Messages</h3>
+        <div id="admin-messages-table">
+          <div class="loader"><div class="loader-dots"><span></span><span></span><span></span></div></div>
+        </div>
+      </div>
+
+      <!-- Users -->
+      <div id="admin-tab-users" style="display:none">
+        <h3 style="font-family:var(--font-serif);font-size:1.3rem;margin-bottom:1.5rem">Registered Users</h3>
+        <div id="admin-users-table">
+          <div class="loader"><div class="loader-dots"><span></span><span></span><span></span></div></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Destination Form Modal -->
+<div class="modal-overlay" id="dest-form-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeDestModal()">✕</button>
+    <h2 id="dest-form-title" style="font-family:var(--font-serif);font-size:1.6rem;margin-bottom:0.5rem">Add Destination</h2>
+    <p style="color:var(--stone);font-size:0.85rem;margin-bottom:1.5rem">Fill in the details below</p>
+    <form id="dest-form" onsubmit="submitDestForm(event)">
+      <input type="hidden" name="id" id="dest-form-id">
+      <div class="form-group">
+        <label>Name *</label>
+        <input type="text" name="name" required placeholder="e.g. Mount Fuji">
+      </div>
+      <div class="form-group">
+        <label>Location</label>
+        <input type="text" name="location" placeholder="e.g. Shizuoka Prefecture">
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select name="category">
+          <option value="nature">Nature</option>
+          <option value="temple">Temple</option>
+          <option value="city">City</option>
+          <option value="history">History</option>
+          <option value="beach">Beach</option>
+          <option value="wellness">Wellness</option>
+          <option value="festival">Festival</option>
+          <option value="culture">Culture</option>
+          <option value="general">General</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Image URL</label>
+        <input type="url" name="image_url" placeholder="https://images.unsplash.com/...">
+      </div>
+      <div class="form-group">
+        <label>Rating (0-5)</label>
+        <input type="number" name="rating" min="0" max="5" step="0.1" placeholder="4.8">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea name="description" style="height:100px" placeholder="Describe this destination..."></textarea>
+      </div>
+      <div style="display:flex;gap:1rem">
+        <button type="submit" class="btn btn-primary" id="dest-submit-btn">Add Destination</button>
+        <button type="button" onclick="closeDestModal()" class="btn btn-outline">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast-container" id="toast-container"></div>
+
+<script>
+const API_BASE = '/api';
+let token = localStorage.getItem('jt_token');
+let currentUser = JSON.parse(localStorage.getItem('jt_user') || 'null');
+let editingDestId = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (!token || !currentUser) { window.location.href = '/'; return; }
+  if (currentUser.role !== 'admin') { showToast('Access denied. Admins only.', 'error'); setTimeout(() => window.location.href = '/', 2000); return; }
+  
+  const avatar = currentUser.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.name)}&background=c0392b&color=fff`;
+  document.getElementById('admin-sidebar-user').innerHTML = `
+    <img src="${avatar}" alt="" class="sidebar-avatar">
+    <p class="sidebar-name">${currentUser.name}</p>
+    <p class="sidebar-email">${currentUser.email}</p>
+    <span class="sidebar-badge">Admin</span>
+  `;
+
+  loadStats();
+});
+
+async function apiCall(endpoint, options = {}) {
+  const config = { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, ...options };
+  if (config.body && typeof config.body === 'object') config.body = JSON.stringify(config.body);
+  const res = await fetch(`${API_BASE}${endpoint}`, config);
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Request failed');
+  return data;
+}
+
+function showAdminTab(name, el) {
+  document.querySelectorAll('[id^="admin-tab-"]').forEach(t => t.style.display = 'none');
+  document.querySelectorAll('.sidebar-nav-item').forEach(i => i.classList.remove('active'));
+  document.getElementById(`admin-tab-${name}`).style.display = 'block';
+  if (el) el.classList.add('active');
+
+  const titles = { dashboard: '📊 Admin Dashboard', destinations: '🗾 Manage Destinations', messages: '📩 Contact Messages', users: '👥 Registered Users' };
+  document.getElementById('admin-page-title').textContent = titles[name] || name;
+
+  if (name === 'destinations') loadAdminDestinations();
+  if (name === 'messages') loadAdminMessages();
+  if (name === 'users') loadAdminUsers();
+}
+
+async function loadStats() {
+  try {
+    const data = await apiCall('/admin/stats');
+    const { users, destinations, messages, favorites } = data.stats;
+    document.getElementById('stat-cards').innerHTML = `
+      <div class="stat-card"><div class="stat-card-num">${users}</div><div class="stat-card-label">Users</div></div>
+      <div class="stat-card"><div class="stat-card-num">${destinations}</div><div class="stat-card-label">Destinations</div></div>
+      <div class="stat-card"><div class="stat-card-num">${messages}</div><div class="stat-card-label">Messages</div></div>
+      <div class="stat-card"><div class="stat-card-num">${favorites}</div><div class="stat-card-label">Favorites</div></div>
+    `;
+  } catch (err) {
+    document.getElementById('stat-cards').innerHTML = `<p>Connect your backend to see stats</p>`;
+  }
+}
+
+async function loadAdminDestinations() {
+  const container = document.getElementById('admin-dest-table');
+  container.innerHTML = '<div class="loader"><div class="loader-dots"><span></span><span></span><span></span></div></div>';
+  try {
+    const data = await apiCall('/admin/destinations');
+    container.innerHTML = `
+      <div style="overflow-x:auto">
+      <table class="data-table">
+        <thead><tr>
+          <th>Image</th><th>Name</th><th>Location</th><th>Category</th><th>Rating</th><th>Actions</th>
+        </tr></thead>
+        <tbody>${data.destinations.map(d => `
+          <tr>
+            <td><img src="${d.image_url || 'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=200'}" alt="${d.name}"></td>
+            <td><strong>${d.name}</strong></td>
+            <td>${d.location || '—'}</td>
+            <td><span class="badge badge-${d.category || 'default'}">${d.category || 'general'}</span></td>
+            <td>⭐ ${d.rating || '—'}</td>
+            <td><div class="action-btns">
+              <button class="action-btn action-btn-edit" onclick="editDest(${JSON.stringify(d).replace(/"/g, '&quot;')})">Edit</button>
+              <button class="action-btn action-btn-delete" onclick="deleteDest(${d.id})">Delete</button>
+            </div></td>
+          </tr>
+        `).join('')}</tbody>
+      </table></div>`;
+  } catch (err) {
+    container.innerHTML = `<div class="empty-state"><p>Error: ${err.message}</p></div>`;
+  }
+}
+
+function openDestModal() {
+  editingDestId = null;
+  document.getElementById('dest-form-title').textContent = 'Add Destination';
+  document.getElementById('dest-submit-btn').textContent = 'Add Destination';
+  document.getElementById('dest-form').reset();
+  document.getElementById('dest-form-modal').classList.add('open');
+}
+
+function editDest(dest) {
+  editingDestId = dest.id;
+  document.getElementById('dest-form-title').textContent = 'Edit Destination';
+  document.getElementById('dest-submit-btn').textContent = 'Save Changes';
+  const form = document.getElementById('dest-form');
+  form.querySelector('[name="name"]').value = dest.name || '';
+  form.querySelector('[name="location"]').value = dest.location || '';
+  form.querySelector('[name="category"]').value = dest.category || 'general';
+  form.querySelector('[name="image_url"]').value = dest.image_url || '';
+  form.querySelector('[name="rating"]').value = dest.rating || '';
+  form.querySelector('[name="description"]').value = dest.description || '';
+  document.getElementById('dest-form-modal').classList.add('open');
+}
+
+function closeDestModal() {
+  document.getElementById('dest-form-modal').classList.remove('open');
+}
+
+async function submitDestForm(event) {
+  event.preventDefault();
+  const form = document.getElementById('dest-form');
+  const btn = document.getElementById('dest-submit-btn');
+  btn.disabled = true;
+  
+  const body = {
+    name: form.querySelector('[name="name"]').value,
+    location: form.querySelector('[name="location"]').value,
+    category: form.querySelector('[name="category"]').value,
+    image_url: form.querySelector('[name="image_url"]').value,
+    rating: form.querySelector('[name="rating"]').value,
+    description: form.querySelector('[name="description"]').value,
+  };
+
+  try {
+    if (editingDestId) {
+      await apiCall(`/admin/destinations/${editingDestId}`, { method: 'PUT', body });
+      showToast('Destination updated!', 'success');
+    } else {
+      await apiCall('/admin/destinations', { method: 'POST', body });
+      showToast('Destination added!', 'success');
+    }
+    closeDestModal();
+    loadAdminDestinations();
+    loadStats();
+  } catch (err) {
+    showToast(err.message, 'error');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+async function deleteDest(id) {
+  if (!confirm('Delete this destination? This cannot be undone.')) return;
+  try {
+    await apiCall(`/admin/destinations/${id}`, { method: 'DELETE' });
+    showToast('Destination deleted', 'info');
+    loadAdminDestinations();
+    loadStats();
+  } catch (err) {
+    showToast(err.message, 'error');
+  }
+}
+
+async function loadAdminMessages() {
+  const container = document.getElementById('admin-messages-table');
+  container.innerHTML = '<div class="loader"><div class="loader-dots"><span></span><span></span><span></span></div></div>';
+  try {
+    const data = await apiCall('/admin/messages');
+    if (!data.messages.length) { container.innerHTML = '<div class="empty-state"><div class="empty-icon">📩</div><h3 class="empty-title">No messages yet</h3></div>'; return; }
+    container.innerHTML = `<div style="overflow-x:auto"><table class="data-table">
+      <thead><tr><th>From</th><th>Email</th><th>Subject</th><th>Message</th><th>Date</th></tr></thead>
+      <tbody>${data.messages.map(m => `
+        <tr>
+          <td><strong>${m.name}</strong>${m.user_name ? `<br><small style="color:var(--stone)">${m.user_name}</small>` : ''}</td>
+          <td>${m.email}</td>
+          <td>${m.subject || '—'}</td>
+          <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${m.message}</td>
+          <td>${new Date(m.created_at).toLocaleDateString()}</td>
+        </tr>
+      `).join('')}</tbody>
+    </table></div>`;
+  } catch (err) {
+    container.innerHTML = `<div class="empty-state"><p>Error: ${err.message}</p></div>`;
+  }
+}
+
+async function loadAdminUsers() {
+  const container = document.getElementById('admin-users-table');
+  container.innerHTML = '<div class="loader"><div class="loader-dots"><span></span><span></span><span></span></div></div>';
+  try {
+    const data = await apiCall('/admin/users');
+    container.innerHTML = `<div style="overflow-x:auto"><table class="data-table">
+      <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Joined</th></tr></thead>
+      <tbody>${data.users.map(u => `
+        <tr>
+          <td><strong>${u.name}</strong></td>
+          <td>${u.email}</td>
+          <td><span class="badge ${u.role === 'admin' ? 'badge-temple' : 'badge-default'}">${u.role}</span></td>
+          <td>${new Date(u.created_at).toLocaleDateString()}</td>
+        </tr>
+      `).join('')}</tbody>
+    </table></div>`;
+  } catch (err) {
+    container.innerHTML = `<div class="empty-state"><p>Error: ${err.message}</p></div>`;
+  }
+}
+
+function logout() {
+  localStorage.removeItem('jt_token');
+  localStorage.removeItem('jt_user');
+  window.location.href = '/';
+}
+
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('open');
+});
+
+function showToast(message, type = 'info') {
+  const container = document.getElementById('toast-container');
+  const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<span>${icons[type]||'ℹ️'}</span><span>${message}</span>`;
+  container.appendChild(toast);
+  requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('show')));
+  setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 3500);
+}
+</script>
+</body>
+</html>

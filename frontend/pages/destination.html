@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destination — Nihon Travel</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Leaflet Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- AOS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+  <style>
+    /* ── Variables ── */
+    :root {
+      --ink: #1a1a2e;
+      --vermilion: #c0392b;
+      --vermilion-light: #e74c3c;
+      --paper: #faf8f3;
+      --paper-dark: #f0ede4;
+      --jade: #2c7a5a;
+      --gold: #c8a84b;
+      --stone: #8c8c8c;
+      --stone-light: #c4c4c4;
+      --white: #ffffff;
+      --shadow-soft: 0 4px 30px rgba(0,0,0,0.08);
+      --shadow-deep: 0 20px 60px rgba(0,0,0,0.15);
+      --radius: 6px;
+      --radius-lg: 16px;
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --font-serif: 'Shippori Mincho', serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--paper); color: var(--ink); line-height: 1.7; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--paper-dark); }
+    ::-webkit-scrollbar-thumb { background: var(--vermilion); border-radius: 3px; }
+
+    /* ── LOADING SCREEN ── */
+    #page-loader {
+      position: fixed;
+      inset: 0;
+      background: var(--ink);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      transition: opacity 0.5s ease;
+    }
+    #page-loader.fade-out { opacity: 0; pointer-events: none; }
+
+    .loader-kanji {
+      font-family: var(--font-serif);
+      font-size: 5rem;
+      color: var(--vermilion);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    .loader-text {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+    .loader-bar {
+      width: 200px;
+      height: 2px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .loader-bar-fill {
+      height: 100%;
+      background: var(--vermilion);
+      border-radius: 2px;
+      animation: loadBar 1.2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.95); } }
+    @keyframes loadBar { 0% { width: 0%; } 100% { width: 100%; } }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.2rem 0;
+      transition: var(--transition);
+    }
+    nav.scrolled {
+      background: rgba(250,248,243,0.97);
+      backdrop-filter: blur(12px);
+      padding: 0.8rem 0;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+    }
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: var(--transition);
+    }
+    .nav-logo .kanji { color: var(--vermilion); font-size: 1.7rem; }
+    nav.scrolled .nav-logo { color: var(--ink); }
+
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.8);
+      transition: var(--transition);
+      padding: 0.5rem 1.2rem;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 100px;
+    }
+    .nav-back:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+    nav.scrolled .nav-back { color: var(--stone); border-color: var(--paper-dark); }
+    nav.scrolled .nav-back:hover { color: var(--ink); background: var(--paper-dark); }
+
+    /* ── HERO ── */
+    .dest-hero {
+      position: relative;
+      height: 75vh;
+      min-height: 550px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .dest-hero-bg {
+      position: absolute;
+      inset: -80px 0 0 0;
+      background-size: cover;
+      background-position: center center;
+      will-change: transform;
+      transform: translateZ(0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+
+    .dest-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(10,10,25,0.2) 0%,
+        rgba(10,10,25,0.15) 40%,
+        rgba(10,10,25,0.85) 100%
+      );
+    }
+
+    /* Decorative vertical line */
+    .dest-hero::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 12%;
+      width: 1px;
+      background: rgba(255,255,255,0.06);
+      z-index: 1;
+    }
+
+    .dest-hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 5% 4rem;
+      max-width: 1280px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .dest-hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .dest-hero-cat {
+      background: var(--vermilion);
+      color: var(--white);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.35rem 1rem;
+      border-radius: 100px;
+    }
+
+    .dest-hero-location {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .dest-hero-rating {
+      color: var(--gold);
+      font-size: 0.9rem;
+      font-weight: 700;
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(8px);
+      padding: 0.3rem 0.9rem;
+      border-radius: 100px;
+      border: 1px solid rgba(200,168,75,0.4);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .dest-hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      color: var(--white);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+    }
+
+    .dest-hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.8rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border-radius: var(--radius);
+      transition: var(--transition);
+      cursor: pointer;
+      border: 2px solid transparent;
+      font-family: inherit;
+      letter-spacing: 0.04em;
+    }
+    .btn-primary { background: var(--vermilion); color: var(--white); border-color: var(--vermilion); }
+    .btn-primary:hover { background: var(--vermilion-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(192,57,43,0.35); }
+    .btn-glass { background: rgba(255,255,255,0.15); color: var(--white); border-color: rgba(255,255,255,0.4); backdrop-filter: blur(8px); }
+    .btn-glass:hover { background: rgba(255,255,255,0.25); transform: translateY(-2px); }
+    .btn-outline-dark { background: transparent; color: var(--ink); border-color: var(--paper-dark); }
+    .btn-outline-dark:hover { border-color: var(--vermilion); color: var(--vermilion); }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb {
+      background: var(--white);
+      border-bottom: 1px solid var(--paper-dark);
+      padding: 0.9rem 0;
+    }
+    .breadcrumb-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 5%;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--stone);
+    }
+    .breadcrumb-inner a { color: var(--stone); transition: var(--transition); }
+    .breadcrumb-inner a:hover { color: var(--vermilion); }
+    .breadcrumb-sep { color: var(--stone-light); }
+    .breadcrumb-current { color: var(--ink); font-weight: 500; }
+
+    /* ── MAIN LAYOUT ── */
+    .dest-body {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 4rem 5%;
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 3.5rem;
+      align-items: start;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--vermilion);
+      margin-bottom: 0.6rem;
+    }
+
+    /* ── DESCRIPTION ── */
+    .dest-description {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 2rem;
+    }
+
+    .dest-desc-title {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      color: var(--ink);
+      margin-bottom: 1.2rem;
+      font-weight: 500;
+    }
+
+    .dest-desc-text {
+      font-size: 0.95rem;
+      color: #4a4a5a;
+      line-height: 1.9;
+    }
+
+    /* Quick info pills */
+    .dest-quick-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.8rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--paper-dark);
+    }
+
+    .quick-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--paper);
+      border: 1px solid var(--paper-dark);
+      padding: 0.5rem 1rem;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      color: var(--ink);
+      transition: var(--transition);
+    }
+    .quick-pill:hover { border-color: var(--vermilion); color: var(--vermilion); }
+    .quick-pill-icon { font-size: 1rem; }
+
+    /* ── MAP SECTION ── */
+    .dest-map-section {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 2rem;
+    }
+
+    .dest-map-header {
+      padding: 1.5rem 2rem 1rem;
+      border-bottom: 1px solid var(--paper-dark);
+    }
+
+    .dest-map-title {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    #dest-map {
+      height: 360px;
+      width: 100%;
+    }
+
+    .dest-map-footer {
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--stone);
+      border-top: 1px solid var(--paper-dark);
+    }
+
+    .dest-map-coords {
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: var(--stone-light);
+    }
+
+    /* ── TIPS SECTION ── */
+    .dest-tips {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 2rem;
+    }
+
+    .tips-title {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .tip-item {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.4rem;
+      padding-bottom: 1.4rem;
+      border-bottom: 1px solid var(--paper-dark);
+    }
+    .tip-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+
+    .tip-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--paper-dark), var(--paper));
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      border: 1px solid var(--paper-dark);
+    }
+
+    .tip-content h4 {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+    }
+
+    .tip-content p {
+      font-size: 0.82rem;
+      color: var(--stone);
+      line-height: 1.6;
+    }
+
+    /* ── SEASONS ── */
+    .dest-seasons {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 2rem;
+    }
+
+    .seasons-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .season-card {
+      text-align: center;
+      padding: 1.2rem 0.8rem;
+      border-radius: var(--radius);
+      border: 1.5px solid var(--paper-dark);
+      transition: var(--transition);
+      cursor: default;
+    }
+
+    .season-card.best {
+      border-color: var(--vermilion);
+      background: rgba(192,57,43,0.04);
+    }
+
+    .season-icon { font-size: 1.8rem; margin-bottom: 0.5rem; display: block; }
+    .season-name { font-size: 0.78rem; font-weight: 600; color: var(--ink); margin-bottom: 0.3rem; }
+    .season-months { font-size: 0.7rem; color: var(--stone); }
+    .season-badge {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.15rem 0.5rem;
+      background: var(--vermilion);
+      color: var(--white);
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 100px;
+    }
+
+    /* ── SIDEBAR ── */
+    .dest-sidebar { position: sticky; top: 100px; display: flex; flex-direction: column; gap: 1.5rem; }
+
+    /* Info Card */
+    .info-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .info-card-title {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      color: var(--ink);
+      margin-bottom: 1.4rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--vermilion);
+      display: inline-block;
+    }
+
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      margin-bottom: 1.1rem;
+    }
+    .info-row:last-child { margin-bottom: 0; }
+
+    .info-icon {
+      font-size: 1.1rem;
+      width: 36px;
+      height: 36px;
+      background: var(--paper-dark);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .info-label {
+      font-size: 0.7rem;
+      color: var(--stone);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+
+    .info-val {
+      font-size: 0.88rem;
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    /* Rating Visual */
+    .rating-display {
+      background: linear-gradient(135deg, var(--ink), #2a2a4e);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      color: var(--white);
+      text-align: center;
+    }
+
+    .rating-num {
+      font-family: var(--font-serif);
+      font-size: 4rem;
+      color: var(--gold);
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .rating-stars { font-size: 1.2rem; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+    .rating-label { font-size: 0.72rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.15em; }
+
+    /* Fav button sidebar */
+    .sidebar-fav-btn {
+      width: 100%;
+      padding: 0.9rem;
+      border-radius: var(--radius);
+      font-size: 0.88rem;
+      font-weight: 500;
+      border: 2px solid var(--paper-dark);
+      background: transparent;
+      color: var(--stone);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: var(--transition);
+      font-family: inherit;
+    }
+
+    .sidebar-fav-btn.active, .sidebar-fav-btn:hover {
+      border-color: var(--vermilion);
+      color: var(--vermilion);
+      background: rgba(192,57,43,0.05);
+    }
+
+    /* ── GALLERY STRIP ── */
+    .dest-gallery {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 2rem;
+    }
+
+    .gallery-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+    }
+
+    .gallery-strip-item {
+      height: 130px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+    .gallery-strip-item:first-child { grid-column: span 2; height: 270px; }
+
+    .gallery-strip-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .gallery-strip-item:hover img { transform: scale(1.06); }
+
+    .gallery-strip-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,25,0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+    .gallery-strip-item:hover .gallery-strip-overlay { background: rgba(10,10,25,0.3); }
+    .gallery-strip-overlay span { color: var(--white); font-size: 1.5rem; opacity: 0; transition: var(--transition); }
+    .gallery-strip-item:hover .gallery-strip-overlay span { opacity: 1; }
+
+    /* ── RELATED ── */
+    .related-section {
+      background: var(--paper-dark);
+      padding: 5rem 0;
+    }
+
+    .related-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 5%;
+    }
+
+    .related-title {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      color: var(--ink);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+
+    .related-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      transition: var(--transition);
+    }
+    .related-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-deep); }
+
+    .related-card img { width: 100%; height: 180px; object-fit: cover; }
+    .related-card-body { padding: 1.2rem; }
+    .related-card-cat { font-size: 0.65rem; color: var(--vermilion); text-transform: uppercase; letter-spacing: 0.15em; font-weight: 700; margin-bottom: 0.4rem; }
+    .related-card-name { font-family: var(--font-serif); font-size: 1.05rem; color: var(--ink); margin-bottom: 0.3rem; }
+    .related-card-loc { font-size: 0.78rem; color: var(--stone); }
+    .related-card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.78rem;
+      color: var(--vermilion);
+      font-weight: 500;
+      margin-top: 0.75rem;
+      transition: var(--transition);
+    }
+    .related-card-link:hover { gap: 0.6rem; }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,10,25,0.95);
+      z-index: 3000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-height: 90vh; max-width: 90vw; object-fit: contain; border-radius: var(--radius); }
+    .lightbox-close { position: absolute; top: 1.5rem; right: 2rem; color: var(--white); font-size: 2.5rem; cursor: pointer; opacity: 0.7; transition: var(--transition); }
+    .lightbox-close:hover { opacity: 1; color: var(--vermilion); }
+
+    /* ── TOAST ── */
+    .toast-container { position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; display: flex; flex-direction: column; gap: 0.75rem; }
+    .toast { background: var(--ink); color: var(--white); padding: 1rem 1.5rem; border-radius: var(--radius); font-size: 0.85rem; max-width: 320px; display: flex; align-items: center; gap: 0.75rem; box-shadow: var(--shadow-deep); transform: translateX(120%); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); border-left: 3px solid var(--vermilion); }
+    .toast.show { transform: translateX(0); }
+    .toast.success { border-left-color: var(--jade); }
+    .toast.info { border-left-color: var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .dest-body { grid-template-columns: 1fr; }
+      .dest-sidebar { position: static; }
+      .seasons-grid { grid-template-columns: repeat(2, 1fr); }
+      .related-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .dest-hero { height: 60vh; min-height: 420px; }
+      .dest-hero-title { font-size: 2rem; }
+      .gallery-strip { grid-template-columns: repeat(2, 1fr); }
+      .gallery-strip-item:first-child { grid-column: span 2; height: 200px; }
+      .related-grid { grid-template-columns: 1fr; }
+      .seasons-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── PAGE LOADER ── -->
+<div id="page-loader">
+  <div class="loader-kanji">日</div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+  <p class="loader-text">Loading destination</p>
+</div>
+
+<!-- ── NAV ── -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <span class="kanji">日</span> Nihon Travel
+    </a>
+    <a href="/#destinations" class="nav-back">← Back to Destinations</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="dest-hero" id="dest-hero">
+  <div class="dest-hero-bg" id="hero-bg"></div>
+  <div class="dest-hero-overlay"></div>
+  <div class="dest-hero-content">
+    <div class="dest-hero-meta">
+      <span class="dest-hero-cat" id="hero-cat">—</span>
+      <span class="dest-hero-location">📍 <span id="hero-loc">—</span></span>
+      <span class="dest-hero-rating" id="hero-rating"></span>
+    </div>
+    <h1 class="dest-hero-title" id="hero-title">Loading…</h1>
+    <div class="dest-hero-actions">
+      <button class="btn btn-primary" onclick="scrollToMap()">🗺️ View on Map</button>
+      <button class="btn btn-glass" id="hero-fav-btn" onclick="toggleFavorite()">🤍 Save to Favorites</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── BREADCRUMB ── -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="/">Home</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/#destinations">Destinations</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current" id="breadcrumb-name">Loading…</span>
+  </div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<div class="dest-body">
+
+  <!-- LEFT COLUMN -->
+  <div class="dest-left">
+
+    <!-- Description -->
+    <div class="dest-description" data-aos="fade-up">
+      <p class="section-label">About this Place</p>
+      <h2 class="dest-desc-title" id="desc-title">—</h2>
+      <p class="dest-desc-text" id="desc-text">—</p>
+
+      <div class="dest-quick-info" id="quick-info">
+        <!-- filled by JS -->
+      </div>
+    </div>
+
+    <!-- Gallery Strip -->
+    <div class="dest-gallery" data-aos="fade-up" data-aos-delay="80">
+      <p class="section-label">Gallery</p>
+      <h3 style="font-family:var(--font-serif);font-size:1.3rem;color:var(--ink)">Photo Highlights</h3>
+      <div class="gallery-strip" id="gallery-strip">
+        <!-- filled by JS -->
+      </div>
+    </div>
+
+    <!-- MAP -->
+    <div class="dest-map-section" data-aos="fade-up" data-aos-delay="100" id="map-section">
+      <div class="dest-map-header">
+        <p class="section-label">Location</p>
+        <h3 class="dest-map-title">🗺️ Find it on the Map</h3>
+      </div>
+      <div id="dest-map"></div>
+      <div class="dest-map-footer">
+        <span id="map-address">Japan</span>
+        <span class="dest-map-coords" id="map-coords"></span>
+      </div>
+    </div>
+
+    <!-- Travel Tips -->
+    <div class="dest-tips" data-aos="fade-up" data-aos-delay="120">
+      <h3 class="tips-title">💡 Insider Travel Tips</h3>
+      <div id="tips-list">
+        <!-- filled by JS -->
+      </div>
+    </div>
+
+    <!-- Best Seasons -->
+    <div class="dest-seasons" data-aos="fade-up" data-aos-delay="140">
+      <p class="section-label">When to Visit</p>
+      <h3 style="font-family:var(--font-serif);font-size:1.3rem;color:var(--ink)">Best Seasons</h3>
+      <div class="seasons-grid" id="seasons-grid">
+        <!-- filled by JS -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT SIDEBAR -->
+  <aside class="dest-sidebar">
+
+    <!-- Rating -->
+    <div class="rating-display" data-aos="fade-left">
+      <span class="rating-num" id="sidebar-rating">—</span>
+      <div class="rating-stars" id="sidebar-stars">⭐⭐⭐⭐⭐</div>
+      <p class="rating-label">Visitor Rating</p>
+    </div>
+
+    <!-- Quick Info -->
+    <div class="info-card" data-aos="fade-left" data-aos-delay="80">
+      <div class="info-card-title">Destination Info</div>
+
+      <div class="info-row">
+        <div class="info-icon">📍</div>
+        <div>
+          <span class="info-label">Location</span>
+          <span class="info-val" id="info-location">—</span>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">🏷️</div>
+        <div>
+          <span class="info-label">Category</span>
+          <span class="info-val" id="info-category">—</span>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">🌸</div>
+        <div>
+          <span class="info-label">Best Season</span>
+          <span class="info-val" id="info-season">—</span>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">🕐</div>
+        <div>
+          <span class="info-label">Recommended Stay</span>
+          <span class="info-val" id="info-duration">—</span>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">💴</div>
+        <div>
+          <span class="info-label">Entry</span>
+          <span class="info-val" id="info-entry">—</span>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">🚆</div>
+        <div>
+          <span class="info-label">Getting There</span>
+          <span class="info-val" id="info-transport">—</span>
+        </div>
+      </div>
+
+      <div style="margin-top:1.5rem">
+        <button class="sidebar-fav-btn" id="sidebar-fav-btn" onclick="toggleFavorite()">
+          🤍 Add to Favorites
+        </button>
+      </div>
+    </div>
+
+    <!-- Language card -->
+    <div class="info-card" data-aos="fade-left" data-aos-delay="160">
+      <div class="info-card-title">Useful Japanese</div>
+      <div id="japanese-phrases">
+        <!-- filled by JS -->
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<!-- ── RELATED DESTINATIONS ── -->
+<div class="related-section">
+  <div class="related-inner">
+    <div class="related-title">
+      <span>You May Also Like</span>
+      <a href="/#destinations" style="font-size:0.85rem;color:var(--stone);font-family:var(--font-body);font-weight:400">View all →</a>
+    </div>
+    <div class="related-grid" id="related-grid">
+      <!-- filled by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" onclick="document.getElementById('lightbox').classList.remove('open')">✕</span>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- Toast -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- ════════════════════ SCRIPT ════════════════════ -->
+<script>
+// ─── Destination Data (map coords + extra info) ───
+const DEST_DATA = {
+  'mount fuji': {
+    lat: 35.3606, lng: 138.7274,
+    bestSeason: 'July – August',
+    duration: '1–2 days',
+    entry: 'Free (¥1,000 trail fee)',
+    transport: 'Bus from Shinjuku Station',
+    tips: [
+      { icon: '⏰', title: 'Start Early', text: 'Begin your climb at midnight to reach the summit by sunrise. Crowds peak after 6AM.' },
+      { icon: '🧥', title: 'Layer Up', text: 'Temperature at the summit is 5°C even in summer. Bring a wind-proof jacket and gloves.' },
+      { icon: '💧', title: 'Stay Hydrated', text: 'Buy water at station 5 (last convenience stop). Water above costs ¥500 per bottle.' },
+      { icon: '🥾', title: 'Proper Footwear', text: 'Volcanic rock is slippery. Wear hiking boots or sturdy sneakers, never sandals.' },
+      { icon: '📅', title: 'Climbing Season', text: 'Official season is July–August only. Mountain huts and trails close outside this window.' },
+      { icon: '🌩️', title: 'Watch Weather', text: 'Check forecasts daily. Lightning storms can appear suddenly on the summit.' }
+    ],
+    gallery: [
+      'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800',
+      'https://images.unsplash.com/photo-1537981881082-4c4d4e4b5124?w=600',
+      'https://images.unsplash.com/photo-1474178787639-99ab2ca6fc88?w=600',
+      'https://images.unsplash.com/photo-1578271887552-5ac3a72752bc?w=600',
+      'https://images.unsplash.com/photo-1542640244-7e672d6cef4e?w=600'
+    ],
+    seasons: { spring: false, summer: true, autumn: false, winter: false },
+    phrases: [
+      { jp: '富士山', rom: 'Fuji-san', en: 'Mount Fuji' },
+      { jp: '頂上', rom: 'Chōjō', en: 'Summit' },
+      { jp: '入山料', rom: 'Nyūzan-ryō', en: 'Trail fee' }
+    ]
+  },
+  'fushimi inari': {
+    lat: 34.9671, lng: 135.7727,
+    bestSeason: 'March – May, Oct – Nov',
+    duration: '2–3 hours',
+    entry: 'Free',
+    transport: 'JR Inari Station (2 min walk)',
+    tips: [
+      { icon: '🌅', title: 'Visit at Dawn', text: 'The shrine is open 24/7. Arrive before 7AM to have the torii gates entirely to yourself.' },
+      { icon: '👟', title: 'Wear Comfortable Shoes', text: 'The full 4km loop takes 2–3 hours up steep stone steps. Sneakers are essential.' },
+      { icon: '🦊', title: 'Spot the Foxes', text: 'Kitsune (fox) statues are messengers of Inari. Count how many you spot along the trail.' },
+      { icon: '📸', title: 'Best Photo Spot', text: 'The Senbon Torii tunnel (first 400m) is most photogenic — best light in early morning.' },
+      { icon: '🍡', title: 'Try Inari Sushi', text: 'The stalls near the entrance sell inari-zushi (tofu pockets with rice) — a local specialty.' },
+      { icon: '🗺️', title: 'Don\'t Rush', text: 'Most tourists only walk 30 minutes in. Hike further for spectacular city views and solitude.' }
+    ],
+    gallery: [
+      'https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=800',
+      'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600',
+      'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=600',
+      'https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?w=600',
+      'https://images.unsplash.com/photo-1553701800-2e6f41a31b35?w=600'
+    ],
+    seasons: { spring: true, summer: false, autumn: true, winter: false },
+    phrases: [
+      { jp: '伏見稲荷', rom: 'Fushimi Inari', en: 'Fushimi Inari Shrine' },
+      { jp: '鳥居', rom: 'Torii', en: 'Torii gate' },
+      { jp: '参道', rom: 'Sandō', en: 'Shrine path' }
+    ]
+  },
+  'shibuya crossing': {
+    lat: 35.6595, lng: 139.7004,
+    bestSeason: 'Year-round',
+    duration: '1–2 hours',
+    entry: 'Free',
+    transport: 'Shibuya Station (all lines)',
+    tips: [
+      { icon: '📸', title: 'Best Vantage Point', text: 'Head to Starbucks 2F or Mag\'s Park rooftop for the iconic aerial shot of the crossing.' },
+      { icon: '🌃', title: 'Best Time', text: 'Evening rush (5–8PM weekdays) is most dramatic. Weekends are busy all day.' },
+      { icon: '🚶', title: 'Join the Flow', text: 'When the lights change, walk naturally with the crowd. It\'s surprisingly orderly despite the chaos.' },
+      { icon: '🛍️', title: 'Shibuya 109', text: 'The cylindrical Shibuya 109 mall nearby is iconic Japanese street fashion. Worth exploring.' },
+      { icon: '🐕', title: 'Hachiko Statue', text: 'Meet Hachiko — the loyal dog statue outside the station. A famous meeting point for locals.' },
+      { icon: '🎮', title: 'Explore the Area', text: 'Nearby Shimokitazawa is great for vintage shops, live music venues and cafes.' }
+    ],
+    gallery: [
+      'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800',
+      'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=600',
+      'https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?w=600',
+      'https://images.unsplash.com/photo-1534430480872-3498386e7856?w=600',
+      'https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?w=600'
+    ],
+    seasons: { spring: true, summer: true, autumn: true, winter: true },
+    phrases: [
+      { jp: '渋谷', rom: 'Shibuya', en: 'Shibuya' },
+      { jp: '交差点', rom: 'Kōsaten', en: 'Crossing' },
+      { jp: 'すみません', rom: 'Sumimasen', en: 'Excuse me' }
+    ]
+  },
+  'arashiyama': {
+    lat: 35.0094, lng: 135.6728,
+    bestSeason: 'March – April, Nov',
+    duration: 'Half day',
+    entry: 'Free (grove)',
+    transport: 'Randen Arashiyama Station',
+    tips: [
+      { icon: '🌅', title: 'Early Morning Only', text: 'The bamboo grove becomes impossible to photograph by 9AM. Arrive before 7AM for empty paths.' },
+      { icon: '🚤', title: 'Boat on the River', text: 'Rent a rowboat on the Ōi River for a tranquil experience among the mountains (¥1,500/hour).' },
+      { icon: '🐒', title: 'Monkey Park', text: 'Iwatayama Monkey Park is a 20-min hike with over 120 Japanese macaques and views of Kyoto.' },
+      { icon: '🍁', title: 'Autumn Colors', text: 'November is magical — the hillsides turn red and gold, framing the bamboo in vivid color.' },
+      { icon: '🚲', title: 'Rent a Bike', text: 'Cycling is the best way to explore the area. Rentals start at ¥1,200 for a full day.' },
+      { icon: '🍵', title: 'Sagano Tea House', text: 'Stop for matcha and wagashi sweets at one of the traditional tea houses along Saga Toriimoto.' }
+    ],
+    gallery: [
+      'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800',
+      'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=600',
+      'https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=600',
+      'https://images.unsplash.com/photo-1513407030348-c983a97b98d8?w=600',
+      'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600'
+    ],
+    seasons: { spring: true, summer: false, autumn: true, winter: false },
+    phrases: [
+      { jp: '嵐山', rom: 'Arashiyama', en: 'Arashiyama' },
+      { jp: '竹林', rom: 'Chikurin', en: 'Bamboo grove' },
+      { jp: '渡月橋', rom: 'Togetsu-kyō', en: 'Moon Bridge' }
+    ]
+  },
+  'osaka castle': {
+    lat: 34.6873, lng: 135.5262,
+    bestSeason: 'March – April, Nov',
+    duration: '2–3 hours',
+    entry: '¥600 (museum)',
+    transport: 'Tanimachi 4-chome Station',
+    tips: [
+      { icon: '🌸', title: 'Cherry Blossom Season', text: 'Over 600 cherry trees bloom in the castle grounds in late March. Book nearby hotels months in advance.' },
+      { icon: '🏯', title: 'Museum Inside', text: 'The 8-floor museum traces Osaka\'s history from Hideyoshi\'s era. Top floor has panoramic views.' },
+      { icon: '🌆', title: 'Night Illumination', text: 'The castle is lit up at night on select dates. Check the seasonal event calendar before visiting.' },
+      { icon: '🛍️', title: 'Osaka Food Near', text: 'Head 10 min south to Shinsaibashi for takoyaki, okonomiyaki and all of Osaka\'s famous food.' },
+      { icon: '🎋', title: 'Nishinomaru Garden', text: 'The western garden (¥200 entry) has the best unobstructed views of the castle tower.' },
+      { icon: '🚶', title: 'The Grounds are Free', text: 'You only pay to enter the castle tower. Walking the surrounding park and moat is completely free.' }
+    ],
+    gallery: [
+      'https://images.unsplash.com/photo-1589952283406-b53a7d1347e8?w=800',
+      'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600',
+      'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=600',
+      'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=600',
+      'https://images.unsplash.com/photo-1578271887552-5ac3a72752bc?w=600'
+    ],
+    seasons: { spring: true, summer: false, autumn: true, winter: false },
+    phrases: [
+      { jp: '大阪城', rom: 'Ōsaka-jō', en: 'Osaka Castle' },
+      { jp: 'たこ焼き', rom: 'Takoyaki', en: 'Octopus balls' },
+      { jp: 'なんば', rom: 'Namba', en: 'Namba district' }
+    ]
+  },
+  'nara deer park': {
+    lat: 34.6851, lng: 135.8048,
+    bestSeason: 'Spring & Autumn',
+    duration: 'Half day',
+    entry: 'Free (park)',
+    transport: 'JR Nara Station (15 min walk)',
+    tips: [
+      { icon: '🦌', title: 'Buy Deer Crackers', text: 'Shika-senbei crackers (¥200/pack) are sold everywhere. Bow to a deer and it will bow back!' },
+      { icon: '👜', title: 'Protect Your Belongings', text: 'Deer are notorious bag-snatchers. Keep food hidden and zip up backpacks at all times.' },
+      { icon: '🏛️', title: 'Tōdai-ji Temple', text: 'Don\'t miss the Great Buddha Hall — the world\'s largest wooden building with a 15m bronze Buddha.' },
+      { icon: '🌅', title: 'Golden Hour', text: 'The park at sunrise is otherworldly — deer move through misty fields with no tourists in sight.' },
+      { icon: '🍦', title: 'Deer Poo Warning', text: 'The ground can be... eventful. Watch your step and perhaps avoid wearing white shoes.' },
+      { icon: '🛤️', title: 'Day Trip from Osaka', text: 'Nara is only 45 minutes from Osaka and Kyoto by train. Perfect as a half-day excursion.' }
+    ],
+    gallery: [
+      'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800',
+      'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=600',
+      'https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=600',
+      'https://images.unsplash.com/photo-1589952283406-b53a7d1347e8?w=600',
+      'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600'
+    ],
+    seasons: { spring: true, summer: false, autumn: true, winter: false },
+    phrases: [
+      { jp: '奈良', rom: 'Nara', en: 'Nara' },
+      { jp: '鹿', rom: 'Shika', en: 'Deer' },
+      { jp: '鹿せんべい', rom: 'Shika-senbei', en: 'Deer cracker' }
+    ]
+  }
+};
+
+// ─── Default fallback data ───
+const DEFAULT_DATA = {
+  lat: 35.6762, lng: 139.6503,
+  bestSeason: 'Spring & Autumn',
+  duration: 'Flexible',
+  entry: 'Varies',
+  transport: 'Local train or bus',
+  tips: [
+    { icon: '🗾', title: 'IC Card', text: 'Get a Suica or Pasmo IC card at the airport. Works on all trains, buses and even convenience stores.' },
+    { icon: '📶', title: 'Pocket WiFi', text: 'Rent a pocket WiFi router at the airport for ¥600/day. Essential for navigation and translation.' },
+    { icon: '🎌', title: 'Etiquette', text: 'Speak quietly on trains, queue patiently, and never tip — it can be considered rude in Japan.' },
+    { icon: '💴', title: 'Cash is King', text: 'Many places are cash-only. Carry yen and use 7-Eleven ATMs which accept international cards.' },
+    { icon: '🥢', title: 'Food Tips', text: 'Convenience store food is genuinely delicious. Don\'t skip onigiri, sandwiches and hot foods from 7-Eleven.' },
+    { icon: '🌸', title: 'Seasonal Events', text: 'Check local festival calendars — matsuri and seasonal events happen year-round across Japan.' }
+  ],
+  gallery: [
+    'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800',
+    'https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=600',
+    'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600',
+    'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600',
+    'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=600'
+  ],
+  seasons: { spring: true, summer: false, autumn: true, winter: false },
+  phrases: [
+    { jp: 'ありがとう', rom: 'Arigatō', en: 'Thank you' },
+    { jp: 'すみません', rom: 'Sumimasen', en: 'Excuse me' },
+    { jp: 'どこですか？', rom: 'Doko desu ka?', en: 'Where is it?' }
+  ]
+};
+
+// ─── State ───
+const API_BASE = '/api';
+let destData = null;
+let extraData = null;
+let isFav = false;
+let leafletMap = null;
+
+// ─── Init ───
+document.addEventListener('DOMContentLoaded', async () => {
+  AOS.init({ duration: 750, easing: 'ease-out-cubic', once: true, offset: 50 });
+
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+
+  if (!id) {
+    window.location.href = '/#destinations';
+    return;
+  }
+
+  await loadDestination(id);
+  checkFavoriteStatus(id);
+  initNavScroll();
+  initParallax();
+  initLightbox();
+
+  // Hide loader
+  setTimeout(() => {
+    const loader = document.getElementById('page-loader');
+    loader.classList.add('fade-out');
+    setTimeout(() => loader.remove(), 500);
+  }, 800);
+});
+
+// ─── Load Destination ───
+async function loadDestination(id) {
+  try {
+    const res = await fetch(`${API_BASE}/destinations/${id}`);
+    if (!res.ok) throw new Error('Not found');
+    const data = await res.json();
+    destData = data.destination;
+  } catch (err) {
+    // Use demo data
+    const demos = [
+      { id: 1, name: 'Mount Fuji', location: 'Shizuoka Prefecture', category: 'nature', rating: 4.9, description: 'Japan\'s iconic sacred mountain rising 3,776 meters above the surrounding landscape. Recognized as a UNESCO World Heritage Site, it\'s been the subject of countless artworks and pilgrimages. The symmetrical volcanic cone is visible on clear days from Tokyo, 100km away. Whether you climb it or simply admire it from afar, Fuji-san is an unforgettable symbol of Japan.', image_url: 'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=1800' },
+      { id: 2, name: 'Fushimi Inari', location: 'Kyoto', category: 'temple', rating: 4.8, description: 'Thousands of brilliant vermilion torii gates wind through the forested hills behind Fushimi Inari Taisha, a Shinto shrine at the base of Inari Mountain. The gates are dedicated to Inari, the god of rice and prosperity. Donated by businesses over centuries, each gate bears the name of its donor. The full mountain trail takes about 2–3 hours and rewards hikers with sweeping views of Kyoto.', image_url: 'https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=1800' },
+      { id: 3, name: 'Shibuya Crossing', location: 'Tokyo', category: 'city', rating: 4.7, description: 'The world\'s busiest pedestrian crossing sits at the heart of one of Tokyo\'s most energetic districts. When the lights turn red, traffic stops in all directions simultaneously and up to 3,000 people cross from every angle — a perfectly choreographed human spectacle. Surrounded by towering neon screens and department stores, Shibuya Crossing perfectly captures the controlled chaos and electric energy of modern Tokyo.', image_url: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1800' },
+      { id: 4, name: 'Arashiyama', location: 'Kyoto', category: 'nature', rating: 4.8, description: 'On the western outskirts of Kyoto, Arashiyama offers one of Japan\'s most serene and photogenic landscapes. The famous bamboo grove creates an almost supernatural tunnel of towering stalks that filter light into a soft green glow. The area also features the Tenryu-ji temple garden, the scenic Ōi River, and hillsides that burst with cherry blossoms in spring and fiery foliage in autumn.', image_url: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1800' },
+      { id: 5, name: 'Osaka Castle', location: 'Osaka', category: 'history', rating: 4.6, description: 'Built in 1583 by the warlord Toyotomi Hideyoshi, Osaka Castle played a central role in unifying Japan. The magnificent structure stands on a raised stone platform, surrounded by secondary citadels, gates, turrets and impressive stone walls, all of which are still standing. Today the castle is an 8-story museum containing artifacts from the Sengoku period, with panoramic views of Osaka from the top floor.', image_url: 'https://images.unsplash.com/photo-1589952283406-b53a7d1347e8?w=1800' },
+      { id: 6, name: 'Nara Deer Park', location: 'Nara', category: 'nature', rating: 4.7, description: 'In the ancient city of Nara, over 1,200 wild sika deer roam freely through the park, considered sacred messengers of the gods in the Shinto religion. Remarkably tame and accustomed to visitors, the deer bow to receive shika-senbei crackers sold throughout the park. The area also contains important cultural sites including Tōdai-ji temple, housing Japan\'s largest bronze Buddha statue.', image_url: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=1800' },
+    ];
+    destData = demos.find(d => d.id == id) || demos[0];
+  }
+
+  renderPage();
+}
+
+// ─── Render Page ───
+function renderPage() {
+  const d = destData;
+  const key = d.name.toLowerCase().replace(/[^a-z\s]/g, '').trim();
+
+  // Match extra data
+  extraData = null;
+  for (const k in DEST_DATA) {
+    if (key.includes(k) || k.includes(key.split(' ')[0])) {
+      extraData = DEST_DATA[k];
+      break;
+    }
+  }
+  if (!extraData) extraData = DEFAULT_DATA;
+
+  // Update <title>
+  document.title = `${d.name} — Nihon Travel`;
+
+  // Update breadcrumb
+  document.getElementById('breadcrumb-name').textContent = d.name;
+
+  // Hero
+  // Use highest quality image
+  let imgUrl = d.image_url || '';
+  // If Unsplash URL, force highest quality
+  if (imgUrl.includes('unsplash.com')) {
+    imgUrl = imgUrl.replace(/[?&]w=\d+/g, '').replace(/[?&]q=\d+/g, '');
+    imgUrl += (imgUrl.includes('?') ? '&' : '?') + 'w=1920&q=95&fit=crop&auto=format';
+  }
+  document.getElementById('hero-bg').style.backgroundImage = `url('${imgUrl}')`;
+  document.getElementById('hero-title').textContent = d.name;
+  document.getElementById('hero-cat').textContent = d.category || 'destination';
+  document.getElementById('hero-loc').textContent = d.location || 'Japan';
+  document.getElementById('hero-rating').textContent = `⭐ ${d.rating}`;
+
+  // Description
+  document.getElementById('desc-title').textContent = d.name;
+  document.getElementById('desc-text').textContent = d.description || 'An incredible destination in Japan, waiting to be discovered.';
+
+  // Quick pills
+  document.getElementById('quick-info').innerHTML = [
+    { icon: '🏷️', text: d.category },
+    { icon: '📍', text: d.location },
+    { icon: '⭐', text: `Rated ${d.rating}` },
+    { icon: '🌸', text: extraData.bestSeason },
+    { icon: '🕐', text: extraData.duration },
+    { icon: '💴', text: extraData.entry },
+  ].map(p => `
+    <div class="quick-pill">
+      <span class="quick-pill-icon">${p.icon}</span>
+      <span>${p.text}</span>
+    </div>
+  `).join('');
+
+  // Sidebar info
+  document.getElementById('info-location').textContent = d.location || 'Japan';
+  document.getElementById('info-category').textContent = capitalize(d.category) || '—';
+  document.getElementById('info-season').textContent = extraData.bestSeason;
+  document.getElementById('info-duration').textContent = extraData.duration;
+  document.getElementById('info-entry').textContent = extraData.entry;
+  document.getElementById('info-transport').textContent = extraData.transport;
+
+  // Rating
+  document.getElementById('sidebar-rating').textContent = d.rating;
+  const filled = Math.round(d.rating);
+  document.getElementById('sidebar-stars').textContent = '⭐'.repeat(filled) + '☆'.repeat(5 - filled);
+
+  // Map
+  initMap(extraData.lat, extraData.lng, d.name, d.location);
+  document.getElementById('map-address').textContent = `${d.name}, ${d.location || 'Japan'}`;
+  document.getElementById('map-coords').textContent = `${extraData.lat.toFixed(4)}°N, ${extraData.lng.toFixed(4)}°E`;
+
+  // Tips
+  document.getElementById('tips-list').innerHTML = extraData.tips.map(tip => `
+    <div class="tip-item">
+      <div class="tip-icon">${tip.icon}</div>
+      <div class="tip-content">
+        <h4>${tip.title}</h4>
+        <p>${tip.text}</p>
+      </div>
+    </div>
+  `).join('');
+
+  // Seasons
+  const seasons = [
+    { key: 'spring', icon: '🌸', name: 'Spring', months: 'Mar – May' },
+    { key: 'summer', icon: '☀️', name: 'Summer', months: 'Jun – Aug' },
+    { key: 'autumn', icon: '🍁', name: 'Autumn', months: 'Sep – Nov' },
+    { key: 'winter', icon: '❄️', name: 'Winter', months: 'Dec – Feb' },
+  ];
+  document.getElementById('seasons-grid').innerHTML = seasons.map(s => `
+    <div class="season-card ${extraData.seasons[s.key] ? 'best' : ''}">
+      <span class="season-icon">${s.icon}</span>
+      <div class="season-name">${s.name}</div>
+      <div class="season-months">${s.months}</div>
+      ${extraData.seasons[s.key] ? '<span class="season-badge">Recommended</span>' : ''}
+    </div>
+  `).join('');
+
+  // Gallery
+  const imgs = extraData.gallery;
+  document.getElementById('gallery-strip').innerHTML = imgs.map((src, i) => `
+    <div class="gallery-strip-item" onclick="openLightbox('${src}')">
+      <img src="${src}" alt="Gallery ${i + 1}" loading="lazy">
+      <div class="gallery-strip-overlay"><span>🔍</span></div>
+    </div>
+  `).join('');
+
+  // Japanese phrases
+  document.getElementById('japanese-phrases').innerHTML = extraData.phrases.map(p => `
+    <div style="padding:0.75rem 0;border-bottom:1px solid var(--paper-dark)">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <span style="font-family:var(--font-serif);font-size:1.3rem;color:var(--ink)">${p.jp}</span>
+        <span style="font-size:0.7rem;color:var(--stone);font-style:italic">${p.rom}</span>
+      </div>
+      <div style="font-size:0.78rem;color:var(--stone);margin-top:0.15rem">${p.en}</div>
+    </div>
+  `).join('');
+
+  // Related destinations (load async)
+  loadRelated();
+}
+
+// ─── Leaflet Map ───
+function initMap(lat, lng, name, location) {
+  if (leafletMap) {
+    leafletMap.remove();
+  }
+
+  leafletMap = L.map('dest-map', {
+    center: [lat, lng],
+    zoom: 13,
+    zoomControl: true,
+    scrollWheelZoom: false
+  });
+
+  // Tile layer — CartoDB Positron (no API key needed, elegant style)
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '© OpenStreetMap © CARTO',
+    subdomains: 'abcd',
+    maxZoom: 19
+  }).addTo(leafletMap);
+
+  // Custom red marker
+  const redIcon = L.divIcon({
+    className: '',
+    html: `
+      <div style="
+        width:40px;height:40px;
+        background:var(--vermilion, #c0392b);
+        border-radius:50% 50% 50% 0;
+        transform:rotate(-45deg);
+        border:3px solid white;
+        box-shadow:0 4px 15px rgba(192,57,43,0.5);
+        display:flex;align-items:center;justify-content:center;
+      ">
+        <span style="transform:rotate(45deg);font-size:16px">📍</span>
+      </div>`,
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -45]
+  });
+
+  const marker = L.marker([lat, lng], { icon: redIcon }).addTo(leafletMap);
+
+  marker.bindPopup(`
+    <div style="font-family:var(--font-serif,'Shippori Mincho',serif);padding:0.3rem">
+      <strong style="font-size:1rem;color:#1a1a2e">${name}</strong><br>
+      <span style="font-size:0.78rem;color:#8c8c8c">📍 ${location || 'Japan'}</span>
+    </div>
+  `, { maxWidth: 200 }).openPopup();
+}
+
+function scrollToMap() {
+  document.getElementById('map-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// ─── Favorites ───
+function checkFavoriteStatus(destId) {
+  const token = localStorage.getItem('jt_token');
+  if (!token) return;
+
+  fetch(`${API_BASE}/favorites`, {
+    headers: { 'Authorization': `Bearer ${token}` }
+  })
+  .then(r => r.json())
+  .then(data => {
+    const favIds = (data.favorites || []).map(f => f.id);
+    isFav = favIds.includes(parseInt(destId));
+    updateFavUI();
+  })
+  .catch(() => {});
+}
+
+function updateFavUI() {
+  const heroBtn = document.getElementById('hero-fav-btn');
+  const sideBtn = document.getElementById('sidebar-fav-btn');
+  if (heroBtn) heroBtn.textContent = isFav ? '❤️ Saved' : '🤍 Save to Favorites';
+  if (sideBtn) sideBtn.textContent = isFav ? '❤️ Saved to Favorites' : '🤍 Add to Favorites';
+  if (sideBtn) sideBtn.classList.toggle('active', isFav);
+}
+
+async function toggleFavorite() {
+  const token = localStorage.getItem('jt_token');
+  if (!token) {
+    showToast('Please sign in to save favorites', 'error');
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/favorites`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify({ destination_id: destData.id })
+    });
+    const data = await res.json();
+    isFav = data.action === 'added';
+    updateFavUI();
+    showToast(isFav ? 'Added to favorites ❤️' : 'Removed from favorites', isFav ? 'success' : 'info');
+  } catch (err) {
+    showToast('Could not update favorites', 'error');
+  }
+}
+
+// ─── Related Destinations ───
+async function loadRelated() {
+  try {
+    const res = await fetch(`${API_BASE}/destinations?limit=6`);
+    const data = await res.json();
+    const related = (data.destinations || [])
+      .filter(d => d.id !== destData?.id)
+      .slice(0, 3);
+    renderRelated(related);
+  } catch (err) {
+    // demo
+    const demos = [
+      { id: 2, name: 'Fushimi Inari', location: 'Kyoto', category: 'temple', rating: 4.8, image_url: 'https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=600' },
+      { id: 3, name: 'Shibuya Crossing', location: 'Tokyo', category: 'city', rating: 4.7, image_url: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600' },
+      { id: 4, name: 'Arashiyama', location: 'Kyoto', category: 'nature', rating: 4.8, image_url: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600' },
+    ].filter(d => d.id !== destData?.id).slice(0, 3);
+    renderRelated(demos);
+  }
+}
+
+function renderRelated(destinations) {
+  document.getElementById('related-grid').innerHTML = destinations.map(d => `
+    <a href="/pages/destination.html?id=${d.id}" class="related-card">
+      <img src="${d.image_url}" alt="${d.name}" loading="lazy">
+      <div class="related-card-body">
+        <p class="related-card-cat">${d.category || 'destination'}</p>
+        <h4 class="related-card-name">${d.name}</h4>
+        <p class="related-card-loc">📍 ${d.location || 'Japan'}</p>
+        <span class="related-card-link">Explore →</span>
+      </div>
+    </a>
+  `).join('');
+}
+
+// ─── Nav Scroll ───
+function initNavScroll() {
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+}
+
+// ─── Parallax ───
+function initParallax() {
+  const bg = document.getElementById('hero-bg');
+  window.addEventListener('scroll', () => {
+    const offset = window.scrollY * 0.25;
+    bg.style.transform = `translateY(${offset}px)`;
+  }, { passive: true });
+}
+
+// ─── Lightbox ───
+function initLightbox() {
+  document.getElementById('lightbox').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
+  });
+}
+
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
+
+// ─── Helpers ───
+function capitalize(str) {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function showToast(message, type = 'info') {
+  const container = document.getElementById('toast-container');
+  const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<span>${icons[type] || 'ℹ️'}</span><span>${message}</span>`;
+  container.appendChild(toast);
+  requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('show')));
+  setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 3500);
+}
+</script>
+</body>
+</html>
