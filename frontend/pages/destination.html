@@ -9,6 +9,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
   <!-- Leaflet Map -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -16,6 +19,9 @@
   <!-- AOS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+  <!-- i18n -->
+  <script src="/js/i18n.js"></script>
 
   <style>
     /* ── Variables ── */
@@ -128,6 +134,12 @@
     .nav-logo .kanji { color: var(--vermilion); font-size: 1.7rem; }
     nav.scrolled .nav-logo { color: var(--ink); }
 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
     .nav-back {
       display: flex;
       align-items: center;
@@ -143,6 +155,39 @@
     .nav-back:hover { background: rgba(255,255,255,0.1); color: var(--white); }
     nav.scrolled .nav-back { color: var(--stone); border-color: var(--paper-dark); }
     nav.scrolled .nav-back:hover { color: var(--ink); background: var(--paper-dark); }
+
+    /* ── LANG SWITCHER ── */
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 100px;
+      padding: 3px;
+    }
+    nav.scrolled .lang-switcher {
+      background: var(--paper);
+      border-color: var(--paper-dark);
+    }
+    .lang-btn {
+      font-family: var(--font-body);
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 0.28rem 0.65rem;
+      border-radius: 100px;
+      color: rgba(255,255,255,0.7);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .lang-btn:hover { color: var(--white); background: rgba(255,255,255,0.14); }
+    .lang-btn.active { background: var(--vermilion); color: var(--white); }
+    nav.scrolled .lang-btn { color: var(--stone); }
+    nav.scrolled .lang-btn:hover { color: var(--ink); background: var(--paper-dark); }
+    nav.scrolled .lang-btn.active { background: var(--vermilion); color: var(--white); }
 
     /* ── HERO ── */
     .dest-hero {
@@ -176,7 +221,6 @@
       );
     }
 
-    /* Decorative vertical line */
     .dest-hero::before {
       content: '';
       position: absolute;
@@ -361,7 +405,7 @@
       transition: var(--transition);
     }
     .quick-pill:hover { border-color: var(--vermilion); color: var(--vermilion); }
-    .quick-pill-icon { font-size: 1rem; }
+    .quick-pill-icon { font-size: 0.85rem; color: var(--vermilion); width: 14px; text-align: center; }
 
     /* ── MAP SECTION ── */
     .dest-map-section {
@@ -383,8 +427,9 @@
       color: var(--ink);
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
     }
+    .dest-map-title i { color: var(--vermilion); font-size: 1rem; }
 
     #dest-map {
       height: 360px;
@@ -425,6 +470,7 @@
       align-items: center;
       gap: 0.6rem;
     }
+    .tips-title i { color: var(--gold); font-size: 1.1rem; }
 
     .tip-item {
       display: flex;
@@ -443,9 +489,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
+      font-size: 1rem;
       flex-shrink: 0;
       border: 1px solid var(--paper-dark);
+      color: var(--vermilion);
     }
 
     .tip-content h4 {
@@ -491,7 +538,14 @@
       background: rgba(192,57,43,0.04);
     }
 
-    .season-icon { font-size: 1.8rem; margin-bottom: 0.5rem; display: block; }
+    .season-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.6rem;
+      display: block;
+      color: var(--stone);
+    }
+    .season-card.best .season-icon { color: var(--vermilion); }
+
     .season-name { font-size: 0.78rem; font-weight: 600; color: var(--ink); margin-bottom: 0.3rem; }
     .season-months { font-size: 0.7rem; color: var(--stone); }
     .season-badge {
@@ -537,7 +591,7 @@
     .info-row:last-child { margin-bottom: 0; }
 
     .info-icon {
-      font-size: 1.1rem;
+      font-size: 0.9rem;
       width: 36px;
       height: 36px;
       background: var(--paper-dark);
@@ -546,6 +600,7 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      color: var(--vermilion);
     }
 
     .info-label {
@@ -581,7 +636,8 @@
       margin-bottom: 0.4rem;
     }
 
-    .rating-stars { font-size: 1.2rem; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+    .rating-stars { font-size: 1rem; letter-spacing: 0.15em; margin-bottom: 0.5rem; color: var(--gold); }
+    .rating-stars .fa-regular { color: rgba(255,255,255,0.25); }
     .rating-label { font-size: 0.72rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.15em; }
 
     /* Fav button sidebar */
@@ -650,9 +706,9 @@
       justify-content: center;
       transition: var(--transition);
     }
-    .gallery-strip-item:hover .gallery-strip-overlay { background: rgba(10,10,25,0.3); }
-    .gallery-strip-overlay span { color: var(--white); font-size: 1.5rem; opacity: 0; transition: var(--transition); }
-    .gallery-strip-item:hover .gallery-strip-overlay span { opacity: 1; }
+    .gallery-strip-item:hover .gallery-strip-overlay { background: rgba(10,10,25,0.35); }
+    .gallery-strip-overlay i { color: var(--white); font-size: 1.3rem; opacity: 0; transition: var(--transition); }
+    .gallery-strip-item:hover .gallery-strip-overlay i { opacity: 1; }
 
     /* ── RELATED ── */
     .related-section {
@@ -695,7 +751,8 @@
     .related-card-body { padding: 1.2rem; }
     .related-card-cat { font-size: 0.65rem; color: var(--vermilion); text-transform: uppercase; letter-spacing: 0.15em; font-weight: 700; margin-bottom: 0.4rem; }
     .related-card-name { font-family: var(--font-serif); font-size: 1.05rem; color: var(--ink); margin-bottom: 0.3rem; }
-    .related-card-loc { font-size: 0.78rem; color: var(--stone); }
+    .related-card-loc { font-size: 0.78rem; color: var(--stone); display: flex; align-items: center; gap: 0.35rem; }
+    .related-card-loc i { color: var(--vermilion); font-size: 0.72rem; }
     .related-card-link {
       display: inline-flex;
       align-items: center;
@@ -720,8 +777,23 @@
     }
     .lightbox.open { display: flex; }
     .lightbox img { max-height: 90vh; max-width: 90vw; object-fit: contain; border-radius: var(--radius); }
-    .lightbox-close { position: absolute; top: 1.5rem; right: 2rem; color: var(--white); font-size: 2.5rem; cursor: pointer; opacity: 0.7; transition: var(--transition); }
-    .lightbox-close:hover { opacity: 1; color: var(--vermilion); }
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem; right: 2rem;
+      color: var(--white);
+      font-size: 1.6rem;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: var(--transition);
+      width: 44px; height: 44px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox-close:hover { opacity: 1; color: var(--vermilion); background: rgba(255,255,255,0.18); }
 
     /* ── TOAST ── */
     .toast-container { position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; display: flex; flex-direction: column; gap: 0.75rem; }
@@ -729,6 +801,10 @@
     .toast.show { transform: translateX(0); }
     .toast.success { border-left-color: var(--jade); }
     .toast.info { border-left-color: var(--gold); }
+    .toast i { font-size: 1rem; flex-shrink: 0; }
+    .toast.success i { color: var(--jade); }
+    .toast.error i { color: var(--vermilion); }
+    .toast.info i { color: var(--gold); }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
@@ -744,6 +820,7 @@
       .gallery-strip-item:first-child { grid-column: span 2; height: 200px; }
       .related-grid { grid-template-columns: 1fr; }
       .seasons-grid { grid-template-columns: repeat(2, 1fr); }
+      .nav-right { gap: 0.6rem; }
     }
   </style>
 </head>
@@ -762,7 +839,16 @@
     <a href="/" class="nav-logo">
       <span class="kanji">日</span> Nihon Travel
     </a>
-    <a href="/#destinations" class="nav-back">← Back to Destinations</a>
+    <div class="nav-right">
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="ru">RU</button>
+        <button class="lang-btn" data-lang="kz">KZ</button>
+      </div>
+      <a href="/#destinations" class="nav-back" data-i18n="nav.back-dest">
+        <i class="fa-solid fa-arrow-left"></i> Back to Destinations
+      </a>
+    </div>
   </div>
 </nav>
 
@@ -773,13 +859,20 @@
   <div class="dest-hero-content">
     <div class="dest-hero-meta">
       <span class="dest-hero-cat" id="hero-cat">—</span>
-      <span class="dest-hero-location">📍 <span id="hero-loc">—</span></span>
+      <span class="dest-hero-location">
+        <i class="fa-solid fa-location-dot"></i>
+        <span id="hero-loc">—</span>
+      </span>
       <span class="dest-hero-rating" id="hero-rating"></span>
     </div>
     <h1 class="dest-hero-title" id="hero-title">Loading…</h1>
     <div class="dest-hero-actions">
-      <button class="btn btn-primary" onclick="scrollToMap()">🗺️ View on Map</button>
-      <button class="btn btn-glass" id="hero-fav-btn" onclick="toggleFavorite()">🤍 Save to Favorites</button>
+      <button class="btn btn-primary" onclick="scrollToMap()" data-i18n="dest.page.map-btn">
+        <i class="fa-solid fa-map-location-dot"></i> View on Map
+      </button>
+      <button class="btn btn-glass" id="hero-fav-btn" onclick="toggleFavorite()" data-i18n="dest.page.fav-btn">
+        <i class="fa-regular fa-heart"></i> Save to Favorites
+      </button>
     </div>
   </div>
 </section>
@@ -787,9 +880,9 @@
 <!-- ── BREADCRUMB ── -->
 <div class="breadcrumb">
   <div class="breadcrumb-inner">
-    <a href="/">Home</a>
+    <a href="/" data-i18n="bc.home">Home</a>
     <span class="breadcrumb-sep">›</span>
-    <a href="/#destinations">Destinations</a>
+    <a href="/#destinations" data-i18n="nav.destinations">Destinations</a>
     <span class="breadcrumb-sep">›</span>
     <span class="breadcrumb-current" id="breadcrumb-name">Loading…</span>
   </div>
@@ -803,29 +896,26 @@
 
     <!-- Description -->
     <div class="dest-description" data-aos="fade-up">
-      <p class="section-label">About this Place</p>
+      <p class="section-label" data-i18n="dest.page.about-label">About this Place</p>
       <h2 class="dest-desc-title" id="desc-title">—</h2>
       <p class="dest-desc-text" id="desc-text">—</p>
-
-      <div class="dest-quick-info" id="quick-info">
-        <!-- filled by JS -->
-      </div>
+      <div class="dest-quick-info" id="quick-info"></div>
     </div>
 
     <!-- Gallery Strip -->
     <div class="dest-gallery" data-aos="fade-up" data-aos-delay="80">
-      <p class="section-label">Gallery</p>
-      <h3 style="font-family:var(--font-serif);font-size:1.3rem;color:var(--ink)">Photo Highlights</h3>
-      <div class="gallery-strip" id="gallery-strip">
-        <!-- filled by JS -->
-      </div>
+      <p class="section-label" data-i18n="dest.page.gallery-label">Gallery</p>
+      <h3 style="font-family:var(--font-serif);font-size:1.3rem;color:var(--ink)" data-i18n="dest.page.gallery-title">Photo Highlights</h3>
+      <div class="gallery-strip" id="gallery-strip"></div>
     </div>
 
     <!-- MAP -->
     <div class="dest-map-section" data-aos="fade-up" data-aos-delay="100" id="map-section">
       <div class="dest-map-header">
-        <p class="section-label">Location</p>
-        <h3 class="dest-map-title">🗺️ Find it on the Map</h3>
+        <p class="section-label" data-i18n="dest.page.location-label">Location</p>
+        <h3 class="dest-map-title" data-i18n="dest.page.map-title">
+          <i class="fa-solid fa-map"></i> Find it on the Map
+        </h3>
       </div>
       <div id="dest-map"></div>
       <div class="dest-map-footer">
@@ -836,19 +926,17 @@
 
     <!-- Travel Tips -->
     <div class="dest-tips" data-aos="fade-up" data-aos-delay="120">
-      <h3 class="tips-title">💡 Insider Travel Tips</h3>
-      <div id="tips-list">
-        <!-- filled by JS -->
-      </div>
+      <h3 class="tips-title" data-i18n="dest.page.tips-title">
+        <i class="fa-solid fa-lightbulb"></i> Insider Travel Tips
+      </h3>
+      <div id="tips-list"></div>
     </div>
 
     <!-- Best Seasons -->
     <div class="dest-seasons" data-aos="fade-up" data-aos-delay="140">
-      <p class="section-label">When to Visit</p>
-      <h3 style="font-family:var(--font-serif);font-size:1.3rem;color:var(--ink)">Best Seasons</h3>
-      <div class="seasons-grid" id="seasons-grid">
-        <!-- filled by JS -->
-      </div>
+      <p class="section-label" data-i18n="dest.page.seasons-label">When to Visit</p>
+      <h3 style="font-family:var(--font-serif);font-size:1.3rem;color:var(--ink)" data-i18n="dest.page.seasons-title">Best Seasons</h3>
+      <div class="seasons-grid" id="seasons-grid"></div>
     </div>
 
   </div>
@@ -859,70 +947,68 @@
     <!-- Rating -->
     <div class="rating-display" data-aos="fade-left">
       <span class="rating-num" id="sidebar-rating">—</span>
-      <div class="rating-stars" id="sidebar-stars">⭐⭐⭐⭐⭐</div>
-      <p class="rating-label">Visitor Rating</p>
+      <div class="rating-stars" id="sidebar-stars"></div>
+      <p class="rating-label" data-i18n="dest.page.rating-label">Visitor Rating</p>
     </div>
 
     <!-- Quick Info -->
     <div class="info-card" data-aos="fade-left" data-aos-delay="80">
-      <div class="info-card-title">Destination Info</div>
+      <div class="info-card-title" data-i18n="dest.page.info-title">Destination Info</div>
 
       <div class="info-row">
-        <div class="info-icon">📍</div>
+        <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
         <div>
-          <span class="info-label">Location</span>
+          <span class="info-label" data-i18n="dest.page.info-location">Location</span>
           <span class="info-val" id="info-location">—</span>
         </div>
       </div>
       <div class="info-row">
-        <div class="info-icon">🏷️</div>
+        <div class="info-icon"><i class="fa-solid fa-tag"></i></div>
         <div>
-          <span class="info-label">Category</span>
+          <span class="info-label" data-i18n="dest.page.info-cat">Category</span>
           <span class="info-val" id="info-category">—</span>
         </div>
       </div>
       <div class="info-row">
-        <div class="info-icon">🌸</div>
+        <div class="info-icon"><i class="fa-solid fa-spa"></i></div>
         <div>
-          <span class="info-label">Best Season</span>
+          <span class="info-label" data-i18n="dest.page.info-season">Best Season</span>
           <span class="info-val" id="info-season">—</span>
         </div>
       </div>
       <div class="info-row">
-        <div class="info-icon">🕐</div>
+        <div class="info-icon"><i class="fa-solid fa-clock"></i></div>
         <div>
-          <span class="info-label">Recommended Stay</span>
+          <span class="info-label" data-i18n="dest.page.info-dur">Recommended Stay</span>
           <span class="info-val" id="info-duration">—</span>
         </div>
       </div>
       <div class="info-row">
-        <div class="info-icon">💴</div>
+        <div class="info-icon"><i class="fa-solid fa-ticket"></i></div>
         <div>
-          <span class="info-label">Entry</span>
+          <span class="info-label" data-i18n="dest.page.info-entry">Entry</span>
           <span class="info-val" id="info-entry">—</span>
         </div>
       </div>
       <div class="info-row">
-        <div class="info-icon">🚆</div>
+        <div class="info-icon"><i class="fa-solid fa-train"></i></div>
         <div>
-          <span class="info-label">Getting There</span>
+          <span class="info-label" data-i18n="dest.page.info-transport">Getting There</span>
           <span class="info-val" id="info-transport">—</span>
         </div>
       </div>
 
       <div style="margin-top:1.5rem">
-        <button class="sidebar-fav-btn" id="sidebar-fav-btn" onclick="toggleFavorite()">
-          🤍 Add to Favorites
+        <button class="sidebar-fav-btn" id="sidebar-fav-btn" onclick="toggleFavorite()" data-i18n="dest.page.fav-add">
+          <i class="fa-regular fa-heart"></i> Add to Favorites
         </button>
       </div>
     </div>
 
     <!-- Language card -->
     <div class="info-card" data-aos="fade-left" data-aos-delay="160">
-      <div class="info-card-title">Useful Japanese</div>
-      <div id="japanese-phrases">
-        <!-- filled by JS -->
-      </div>
+      <div class="info-card-title" data-i18n="dest.page.phrases-title">Useful Japanese</div>
+      <div id="japanese-phrases"></div>
     </div>
 
   </aside>
@@ -932,18 +1018,20 @@
 <div class="related-section">
   <div class="related-inner">
     <div class="related-title">
-      <span>You May Also Like</span>
-      <a href="/#destinations" style="font-size:0.85rem;color:var(--stone);font-family:var(--font-body);font-weight:400">View all →</a>
+      <span data-i18n="dest.page.related-title">You May Also Like</span>
+      <a href="/#destinations" style="font-size:0.85rem;color:var(--stone);font-family:var(--font-body);font-weight:400" data-i18n="dest.page.view-all">
+        View all <i class="fa-solid fa-arrow-right"></i>
+      </a>
     </div>
-    <div class="related-grid" id="related-grid">
-      <!-- filled by JS -->
-    </div>
+    <div class="related-grid" id="related-grid"></div>
   </div>
 </div>
 
 <!-- Lightbox -->
 <div class="lightbox" id="lightbox">
-  <span class="lightbox-close" onclick="document.getElementById('lightbox').classList.remove('open')">✕</span>
+  <span class="lightbox-close" onclick="document.getElementById('lightbox').classList.remove('open')">
+    <i class="fa-solid fa-xmark"></i>
+  </span>
   <img id="lightbox-img" src="" alt="">
 </div>
 
@@ -961,12 +1049,12 @@ const DEST_DATA = {
     entry: 'Free (¥1,000 trail fee)',
     transport: 'Bus from Shinjuku Station',
     tips: [
-      { icon: '⏰', title: 'Start Early', text: 'Begin your climb at midnight to reach the summit by sunrise. Crowds peak after 6AM.' },
-      { icon: '🧥', title: 'Layer Up', text: 'Temperature at the summit is 5°C even in summer. Bring a wind-proof jacket and gloves.' },
-      { icon: '💧', title: 'Stay Hydrated', text: 'Buy water at station 5 (last convenience stop). Water above costs ¥500 per bottle.' },
-      { icon: '🥾', title: 'Proper Footwear', text: 'Volcanic rock is slippery. Wear hiking boots or sturdy sneakers, never sandals.' },
-      { icon: '📅', title: 'Climbing Season', text: 'Official season is July–August only. Mountain huts and trails close outside this window.' },
-      { icon: '🌩️', title: 'Watch Weather', text: 'Check forecasts daily. Lightning storms can appear suddenly on the summit.' }
+      { icon: 'fa-solid fa-clock',        title: 'Start Early',       text: 'Begin your climb at midnight to reach the summit by sunrise. Crowds peak after 6AM.' },
+      { icon: 'fa-solid fa-shirt',        title: 'Layer Up',          text: 'Temperature at the summit is 5°C even in summer. Bring a wind-proof jacket and gloves.' },
+      { icon: 'fa-solid fa-droplet',      title: 'Stay Hydrated',     text: 'Buy water at station 5 (last convenience stop). Water above costs ¥500 per bottle.' },
+      { icon: 'fa-solid fa-shoe-prints',  title: 'Proper Footwear',   text: 'Volcanic rock is slippery. Wear hiking boots or sturdy sneakers, never sandals.' },
+      { icon: 'fa-solid fa-calendar-days',title: 'Climbing Season',   text: 'Official season is July–August only. Mountain huts and trails close outside this window.' },
+      { icon: 'fa-solid fa-cloud-bolt',   title: 'Watch Weather',     text: 'Check forecasts daily. Lightning storms can appear suddenly on the summit.' }
     ],
     gallery: [
       'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800',
@@ -989,12 +1077,12 @@ const DEST_DATA = {
     entry: 'Free',
     transport: 'JR Inari Station (2 min walk)',
     tips: [
-      { icon: '🌅', title: 'Visit at Dawn', text: 'The shrine is open 24/7. Arrive before 7AM to have the torii gates entirely to yourself.' },
-      { icon: '👟', title: 'Wear Comfortable Shoes', text: 'The full 4km loop takes 2–3 hours up steep stone steps. Sneakers are essential.' },
-      { icon: '🦊', title: 'Spot the Foxes', text: 'Kitsune (fox) statues are messengers of Inari. Count how many you spot along the trail.' },
-      { icon: '📸', title: 'Best Photo Spot', text: 'The Senbon Torii tunnel (first 400m) is most photogenic — best light in early morning.' },
-      { icon: '🍡', title: 'Try Inari Sushi', text: 'The stalls near the entrance sell inari-zushi (tofu pockets with rice) — a local specialty.' },
-      { icon: '🗺️', title: 'Don\'t Rush', text: 'Most tourists only walk 30 minutes in. Hike further for spectacular city views and solitude.' }
+      { icon: 'fa-solid fa-sun',          title: 'Visit at Dawn',          text: 'The shrine is open 24/7. Arrive before 7AM to have the torii gates entirely to yourself.' },
+      { icon: 'fa-solid fa-person-walking',title: 'Wear Comfortable Shoes', text: 'The full 4km loop takes 2–3 hours up steep stone steps. Sneakers are essential.' },
+      { icon: 'fa-solid fa-paw',          title: 'Spot the Foxes',         text: 'Kitsune (fox) statues are messengers of Inari. Count how many you spot along the trail.' },
+      { icon: 'fa-solid fa-camera',       title: 'Best Photo Spot',        text: 'The Senbon Torii tunnel (first 400m) is most photogenic — best light in early morning.' },
+      { icon: 'fa-solid fa-utensils',     title: 'Try Inari Sushi',        text: 'The stalls near the entrance sell inari-zushi (tofu pockets with rice) — a local specialty.' },
+      { icon: 'fa-solid fa-map',          title: 'Don\'t Rush',            text: 'Most tourists only walk 30 minutes in. Hike further for spectacular city views and solitude.' }
     ],
     gallery: [
       'https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=800',
@@ -1017,12 +1105,12 @@ const DEST_DATA = {
     entry: 'Free',
     transport: 'Shibuya Station (all lines)',
     tips: [
-      { icon: '📸', title: 'Best Vantage Point', text: 'Head to Starbucks 2F or Mag\'s Park rooftop for the iconic aerial shot of the crossing.' },
-      { icon: '🌃', title: 'Best Time', text: 'Evening rush (5–8PM weekdays) is most dramatic. Weekends are busy all day.' },
-      { icon: '🚶', title: 'Join the Flow', text: 'When the lights change, walk naturally with the crowd. It\'s surprisingly orderly despite the chaos.' },
-      { icon: '🛍️', title: 'Shibuya 109', text: 'The cylindrical Shibuya 109 mall nearby is iconic Japanese street fashion. Worth exploring.' },
-      { icon: '🐕', title: 'Hachiko Statue', text: 'Meet Hachiko — the loyal dog statue outside the station. A famous meeting point for locals.' },
-      { icon: '🎮', title: 'Explore the Area', text: 'Nearby Shimokitazawa is great for vintage shops, live music venues and cafes.' }
+      { icon: 'fa-solid fa-camera',        title: 'Best Vantage Point', text: 'Head to Starbucks 2F or Mag\'s Park rooftop for the iconic aerial shot of the crossing.' },
+      { icon: 'fa-solid fa-moon',          title: 'Best Time',          text: 'Evening rush (5–8PM weekdays) is most dramatic. Weekends are busy all day.' },
+      { icon: 'fa-solid fa-person-walking',title: 'Join the Flow',      text: 'When the lights change, walk naturally with the crowd. It\'s surprisingly orderly despite the chaos.' },
+      { icon: 'fa-solid fa-bag-shopping',  title: 'Shibuya 109',        text: 'The cylindrical Shibuya 109 mall nearby is iconic Japanese street fashion. Worth exploring.' },
+      { icon: 'fa-solid fa-paw',           title: 'Hachiko Statue',     text: 'Meet Hachiko — the loyal dog statue outside the station. A famous meeting point for locals.' },
+      { icon: 'fa-solid fa-gamepad',       title: 'Explore the Area',   text: 'Nearby Shimokitazawa is great for vintage shops, live music venues and cafes.' }
     ],
     gallery: [
       'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800',
@@ -1045,12 +1133,12 @@ const DEST_DATA = {
     entry: 'Free (grove)',
     transport: 'Randen Arashiyama Station',
     tips: [
-      { icon: '🌅', title: 'Early Morning Only', text: 'The bamboo grove becomes impossible to photograph by 9AM. Arrive before 7AM for empty paths.' },
-      { icon: '🚤', title: 'Boat on the River', text: 'Rent a rowboat on the Ōi River for a tranquil experience among the mountains (¥1,500/hour).' },
-      { icon: '🐒', title: 'Monkey Park', text: 'Iwatayama Monkey Park is a 20-min hike with over 120 Japanese macaques and views of Kyoto.' },
-      { icon: '🍁', title: 'Autumn Colors', text: 'November is magical — the hillsides turn red and gold, framing the bamboo in vivid color.' },
-      { icon: '🚲', title: 'Rent a Bike', text: 'Cycling is the best way to explore the area. Rentals start at ¥1,200 for a full day.' },
-      { icon: '🍵', title: 'Sagano Tea House', text: 'Stop for matcha and wagashi sweets at one of the traditional tea houses along Saga Toriimoto.' }
+      { icon: 'fa-solid fa-sun',           title: 'Early Morning Only', text: 'The bamboo grove becomes impossible to photograph by 9AM. Arrive before 7AM for empty paths.' },
+      { icon: 'fa-solid fa-sailboat',      title: 'Boat on the River',  text: 'Rent a rowboat on the Ōi River for a tranquil experience among the mountains (¥1,500/hour).' },
+      { icon: 'fa-solid fa-paw',           title: 'Monkey Park',        text: 'Iwatayama Monkey Park is a 20-min hike with over 120 Japanese macaques and views of Kyoto.' },
+      { icon: 'fa-solid fa-leaf',          title: 'Autumn Colors',      text: 'November is magical — the hillsides turn red and gold, framing the bamboo in vivid color.' },
+      { icon: 'fa-solid fa-bicycle',       title: 'Rent a Bike',        text: 'Cycling is the best way to explore the area. Rentals start at ¥1,200 for a full day.' },
+      { icon: 'fa-solid fa-mug-hot',       title: 'Sagano Tea House',   text: 'Stop for matcha and wagashi sweets at one of the traditional tea houses along Saga Toriimoto.' }
     ],
     gallery: [
       'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800',
@@ -1073,12 +1161,12 @@ const DEST_DATA = {
     entry: '¥600 (museum)',
     transport: 'Tanimachi 4-chome Station',
     tips: [
-      { icon: '🌸', title: 'Cherry Blossom Season', text: 'Over 600 cherry trees bloom in the castle grounds in late March. Book nearby hotels months in advance.' },
-      { icon: '🏯', title: 'Museum Inside', text: 'The 8-floor museum traces Osaka\'s history from Hideyoshi\'s era. Top floor has panoramic views.' },
-      { icon: '🌆', title: 'Night Illumination', text: 'The castle is lit up at night on select dates. Check the seasonal event calendar before visiting.' },
-      { icon: '🛍️', title: 'Osaka Food Near', text: 'Head 10 min south to Shinsaibashi for takoyaki, okonomiyaki and all of Osaka\'s famous food.' },
-      { icon: '🎋', title: 'Nishinomaru Garden', text: 'The western garden (¥200 entry) has the best unobstructed views of the castle tower.' },
-      { icon: '🚶', title: 'The Grounds are Free', text: 'You only pay to enter the castle tower. Walking the surrounding park and moat is completely free.' }
+      { icon: 'fa-solid fa-spa',           title: 'Cherry Blossom Season', text: 'Over 600 cherry trees bloom in the castle grounds in late March. Book nearby hotels months in advance.' },
+      { icon: 'fa-solid fa-chess-rook',    title: 'Museum Inside',         text: 'The 8-floor museum traces Osaka\'s history from Hideyoshi\'s era. Top floor has panoramic views.' },
+      { icon: 'fa-solid fa-city',          title: 'Night Illumination',    text: 'The castle is lit up at night on select dates. Check the seasonal event calendar before visiting.' },
+      { icon: 'fa-solid fa-utensils',      title: 'Osaka Food Near',       text: 'Head 10 min south to Shinsaibashi for takoyaki, okonomiyaki and all of Osaka\'s famous food.' },
+      { icon: 'fa-solid fa-tree',          title: 'Nishinomaru Garden',    text: 'The western garden (¥200 entry) has the best unobstructed views of the castle tower.' },
+      { icon: 'fa-solid fa-person-walking',title: 'The Grounds are Free',  text: 'You only pay to enter the castle tower. Walking the surrounding park and moat is completely free.' }
     ],
     gallery: [
       'https://images.unsplash.com/photo-1589952283406-b53a7d1347e8?w=800',
@@ -1101,12 +1189,12 @@ const DEST_DATA = {
     entry: 'Free (park)',
     transport: 'JR Nara Station (15 min walk)',
     tips: [
-      { icon: '🦌', title: 'Buy Deer Crackers', text: 'Shika-senbei crackers (¥200/pack) are sold everywhere. Bow to a deer and it will bow back!' },
-      { icon: '👜', title: 'Protect Your Belongings', text: 'Deer are notorious bag-snatchers. Keep food hidden and zip up backpacks at all times.' },
-      { icon: '🏛️', title: 'Tōdai-ji Temple', text: 'Don\'t miss the Great Buddha Hall — the world\'s largest wooden building with a 15m bronze Buddha.' },
-      { icon: '🌅', title: 'Golden Hour', text: 'The park at sunrise is otherworldly — deer move through misty fields with no tourists in sight.' },
-      { icon: '🍦', title: 'Deer Poo Warning', text: 'The ground can be... eventful. Watch your step and perhaps avoid wearing white shoes.' },
-      { icon: '🛤️', title: 'Day Trip from Osaka', text: 'Nara is only 45 minutes from Osaka and Kyoto by train. Perfect as a half-day excursion.' }
+      { icon: 'fa-solid fa-cookie-bite',   title: 'Buy Deer Crackers',     text: 'Shika-senbei crackers (¥200/pack) are sold everywhere. Bow to a deer and it will bow back!' },
+      { icon: 'fa-solid fa-bag-shopping',  title: 'Protect Your Belongings',text: 'Deer are notorious bag-snatchers. Keep food hidden and zip up backpacks at all times.' },
+      { icon: 'fa-solid fa-landmark',      title: 'Tōdai-ji Temple',       text: 'Don\'t miss the Great Buddha Hall — the world\'s largest wooden building with a 15m bronze Buddha.' },
+      { icon: 'fa-solid fa-sun',           title: 'Golden Hour',           text: 'The park at sunrise is otherworldly — deer move through misty fields with no tourists in sight.' },
+      { icon: 'fa-solid fa-triangle-exclamation', title: 'Deer Poo Warning', text: 'The ground can be... eventful. Watch your step and perhaps avoid wearing white shoes.' },
+      { icon: 'fa-solid fa-train',         title: 'Day Trip from Osaka',   text: 'Nara is only 45 minutes from Osaka and Kyoto by train. Perfect as a half-day excursion.' }
     ],
     gallery: [
       'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800',
@@ -1132,12 +1220,12 @@ const DEFAULT_DATA = {
   entry: 'Varies',
   transport: 'Local train or bus',
   tips: [
-    { icon: '🗾', title: 'IC Card', text: 'Get a Suica or Pasmo IC card at the airport. Works on all trains, buses and even convenience stores.' },
-    { icon: '📶', title: 'Pocket WiFi', text: 'Rent a pocket WiFi router at the airport for ¥600/day. Essential for navigation and translation.' },
-    { icon: '🎌', title: 'Etiquette', text: 'Speak quietly on trains, queue patiently, and never tip — it can be considered rude in Japan.' },
-    { icon: '💴', title: 'Cash is King', text: 'Many places are cash-only. Carry yen and use 7-Eleven ATMs which accept international cards.' },
-    { icon: '🥢', title: 'Food Tips', text: 'Convenience store food is genuinely delicious. Don\'t skip onigiri, sandwiches and hot foods from 7-Eleven.' },
-    { icon: '🌸', title: 'Seasonal Events', text: 'Check local festival calendars — matsuri and seasonal events happen year-round across Japan.' }
+    { icon: 'fa-solid fa-map-location-dot', title: 'IC Card',         text: 'Get a Suica or Pasmo IC card at the airport. Works on all trains, buses and even convenience stores.' },
+    { icon: 'fa-solid fa-wifi',             title: 'Pocket WiFi',     text: 'Rent a pocket WiFi router at the airport for ¥600/day. Essential for navigation and translation.' },
+    { icon: 'fa-solid fa-flag',             title: 'Etiquette',       text: 'Speak quietly on trains, queue patiently, and never tip — it can be considered rude in Japan.' },
+    { icon: 'fa-solid fa-yen-sign',         title: 'Cash is King',    text: 'Many places are cash-only. Carry yen and use 7-Eleven ATMs which accept international cards.' },
+    { icon: 'fa-solid fa-utensils',         title: 'Food Tips',       text: 'Convenience store food is genuinely delicious. Don\'t skip onigiri, sandwiches and hot foods from 7-Eleven.' },
+    { icon: 'fa-solid fa-spa',              title: 'Seasonal Events', text: 'Check local festival calendars — matsuri and seasonal events happen year-round across Japan.' }
   ],
   gallery: [
     'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800',
@@ -1195,7 +1283,6 @@ async function loadDestination(id) {
     const data = await res.json();
     destData = data.destination;
   } catch (err) {
-    // Use demo data
     const demos = [
       { id: 1, name: 'Mount Fuji', location: 'Shizuoka Prefecture', category: 'nature', rating: 4.9, description: 'Japan\'s iconic sacred mountain rising 3,776 meters above the surrounding landscape. Recognized as a UNESCO World Heritage Site, it\'s been the subject of countless artworks and pilgrimages. The symmetrical volcanic cone is visible on clear days from Tokyo, 100km away. Whether you climb it or simply admire it from afar, Fuji-san is an unforgettable symbol of Japan.', image_url: 'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=1800' },
       { id: 2, name: 'Fushimi Inari', location: 'Kyoto', category: 'temple', rating: 4.8, description: 'Thousands of brilliant vermilion torii gates wind through the forested hills behind Fushimi Inari Taisha, a Shinto shrine at the base of Inari Mountain. The gates are dedicated to Inari, the god of rice and prosperity. Donated by businesses over centuries, each gate bears the name of its donor. The full mountain trail takes about 2–3 hours and rewards hikers with sweeping views of Kyoto.', image_url: 'https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=1800' },
@@ -1206,7 +1293,6 @@ async function loadDestination(id) {
     ];
     destData = demos.find(d => d.id == id) || demos[0];
   }
-
   renderPage();
 }
 
@@ -1215,7 +1301,6 @@ function renderPage() {
   const d = destData;
   const key = d.name.toLowerCase().replace(/[^a-z\s]/g, '').trim();
 
-  // Match extra data
   extraData = null;
   for (const k in DEST_DATA) {
     if (key.includes(k) || k.includes(key.split(' ')[0])) {
@@ -1225,16 +1310,11 @@ function renderPage() {
   }
   if (!extraData) extraData = DEFAULT_DATA;
 
-  // Update <title>
   document.title = `${d.name} — Nihon Travel`;
-
-  // Update breadcrumb
   document.getElementById('breadcrumb-name').textContent = d.name;
 
   // Hero
-  // Use highest quality image
   let imgUrl = d.image_url || '';
-  // If Unsplash URL, force highest quality
   if (imgUrl.includes('unsplash.com')) {
     imgUrl = imgUrl.replace(/[?&]w=\d+/g, '').replace(/[?&]q=\d+/g, '');
     imgUrl += (imgUrl.includes('?') ? '&' : '?') + 'w=1920&q=95&fit=crop&auto=format';
@@ -1243,23 +1323,24 @@ function renderPage() {
   document.getElementById('hero-title').textContent = d.name;
   document.getElementById('hero-cat').textContent = d.category || 'destination';
   document.getElementById('hero-loc').textContent = d.location || 'Japan';
-  document.getElementById('hero-rating').textContent = `⭐ ${d.rating}`;
+  document.getElementById('hero-rating').innerHTML = `<i class="fa-solid fa-star"></i> ${d.rating}`;
 
   // Description
   document.getElementById('desc-title').textContent = d.name;
   document.getElementById('desc-text').textContent = d.description || 'An incredible destination in Japan, waiting to be discovered.';
 
   // Quick pills
-  document.getElementById('quick-info').innerHTML = [
-    { icon: '🏷️', text: d.category },
-    { icon: '📍', text: d.location },
-    { icon: '⭐', text: `Rated ${d.rating}` },
-    { icon: '🌸', text: extraData.bestSeason },
-    { icon: '🕐', text: extraData.duration },
-    { icon: '💴', text: extraData.entry },
-  ].map(p => `
+  const pills = [
+    { icon: 'fa-solid fa-tag',             text: d.category },
+    { icon: 'fa-solid fa-location-dot',    text: d.location },
+    { icon: 'fa-solid fa-star',            text: `Rated ${d.rating}` },
+    { icon: 'fa-solid fa-spa',             text: extraData.bestSeason },
+    { icon: 'fa-solid fa-clock',           text: extraData.duration },
+    { icon: 'fa-solid fa-ticket',          text: extraData.entry },
+  ];
+  document.getElementById('quick-info').innerHTML = pills.map(p => `
     <div class="quick-pill">
-      <span class="quick-pill-icon">${p.icon}</span>
+      <span class="quick-pill-icon"><i class="${p.icon}"></i></span>
       <span>${p.text}</span>
     </div>
   `).join('');
@@ -1272,10 +1353,12 @@ function renderPage() {
   document.getElementById('info-entry').textContent = extraData.entry;
   document.getElementById('info-transport').textContent = extraData.transport;
 
-  // Rating
+  // Rating stars
   document.getElementById('sidebar-rating').textContent = d.rating;
   const filled = Math.round(d.rating);
-  document.getElementById('sidebar-stars').textContent = '⭐'.repeat(filled) + '☆'.repeat(5 - filled);
+  document.getElementById('sidebar-stars').innerHTML =
+    '<i class="fa-solid fa-star"></i>'.repeat(filled) +
+    '<i class="fa-regular fa-star"></i>'.repeat(5 - filled);
 
   // Map
   initMap(extraData.lat, extraData.lng, d.name, d.location);
@@ -1285,7 +1368,7 @@ function renderPage() {
   // Tips
   document.getElementById('tips-list').innerHTML = extraData.tips.map(tip => `
     <div class="tip-item">
-      <div class="tip-icon">${tip.icon}</div>
+      <div class="tip-icon"><i class="${tip.icon}"></i></div>
       <div class="tip-content">
         <h4>${tip.title}</h4>
         <p>${tip.text}</p>
@@ -1295,26 +1378,25 @@ function renderPage() {
 
   // Seasons
   const seasons = [
-    { key: 'spring', icon: '🌸', name: 'Spring', months: 'Mar – May' },
-    { key: 'summer', icon: '☀️', name: 'Summer', months: 'Jun – Aug' },
-    { key: 'autumn', icon: '🍁', name: 'Autumn', months: 'Sep – Nov' },
-    { key: 'winter', icon: '❄️', name: 'Winter', months: 'Dec – Feb' },
+    { key: 'spring', icon: 'fa-solid fa-spa',       name: 'Spring', months: 'Mar – May' },
+    { key: 'summer', icon: 'fa-solid fa-sun',        name: 'Summer', months: 'Jun – Aug' },
+    { key: 'autumn', icon: 'fa-solid fa-leaf',       name: 'Autumn', months: 'Sep – Nov' },
+    { key: 'winter', icon: 'fa-solid fa-snowflake',  name: 'Winter', months: 'Dec – Feb' },
   ];
   document.getElementById('seasons-grid').innerHTML = seasons.map(s => `
     <div class="season-card ${extraData.seasons[s.key] ? 'best' : ''}">
-      <span class="season-icon">${s.icon}</span>
+      <span class="season-icon"><i class="${s.icon}"></i></span>
       <div class="season-name">${s.name}</div>
       <div class="season-months">${s.months}</div>
-      ${extraData.seasons[s.key] ? '<span class="season-badge">Recommended</span>' : ''}
+      ${extraData.seasons[s.key] ? '<span class="season-badge">Best</span>' : ''}
     </div>
   `).join('');
 
   // Gallery
-  const imgs = extraData.gallery;
-  document.getElementById('gallery-strip').innerHTML = imgs.map((src, i) => `
+  document.getElementById('gallery-strip').innerHTML = extraData.gallery.map((src, i) => `
     <div class="gallery-strip-item" onclick="openLightbox('${src}')">
       <img src="${src}" alt="Gallery ${i + 1}" loading="lazy">
-      <div class="gallery-strip-overlay"><span>🔍</span></div>
+      <div class="gallery-strip-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
     </div>
   `).join('');
 
@@ -1329,15 +1411,12 @@ function renderPage() {
     </div>
   `).join('');
 
-  // Related destinations (load async)
   loadRelated();
 }
 
 // ─── Leaflet Map ───
 function initMap(lat, lng, name, location) {
-  if (leafletMap) {
-    leafletMap.remove();
-  }
+  if (leafletMap) { leafletMap.remove(); }
 
   leafletMap = L.map('dest-map', {
     center: [lat, lng],
@@ -1346,27 +1425,25 @@ function initMap(lat, lng, name, location) {
     scrollWheelZoom: false
   });
 
-  // Tile layer — CartoDB Positron (no API key needed, elegant style)
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
     attribution: '© OpenStreetMap © CARTO',
     subdomains: 'abcd',
     maxZoom: 19
   }).addTo(leafletMap);
 
-  // Custom red marker
   const redIcon = L.divIcon({
     className: '',
     html: `
       <div style="
         width:40px;height:40px;
-        background:var(--vermilion, #c0392b);
+        background:#c0392b;
         border-radius:50% 50% 50% 0;
         transform:rotate(-45deg);
         border:3px solid white;
         box-shadow:0 4px 15px rgba(192,57,43,0.5);
         display:flex;align-items:center;justify-content:center;
       ">
-        <span style="transform:rotate(45deg);font-size:16px">📍</span>
+        <i class="fa-solid fa-location-dot" style="transform:rotate(45deg);font-size:14px;color:white"></i>
       </div>`,
     iconSize: [40, 40],
     iconAnchor: [20, 40],
@@ -1374,11 +1451,10 @@ function initMap(lat, lng, name, location) {
   });
 
   const marker = L.marker([lat, lng], { icon: redIcon }).addTo(leafletMap);
-
   marker.bindPopup(`
-    <div style="font-family:var(--font-serif,'Shippori Mincho',serif);padding:0.3rem">
+    <div style="font-family:'Shippori Mincho',serif;padding:0.3rem">
       <strong style="font-size:1rem;color:#1a1a2e">${name}</strong><br>
-      <span style="font-size:0.78rem;color:#8c8c8c">📍 ${location || 'Japan'}</span>
+      <span style="font-size:0.78rem;color:#8c8c8c"><i class="fa-solid fa-location-dot" style="color:#c0392b"></i> ${location || 'Japan'}</span>
     </div>
   `, { maxWidth: 200 }).openPopup();
 }
@@ -1391,24 +1467,25 @@ function scrollToMap() {
 function checkFavoriteStatus(destId) {
   const token = localStorage.getItem('jt_token');
   if (!token) return;
-
-  fetch(`${API_BASE}/favorites`, {
-    headers: { 'Authorization': `Bearer ${token}` }
-  })
-  .then(r => r.json())
-  .then(data => {
-    const favIds = (data.favorites || []).map(f => f.id);
-    isFav = favIds.includes(parseInt(destId));
-    updateFavUI();
-  })
-  .catch(() => {});
+  fetch(`${API_BASE}/favorites`, { headers: { 'Authorization': `Bearer ${token}` } })
+    .then(r => r.json())
+    .then(data => {
+      const favIds = (data.favorites || []).map(f => f.id);
+      isFav = favIds.includes(parseInt(destId));
+      updateFavUI();
+    })
+    .catch(() => {});
 }
 
 function updateFavUI() {
   const heroBtn = document.getElementById('hero-fav-btn');
   const sideBtn = document.getElementById('sidebar-fav-btn');
-  if (heroBtn) heroBtn.textContent = isFav ? '❤️ Saved' : '🤍 Save to Favorites';
-  if (sideBtn) sideBtn.textContent = isFav ? '❤️ Saved to Favorites' : '🤍 Add to Favorites';
+  if (heroBtn) heroBtn.innerHTML = isFav
+    ? '<i class="fa-solid fa-heart"></i> Saved'
+    : '<i class="fa-regular fa-heart"></i> Save to Favorites';
+  if (sideBtn) sideBtn.innerHTML = isFav
+    ? '<i class="fa-solid fa-heart"></i> Saved to Favorites'
+    : '<i class="fa-regular fa-heart"></i> Add to Favorites';
   if (sideBtn) sideBtn.classList.toggle('active', isFav);
 }
 
@@ -1418,7 +1495,6 @@ async function toggleFavorite() {
     showToast('Please sign in to save favorites', 'error');
     return;
   }
-
   try {
     const res = await fetch(`${API_BASE}/favorites`, {
       method: 'POST',
@@ -1428,7 +1504,7 @@ async function toggleFavorite() {
     const data = await res.json();
     isFav = data.action === 'added';
     updateFavUI();
-    showToast(isFav ? 'Added to favorites ❤️' : 'Removed from favorites', isFav ? 'success' : 'info');
+    showToast(isFav ? 'Added to favorites' : 'Removed from favorites', isFav ? 'success' : 'info');
   } catch (err) {
     showToast('Could not update favorites', 'error');
   }
@@ -1439,12 +1515,9 @@ async function loadRelated() {
   try {
     const res = await fetch(`${API_BASE}/destinations?limit=6`);
     const data = await res.json();
-    const related = (data.destinations || [])
-      .filter(d => d.id !== destData?.id)
-      .slice(0, 3);
+    const related = (data.destinations || []).filter(d => d.id !== destData?.id).slice(0, 3);
     renderRelated(related);
   } catch (err) {
-    // demo
     const demos = [
       { id: 2, name: 'Fushimi Inari', location: 'Kyoto', category: 'temple', rating: 4.8, image_url: 'https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=600' },
       { id: 3, name: 'Shibuya Crossing', location: 'Tokyo', category: 'city', rating: 4.7, image_url: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600' },
@@ -1461,8 +1534,8 @@ function renderRelated(destinations) {
       <div class="related-card-body">
         <p class="related-card-cat">${d.category || 'destination'}</p>
         <h4 class="related-card-name">${d.name}</h4>
-        <p class="related-card-loc">📍 ${d.location || 'Japan'}</p>
-        <span class="related-card-link">Explore →</span>
+        <p class="related-card-loc"><i class="fa-solid fa-location-dot"></i> ${d.location || 'Japan'}</p>
+        <span class="related-card-link">Explore <i class="fa-solid fa-arrow-right"></i></span>
       </div>
     </a>
   `).join('');
@@ -1508,10 +1581,14 @@ function capitalize(str) {
 
 function showToast(message, type = 'info') {
   const container = document.getElementById('toast-container');
-  const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+  const icons = {
+    success: '<i class="fa-solid fa-circle-check"></i>',
+    error:   '<i class="fa-solid fa-circle-xmark"></i>',
+    info:    '<i class="fa-solid fa-circle-info"></i>'
+  };
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
-  toast.innerHTML = `<span>${icons[type] || 'ℹ️'}</span><span>${message}</span>`;
+  toast.innerHTML = `${icons[type] || icons.info}<span>${message}</span>`;
   container.appendChild(toast);
   requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('show')));
   setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 3500);

@@ -64,14 +64,19 @@ function updateNavForAuth() {
       <a href="/pages/profile.html" title="Profile">
         <img src="${avatar}" alt="${state.user.name}" class="user-avatar-nav">
       </a>
-      ${state.user.role === 'admin' ? '<a href="/pages/admin.html" class="btn btn-dark" style="color:inherit">Admin</a>' : ''}
-      <button onclick="logout()" class="btn btn-outline" style="border-color:rgba(0,0,0,0.2);color:var(--stone)">Sign Out</button>
+      ${state.user.role === 'admin' ? '<a href="/pages/admin.html" class="nav-admin-link"><i class="fa-solid fa-shield-halved"></i> Admin</a>' : ''}
     `;
   } else {
     navActions.innerHTML = `
-      <button onclick="openModal('login-modal')" class="btn btn-outline">Sign In</button>
-      <button onclick="openModal('register-modal')" class="btn btn-primary">Join Free</button>
+      <button onclick="openModal('login-modal')" class="btn btn-ghost-sm" data-i18n="nav.signin">Sign In</button>
+      <button onclick="openModal('register-modal')" class="btn btn-vermilion-sm" data-i18n="nav.join">Join Free</button>
     `;
+  }
+  // Re-cache and re-apply language after nav re-render
+  if (window.NihonI18n) {
+    window.NihonI18n.cacheElements();
+    var _navLang = localStorage.getItem('nihon-lang') || 'en';
+    window.NihonI18n.applyLang(_navLang);
   }
 }
 
@@ -235,28 +240,31 @@ function renderDemoDestinations(grid) {
 
 function createDestCard(dest, index) {
   const isFav = state.favorites.includes(dest.id);
-  const stars = '⭐'.repeat(Math.round(dest.rating || 4));
+  // stars unused, rating shown directly
 
   return `
     <div class="dest-card" data-aos="fade-up" data-aos-delay="${index * 80}" data-id="${dest.id}">
       <div class="dest-img-wrap">
         <img src="${dest.image_url || 'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=600'}" 
              alt="${dest.name}" loading="lazy">
-        <span class="dest-category">${dest.category || 'destination'}</span>
+        <span class="dest-category" data-i18n="dest.cat.${dest.category || 'destination'}">${dest.category || 'destination'}</span>
         <button class="dest-fav-btn ${isFav ? 'active' : ''}" 
                 data-id="${dest.id}" 
                 onclick="toggleFavorite(event, ${dest.id})"
                 aria-label="${isFav ? 'Remove from favorites' : 'Add to favorites'}">
-          ${isFav ? '❤️' : '🤍'}
+          ${isFav ? '<i class="fa-solid fa-heart"></i>' : '<i class="fa-regular fa-heart"></i>'}
         </button>
       </div>
       <div class="dest-info">
-        <p class="dest-location">📍 ${dest.location || 'Japan'}</p>
-        <h3 class="dest-name">${dest.name}</h3>
-        <p class="dest-desc">${dest.description || ''}</p>
+        <p class="dest-location">
+          <i class="fa-solid fa-location-dot"></i>
+          <span data-i18n="dest.${dest.id}.location">${dest.location || 'Japan'}</span>
+        </p>
+        <h3 class="dest-name" data-i18n="dest.${dest.id}.name">${dest.name}</h3>
+        <p class="dest-desc" data-i18n="dest.${dest.id}.desc">${dest.description || ''}</p>
         <div class="dest-footer">
-          <span class="dest-rating">⭐ ${dest.rating || '4.8'}</span>
-          <a class="dest-link" href="/pages/destination.html?id=${dest.id}">
+          <span class="dest-rating"><i class="fa-solid fa-star"></i> ${dest.rating || '4.8'}</span>
+          <a class="dest-link" href="/pages/destination.html?id=${dest.id}" data-i18n="dest.explore.link">
             Explore →
           </a>
         </div>
@@ -266,7 +274,16 @@ function createDestCard(dest, index) {
 }
 
 function initFavButtons() {
-  // Re-init AOS for new elements
+  // 1. Cache EN text of newly rendered elements BEFORE translating
+  if (window.NihonI18n && window.NihonI18n.cacheElements) {
+    window.NihonI18n.cacheElements();
+  }
+  // 2. Re-apply current language (includes EN → restores EN from cache)
+  if (window.NihonI18n) {
+    var lang = localStorage.getItem('nihon-lang') || 'en';
+    window.NihonI18n.applyLang(lang);
+  }
+  // 3. Re-init AOS for new elements
   if (typeof AOS !== 'undefined') AOS.refresh();
 }
 
@@ -330,9 +347,14 @@ async function openDestModal(destId) {
   if (!modal) return;
 
   modal.querySelector('.dest-detail-img').src = dest.image_url || '';
-  modal.querySelector('.dest-detail-name').textContent = dest.name;
+  var _lang = localStorage.getItem('nihon-lang') || 'en';
+  var _t = (_lang !== 'en' && window.NihonI18n) ? window.NihonI18n.translations[_lang] : {};
+  var dName = _t['dest.' + dest.id + '.name']     || dest.name;
+  var dLoc  = _t['dest.' + dest.id + '.location'] || dest.location || 'Japan';
+  var dDesc = _t['dest.' + dest.id + '.desc']     || dest.description || '';
+  modal.querySelector('.dest-detail-name').textContent = dName;
   modal.querySelector('.dest-detail-location').textContent = `📍 ${dest.location || 'Japan'}`;
-  modal.querySelector('.dest-detail-desc').textContent = dest.description || '';
+  modal.querySelector('.dest-detail-desc').textContent = dDesc;
   modal.querySelector('.dest-detail-rating').textContent = `⭐ ${dest.rating}`;
   modal.querySelector('.dest-detail-category').textContent = dest.category;
 

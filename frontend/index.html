@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="/css/style.css">
   <!-- AOS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <script src="/js/i18n.js" defer></script>
 </head>
 <body>
 
@@ -21,18 +23,23 @@
       </a>
 
       <ul class="nav-links">
-        <li><a href="#destinations">Destinations</a></li>
-        <li><a href="#about">About Japan</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="/pages/travel-tips.html">Travel Tips</a></li>
-        <li><a href="/pages/anime.html" class="nav-anime-link">✦ Anime</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#destinations" data-i18n="nav.destinations">Destinations</a></li>
+        <li><a href="#about" data-i18n="nav.about">About Japan</a></li>
+        <li><a href="/pages/travel-tips.html" data-i18n="nav.travel-tips">Travel Tips</a></li>
+        <li><a href="/pages/anime.html" class="nav-anime-link"><i class="fa-solid fa-star-of-life"></i> Anime</a></li>
       </ul>
 
-      <div class="nav-actions" id="nav-actions">
-        <button onclick="openModal('login-modal')" class="btn btn-outline">Sign In</button>
-        <button onclick="openModal('register-modal')" class="btn btn-primary">Join Free</button>
-      </div>
+              <div class="nav-right-group">
+          <div class="lang-switcher" role="group" aria-label="Language">
+            <button class="lang-btn active" data-lang="en" title="English">EN</button>
+            <button class="lang-btn" data-lang="ru" title="Русский">RU</button>
+            <button class="lang-btn" data-lang="kz" title="Қазақша">KZ</button>
+          </div>
+          <div class="nav-actions" id="nav-actions">
+            <button onclick="openModal('login-modal')" class="btn btn-ghost-sm" data-i18n="nav.signin">Sign In</button>
+            <button onclick="openModal('register-modal')" class="btn btn-vermilion-sm" data-i18n="nav.join">Join Free</button>
+          </div><!-- /nav-actions -->
+        </div><!-- /nav-right-group -->
 
       <button class="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
@@ -43,12 +50,11 @@
 
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobile-menu">
-  <span class="mobile-menu-close" id="mobile-close">✕</span>
+  <span class="mobile-menu-close" id="mobile-close"><i class="fa-solid fa-xmark"></i></span>
   <a href="#destinations">Destinations</a>
   <a href="#about">About Japan</a>
-  <a href="#gallery">Gallery</a>
   <a href="/pages/travel-tips.html">Travel Tips</a>
-  <a href="/pages/anime.html" style="color:#e879f9">✦ Anime</a>
+  <a href="/pages/anime.html" style="color:#e879f9"><i class="fa-solid fa-star-of-life"></i> Anime</a>
   <a href="#contact">Contact</a>
   <a href="/pages/profile.html">My Profile</a>
 </div>
@@ -60,24 +66,20 @@
   <div class="hero-lines"></div>
 
   <div class="hero-content" data-aos="fade-up" data-aos-duration="1200">
-    <p class="hero-eyebrow">A World Apart</p>
-    <h1 class="hero-title">
+    <p class="hero-eyebrow" data-i18n="index.hero.eyebrow">A World Apart</p>
+    <h1 class="hero-title" data-i18n="index.hero.title">
       Discover the Soul<br>of <em>Japan</em>
     </h1>
-    <p class="hero-desc">
+    <p class="hero-desc" data-i18n="index.hero.desc">
       Ancient temples meet neon cities. Sacred mountains rise above cherry blossom valleys. 
       Begin your journey through the Land of the Rising Sun.
     </p>
     <div class="hero-buttons">
-      <a href="#destinations" class="btn btn-primary">Explore Destinations</a>
-      <button onclick="openModal('register-modal')" class="btn btn-outline">Plan Your Trip →</button>
+      <a href="#destinations" class="btn btn-primary" data-i18n="index.hero.btn1">Explore Destinations</a>
+      <button onclick="openModal('register-modal')" class="btn btn-outline" data-i18n="index.hero.btn2">Plan Your Trip →</button>
     </div>
   </div>
 
-  <div class="hero-scroll">
-    <div class="scroll-line"></div>
-    <span>Scroll</span>
-  </div>
 </section>
 
 <!-- ══════════════════ STATS BAR ══════════════════ -->
@@ -86,19 +88,19 @@
     <div class="stats-grid">
       <div class="stat-item" data-aos="fade-up" data-aos-delay="0">
         <span class="stat-number" data-target="47" data-suffix="+">47+</span>
-        <span class="stat-label">Prefectures</span>
+        <span class="stat-label" data-i18n="stat.prefectures">Prefectures</span>
       </div>
       <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
         <span class="stat-number" data-target="1500" data-suffix="+">1500+</span>
-        <span class="stat-label">UNESCO Sites & Temples</span>
+        <span class="stat-label" data-i18n="stat.sites">UNESCO Sites & Temples</span>
       </div>
       <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
         <span class="stat-number" data-target="3776" data-suffix="m">3776m</span>
-        <span class="stat-label">Mount Fuji</span>
+        <span class="stat-label" data-i18n="stat.fuji">Mount Fuji</span>
       </div>
       <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
         <span class="stat-number" data-target="4" data-suffix=" Seasons">4</span>
-        <span class="stat-label">Distinct Seasons</span>
+        <span class="stat-label" data-i18n="stat.seasons">Distinct Seasons</span>
       </div>
     </div>
   </div>
@@ -108,21 +110,23 @@
 <section id="destinations">
   <div class="container">
     <div class="section-header">
-      <p class="section-label">Explore</p>
-      <h2 class="section-title">Top Destinations</h2>
-      <p class="section-subtitle">
+      <p class="section-label" data-i18n="dest.label">Explore</p>
+      <h2 class="section-title" data-i18n="dest.title">Top Destinations</h2>
+      <p class="section-subtitle" data-i18n="dest.subtitle">
         From the neon-lit streets of Tokyo to the serene gardens of Kyoto — 
         every corner of Japan tells a story.
       </p>
 
       <div class="filter-tabs">
-        <button class="filter-tab active" data-filter="all">All</button>
-        <button class="filter-tab" data-filter="nature">Nature</button>
-        <button class="filter-tab" data-filter="temple">Temples</button>
-        <button class="filter-tab" data-filter="city">Cities</button>
-        <button class="filter-tab" data-filter="history">History</button>
-        <button class="filter-tab" data-filter="beach">Beaches</button>
-        <button class="filter-tab" data-filter="wellness">Wellness</button>
+        <button class="filter-tab active" data-filter="all" data-i18n="dest.filter.all">All</button>
+        <button class="filter-tab" data-filter="nature" data-i18n="dest.filter.nature">Nature</button>
+        <button class="filter-tab" data-filter="temple" data-i18n="dest.filter.temple">Temples</button>
+        <button class="filter-tab" data-filter="city" data-i18n="dest.filter.city">Cities</button>
+        <button class="filter-tab" data-filter="history" data-i18n="dest.filter.history">History</button>
+        <button class="filter-tab" data-filter="beach" data-i18n="dest.filter.beach">Beaches</button>
+        <button class="filter-tab" data-filter="wellness" data-i18n="dest.filter.wellness">Wellness</button>
+        <button class="filter-tab" data-filter="culture" data-i18n="dest.filter.culture">Culture</button>
+        <button class="filter-tab" data-filter="festival" data-i18n="dest.filter.festival">Festivals</button>
       </div>
     </div>
 
@@ -132,7 +136,7 @@
 
     <div class="load-more-wrap">
       <button class="btn btn-dark" id="load-more-btn" onclick="loadMoreDestinations()">
-        Load More Destinations
+        <span data-i18n="dest.load-more">Load More Destinations</span>
       </button>
     </div>
   </div>
@@ -143,9 +147,9 @@
   <div class="container">
     <div class="about-grid">
       <div class="about-text" data-aos="fade-right">
-        <p class="section-label">About Japan</p>
-        <h2 class="section-title">A Nation of Timeless Contrasts</h2>
-        <p class="section-subtitle">
+        <p class="section-label" data-i18n="about.label">About Japan</p>
+        <h2 class="section-title" data-i18n="about.title">A Nation of Timeless Contrasts</h2>
+        <p class="section-subtitle" data-i18n="about.subtitle">
           Japan is a country where ancient tradition and cutting-edge modernity exist in perfect harmony. 
           From misty mountain shrines to ultramodern cities, each experience is a window into a uniquely 
           captivating civilization.
@@ -153,24 +157,24 @@
 
         <div class="about-facts">
           <div class="about-fact" data-aos="fade-up" data-aos-delay="100">
-            <div class="fact-icon"><!--⛩️--></div>
-            <h4 class="fact-title">Rich Culture</h4>
-            <p class="fact-desc">Over 2,000 years of recorded history, living traditions, and arts.</p>
+            <div class="fact-icon"><!--<i class="fa-solid fa-torii-gate"></i>--></div>
+            <h4 class="fact-title" data-i18n="about.fact1.title">Rich Culture</h4>
+            <p class="fact-desc" data-i18n="about.fact1.desc">Over 2,000 years of recorded history, living traditions, and arts.</p>
           </div>
           <div class="about-fact" data-aos="fade-up" data-aos-delay="200">
-            <div class="fact-icon"><!--🍜--></div>
-            <h4 class="fact-title">World Cuisine</h4>
-            <p class="fact-desc">More Michelin stars than any country — a paradise for food lovers.</p>
+            <div class="fact-icon"><!--<i class="fa-solid fa-bowl-food"></i>--></div>
+            <h4 class="fact-title" data-i18n="about.fact2.title">World Cuisine</h4>
+            <p class="fact-desc" data-i18n="about.fact2.desc">More Michelin stars than any country — a paradise for food lovers.</p>
           </div>
           <div class="about-fact" data-aos="fade-up" data-aos-delay="300">
-            <div class="fact-icon"><!--🚄--></div>
-            <h4 class="fact-title">Ultra-Modern</h4>
-            <p class="fact-desc">Shinkansen bullet trains connect the country at 320 km/h.</p>
+            <div class="fact-icon"><!--<i class="fa-solid fa-train-high-speed"></i>--></div>
+            <h4 class="fact-title" data-i18n="about.fact3.title">Ultra-Modern</h4>
+            <p class="fact-desc" data-i18n="about.fact3.desc">Shinkansen bullet trains connect the country at 320 km/h.</p>
           </div>
           <div class="about-fact" data-aos="fade-up" data-aos-delay="400">
-            <div class="fact-icon"><!--🌸--></div>
-            <h4 class="fact-title">Four Seasons</h4>
-            <p class="fact-desc">Each season transforms Japan's landscape into something magical.</p>
+            <div class="fact-icon"><!--<i class="fa-solid fa-spa"></i>--></div>
+            <h4 class="fact-title" data-i18n="about.fact4.title">Four Seasons</h4>
+            <p class="fact-desc" data-i18n="about.fact4.desc">Each season transforms Japan's landscape into something magical.</p>
           </div>
         </div>
       </div>
@@ -183,7 +187,7 @@
           loading="lazy">
         <div class="about-badge">
           <span class="badge-num">126M</span>
-          <span class="badge-text">Population</span>
+          <span class="badge-text" data-i18n="about.badge.text">Population</span>
         </div>
       </div>
     </div>
@@ -194,9 +198,9 @@
 <section id="gallery">
   <div class="container">
     <div class="section-header center">
-      <p class="section-label">Gallery</p>
-      <h2 class="section-title">Japan Through the Lens</h2>
-      <p class="section-subtitle">
+      <p class="section-label" data-i18n="gallery.label">Gallery</p>
+      <h2 class="section-title" data-i18n="gallery.title">Japan Through the Lens</h2>
+      <p class="section-subtitle" data-i18n="gallery.subtitle">
         Each photograph captures a fleeting moment in a country where beauty exists in every detail.
       </p>
     </div>
@@ -207,7 +211,7 @@
            data-caption="Mount Fuji — Shizuoka Prefecture">
         <img src="https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=900&q=80" alt="Mount Fuji">
         <div class="gallery-overlay">
-          <span class="gallery-overlay-icon">⛶</span>
+          <span class="gallery-overlay-icon"><i class="fa-solid fa-expand"></i></span>
           <span class="gallery-overlay-caption">Mount Fuji</span>
         </div>
       </div>
@@ -216,7 +220,7 @@
            data-caption="Fushimi Inari — Kyoto">
         <img src="https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=700&q=80" alt="Torii Gates">
         <div class="gallery-overlay">
-          <span class="gallery-overlay-icon">⛶</span>
+          <span class="gallery-overlay-icon"><i class="fa-solid fa-expand"></i></span>
           <span class="gallery-overlay-caption">Fushimi Inari</span>
         </div>
       </div>
@@ -225,7 +229,7 @@
            data-caption="Nara Deer Park — Nara">
         <img src="https://a-us.storyblok.com/f/1018357/1500x1000/d12f5afc3c/deer_3904413_m.jpg?w=700&q=80" alt="Nara Deer">
         <div class="gallery-overlay">
-          <span class="gallery-overlay-icon">⛶</span>
+          <span class="gallery-overlay-icon"><i class="fa-solid fa-expand"></i></span>
           <span class="gallery-overlay-caption">Nara Deer Park</span>
         </div>
       </div>
@@ -234,7 +238,7 @@
            data-caption="Arashiyama Bamboo Grove — Kyoto">
         <img src="https://travel.rakuten.com/contents/sites/contents/files/styles/max_1300x1300/public/2024-06/arashiyama-bamboo-forest_3.jpg?itok=822ih-Jp?w=900&q=80" alt="Bamboo">
         <div class="gallery-overlay">
-          <span class="gallery-overlay-icon">⛶</span>
+          <span class="gallery-overlay-icon"><i class="fa-solid fa-expand"></i></span>
           <span class="gallery-overlay-caption">Arashiyama Bamboo</span>
         </div>
       </div>
@@ -243,7 +247,7 @@
            data-caption="Shibuya Crossing — Tokyo">
         <img src="https://www.gotokyo.org/en/destinations/western-tokyo/shibuya/images/main.jpg?w=700&q=80" alt="Tokyo">
         <div class="gallery-overlay">
-          <span class="gallery-overlay-icon">⛶</span>
+          <span class="gallery-overlay-icon"><i class="fa-solid fa-expand"></i></span>
           <span class="gallery-overlay-caption">Shibuya Crossing</span>
         </div>
       </div>
@@ -252,7 +256,7 @@
            data-caption="Osaka Castle — Osaka">
         <img src="https://chrisandwrensworld.com/wp-content/uploads/2024/08/osaka-castle-sunset-819x1024.jpeg?w=700&q=80" alt="Osaka Castle">
         <div class="gallery-overlay">
-          <span class="gallery-overlay-icon">⛶</span>
+          <span class="gallery-overlay-icon"><i class="fa-solid fa-expand"></i></span>
           <span class="gallery-overlay-caption">Osaka Castle</span>
         </div>
       </div>
@@ -261,7 +265,7 @@
            data-caption="Gion District — Kyoto">
         <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=900&q=80" alt="Kyoto">
         <div class="gallery-overlay">
-          <span class="gallery-overlay-icon">⛶</span>
+          <span class="gallery-overlay-icon"><i class="fa-solid fa-expand"></i></span>
           <span class="gallery-overlay-caption">Kyoto Gion</span>
         </div>
       </div>
@@ -270,7 +274,7 @@
            data-caption="Hakone Hot Springs — Kanagawa">
         <img src="https://images.trvl-media.com/lodging/105000000/104870000/104862400/104862373/d0c139dd.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill?w=700&q=80" alt="Hot Springs">
         <div class="gallery-overlay">
-          <span class="gallery-overlay-icon">⛶</span>
+          <span class="gallery-overlay-icon"><i class="fa-solid fa-expand"></i></span>
           <span class="gallery-overlay-caption">Hakone Onsen</span>
         </div>
       </div>
@@ -283,32 +287,32 @@
   <div class="container">
     <div class="contact-grid">
       <div class="contact-info" data-aos="fade-right">
-        <p class="section-label">Get in Touch</p>
-        <h2 class="section-title">Plan Your Journey</h2>
-        <p class="section-subtitle">
+        <p class="section-label" data-i18n="contact.label">Get in Touch</p>
+        <h2 class="section-title" data-i18n="contact.title">Plan Your Journey</h2>
+        <p class="section-subtitle" data-i18n="contact.subtitle">
           Our Japan travel specialists are ready to help you craft an unforgettable experience. 
           Reach out with any questions.
         </p>
 
         <div class="contact-detail">
-          <!-- <div class="contact-icon">📧</div> -->
+          <!-- <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div> -->
           <div class="contact-detail-text">
-            <h4>Email Us</h4>
-            <p>hello@nihontravel.com</p>
+            <h4 data-i18n="contact.email.h">Email Us</h4>
+            <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2048454c4c4f604e49484f4e54524156454c0e434f4d">[email&#160;protected]</a></p>
           </div>
         </div>
         <div class="contact-detail">
-          <!-- <div class="contact-icon">📞</div> -->
+          <!-- <div class="contact-icon"><i class="fa-solid fa-phone"></i></div> -->
           <div class="contact-detail-text">
-            <h4>Call Us</h4>
+            <h4 data-i18n="contact.phone.h">Call Us</h4>
             <p>+81 3-1234-5678</p>
           </div>
         </div>
         <div class="contact-detail">
-          <!-- <div class="contact-icon">📍</div> -->
+          <!-- <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div> -->
           <div class="contact-detail-text">
-            <h4>Visit Us</h4>
-            <p>Shinjuku, Tokyo, Japan</p>
+            <h4 data-i18n="contact.addr.h">Visit Us</h4>
+            <p data-i18n="contact.addr.val">Shinjuku, Tokyo, Japan</p>
           </div>
         </div>
       </div>
@@ -317,29 +321,29 @@
         <form id="contact-form">
           <div class="form-row">
             <div class="form-group">
-              <label for="contact-name">Your Name</label>
-              <input type="text" id="contact-name" name="name" placeholder="Tanaka Hiroshi" required>
+              <label for="contact-name" data-i18n="contact.lbl.name">Your Name</label>
+              <input type="text" id="contact-name" name="name" placeholder="Tanaka Hiroshi" data-i18n-ph="contact.ph.name" required>
             </div>
             <div class="form-group">
-              <label for="contact-email">Email Address</label>
-              <input type="email" id="contact-email" name="email" placeholder="you@example.com" required>
+              <label for="contact-email" data-i18n="contact.lbl.email">Email Address</label>
+              <input type="email" id="contact-email" name="email" placeholder="you@example.com" data-i18n-ph="contact.ph.email" required>
             </div>
           </div>
           <div class="form-group">
-            <label for="contact-subject">Subject</label>
+            <label for="contact-subject" data-i18n="contact.lbl.subject">Subject</label>
             <select id="contact-subject" name="subject">
-              <option>Travel Planning</option>
-              <option>Hotel Recommendations</option>
-              <option>Tours & Experiences</option>
-              <option>General Inquiry</option>
+              <option data-i18n="contact.opt1">Travel Planning</option>
+              <option data-i18n="contact.opt2">Hotel Recommendations</option>
+              <option data-i18n="contact.opt3">Tours &amp; Experiences</option>
+              <option data-i18n="contact.opt4">General Inquiry</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="contact-message">Message</label>
-            <textarea id="contact-message" name="message" placeholder="Tell us about your dream Japan trip..." required></textarea>
+            <label for="contact-message" data-i18n="contact.lbl.message">Message</label>
+            <textarea id="contact-message" name="message" placeholder="Tell us about your dream Japan trip..." data-i18n-ph="contact.ph.message" required></textarea>
           </div>
           <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">
-            Send Message
+            <span data-i18n="contact.lbl.send">Send Message</span>
           </button>
         </form>
       </div>
@@ -356,20 +360,20 @@
           <span class="logo-kanji">日</span>
           Nihon Travel
         </a>
-        <p class="footer-desc">
+        <p class="footer-desc" data-i18n="footer.desc">
           Your trusted guide to discovering the wonders of Japan. 
           Crafting unforgettable journeys since 2018.
         </p>
         <div class="footer-socials">
-          <a class="social-link" aria-label="Instagram">📸</a>
-          <a class="social-link" aria-label="Twitter">🐦</a>
-          <a class="social-link" aria-label="Facebook">👤</a>
-          <a class="social-link" aria-label="YouTube">▶️</a>
+          <a class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a class="social-link" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+          <a class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a class="social-link" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
         </div>
       </div>
 
       <div class="footer-col">
-        <h4>Destinations</h4>
+        <h4 data-i18n="footer.col.dest">Destinations</h4>
         <ul>
           <li><a href="#destinations">Tokyo</a></li>
           <li><a href="#destinations">Kyoto</a></li>
@@ -380,29 +384,29 @@
       </div>
 
       <div class="footer-col">
-        <h4>Explore</h4>
+        <h4 data-i18n="footer.col.explore">Explore</h4>
         <ul>
-          <li><a href="#about">About Japan</a></li>
-          <li><a href="#gallery">Gallery</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a href="/pages/profile.html">My Profile</a></li>
+          <li><a href="#about" data-i18n="nav.about">About Japan</a></li>
+          <li><a href="#gallery" data-i18n="nav.gallery">Gallery</a></li>
+          <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+          <li><a href="/pages/profile.html" data-i18n="footer.lnk.profile">My Profile</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
-        <h4><a href="/pages/travel-tips.html">Travel Tips</a></h4>
+        <h4 data-i18n="footer.col.tips">Travel Tips</h4>
         <ul>
-          <li><a href="/pages/when-to-visit.html">When to Visit</a></li>
-          <li><a href="/pages/visa-guide.html">Visa Guide</a></li>
-          <li><a href="/pages/jr-pass-info.html">JR Pass Info</a></li>
-          <li><a href="/pages/etiquette.html">Etiquette</a></li>
+          <li><a href="/pages/when-to-visit.html" data-i18n="footer.lnk.when">When to Visit</a></li>
+          <li><a href="/pages/visa-guide.html" data-i18n="footer.lnk.visa">Visa Guide</a></li>
+          <li><a href="/pages/jr-pass-info.html" data-i18n="footer.lnk.jr">JR Pass Info</a></li>
+          <li><a href="/pages/etiquette.html" data-i18n="footer.lnk.etq">Etiquette</a></li>
         </ul>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <p>© 2025 Nihon Travel. Made with ❤️ for Japan lovers.</p>
-      <p>Privacy Policy · Terms of Service</p>
+      <p data-i18n="footer.copy">© 2025 Nihon Travel. Made with <i class="fa-solid fa-heart"></i> for Japan lovers.</p>
+      <p data-i18n="footer.legal">Privacy Policy · Terms of Service</p>
     </div>
   </div>
 </footer>
@@ -412,25 +416,25 @@
 <!-- Login Modal -->
 <div class="modal-overlay" id="login-modal">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal('login-modal')">✕</button>
-    <h2 class="modal-title">Welcome Back</h2>
-    <p class="modal-subtitle">Sign in to access your favorites and travel history</p>
+    <button class="modal-close" onclick="closeModal('login-modal')"><i class="fa-solid fa-xmark"></i></button>
+    <h2 class="modal-title" data-i18n="modal.login.title">Welcome Back</h2>
+    <p class="modal-subtitle" data-i18n="modal.login.subtitle">Sign in to access your favorites and travel history</p>
     <form id="login-form" onsubmit="handleLogin(event)">
       <div class="form-group">
-        <label>Email Address</label>
+        <label data-i18n="modal.login.email">Email Address</label>
         <input type="email" name="email" placeholder="you@example.com" required>
       </div>
       <div class="form-group">
-        <label>Password</label>
+        <label data-i18n="modal.login.pass">Password</label>
         <input type="password" name="password" placeholder="••••••••" required>
       </div>
-      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center" data-i18n="modal.login.submit">
         Sign In
       </button>
     </form>
     <p class="modal-footer-text">
-      Don't have an account? 
-      <a href="#" onclick="closeModal('login-modal');openModal('register-modal')">Create one</a>
+      <span data-i18n="modal.login.ft">Don't have an account?</span> 
+      <a href="#" onclick="closeModal('login-modal');openModal('register-modal')" data-i18n="modal.login.ft.link">Create one</a>
     </p>
   </div>
 </div>
@@ -438,33 +442,33 @@
 <!-- Register Modal -->
 <div class="modal-overlay" id="register-modal">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal('register-modal')">✕</button>
-    <h2 class="modal-title">Join Nihon Travel</h2>
-    <p class="modal-subtitle">Create your free account and start exploring Japan</p>
+    <button class="modal-close" onclick="closeModal('register-modal')"><i class="fa-solid fa-xmark"></i></button>
+    <h2 class="modal-title" data-i18n="modal.reg.title">Join Nihon Travel</h2>
+    <p class="modal-subtitle" data-i18n="modal.reg.subtitle">Create your free account and start exploring Japan</p>
     <form id="register-form" onsubmit="handleRegister(event)">
-      <div class="form-group">
-        <label>Full Name</label>
-        <input type="text" name="name" placeholder="Your name" required>
+      <div class="form-group" >
+        <label data-i18n="modal.reg.name">Full Name</label>
+        <input type="text" name="name"  placeholder="User" required>
       </div>
       <div class="form-group">
-        <label>Email Address</label>
-        <input type="email" name="email" placeholder="you@example.com" required>
+        <label data-i18n="modal.reg.email">Email Address</label>
+        <input type="email" name="email"  placeholder="user@example.com" required>
       </div>
       <div class="form-group">
-        <label>Password</label>
-        <input type="password" name="password" placeholder="Min 6 characters" required>
+        <label data-i18n="modal.reg.pass">Password</label>
+        <input type="password" name="password"  placeholder="******" required>
       </div>
       <div class="form-group">
-        <label>Confirm Password</label>
-        <input type="password" name="confirm" placeholder="Repeat password" required>
+        <label data-i18n="modal.reg.confirm">Confirm Password</label>
+        <input type="password" name="confirm" placeholder="******" required>
       </div>
-      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center" data-i18n="modal.reg.submit">
         Create Account
       </button>
     </form>
-    <p class="modal-footer-text">
-      Already have an account? 
-      <a href="#" onclick="closeModal('register-modal');openModal('login-modal')">Sign in</a>
+    <p class="modal-footer-text" >
+      <span data-i18n="modal.reg.ft">Already have an account?</span> 
+      <a href="#" onclick="closeModal('register-modal');openModal('login-modal')" data-i18n="modal.reg.ft.link">Sign in</a>
     </p>
   </div>
 </div>
@@ -472,7 +476,7 @@
 <!-- Destination Detail Modal -->
 <div class="modal-overlay dest-detail-modal" id="dest-modal">
   <div class="modal" style="max-width:700px;padding:0;overflow:hidden">
-    <button class="modal-close" onclick="closeModal('dest-modal')" style="z-index:1;top:1rem;right:1rem;background:rgba(255,255,255,0.9);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center">✕</button>
+    <button class="modal-close" onclick="closeModal('dest-modal')" style="z-index:1;top:1rem;right:1rem;background:rgba(255,255,255,0.9);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center"><i class="fa-solid fa-xmark"></i></button>
     <img class="dest-detail-img" src="" alt="" style="width:100%;height:300px;object-fit:cover">
     <div class="dest-detail-body" style="padding:2rem 2.5rem">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem">
@@ -494,7 +498,7 @@
   <div class="lb-backdrop" id="lb-backdrop"></div>
 
   <!-- Close -->
-  <button class="lb-close" id="lb-close" aria-label="Close">✕</button>
+  <button class="lb-close" id="lb-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
 
   <!-- Prev / Next -->
   <button class="lb-nav lb-prev" id="lb-prev" aria-label="Previous">&#8249;</button>
@@ -519,8 +523,8 @@
 <div class="toast-container" id="toast-container"></div>
 
 <!-- Scripts -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 <script src="/js/main.js"></script>
-
 </body>
 </html>

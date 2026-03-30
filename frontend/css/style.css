@@ -159,7 +159,8 @@ h1, h2, h3, h4 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2rem;
+  position: relative;     /* anchor for absolute nav-links */
+  gap: 0;
 }
 
 .nav-logo {
@@ -184,6 +185,9 @@ h1, h2, h3, h4 {
   display: flex;
   align-items: center;
   gap: 2rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .nav-links a {
@@ -1529,4 +1533,150 @@ footer {
 
 .mobile-sub-links a:hover {
   color: var(--vermilion) !important;
+}
+/* ═══════════════════════════════════════════════════════════
+   LANGUAGE SWITCHER — index.html (main nav)
+   ═══════════════════════════════════════════════════════════ */
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: 100px;
+  padding: 3px;
+  backdrop-filter: blur(8px);
+  transition: var(--transition);
+}
+#navbar.scrolled .lang-switcher {
+  background: var(--paper);
+  border-color: var(--paper-dark);
+}
+.lang-btn {
+  font-family: var(--font-body);
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0.28rem 0.65rem;
+  border-radius: 100px;
+  color: rgba(255, 255, 255, 0.65);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  line-height: 1;
+  white-space: nowrap;
+}
+.lang-btn:hover {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.14);
+}
+.lang-btn.active {
+  background: var(--vermilion);
+  color: var(--white);
+  box-shadow: 0 2px 8px rgba(192, 57, 43, 0.4);
+}
+#navbar.scrolled .lang-btn        { color: var(--stone); }
+#navbar.scrolled .lang-btn:hover  { color: var(--ink); background: var(--paper-dark); }
+#navbar.scrolled .lang-btn.active { background: var(--vermilion); color: var(--white); }
+
+.nav-right-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.fact-icon i  { font-size: 1.6rem; color: var(--vermilion); }
+.social-link i { font-size: 1.05rem; }
+.gallery-overlay-icon i { font-size: 1.2rem; }
+
+@media (max-width: 480px) {
+  .lang-switcher { gap: 1px; }
+  .lang-btn { padding: 0.25rem 0.5rem; font-size: 0.62rem; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   NAVBAR COMPACT — overrides for tighter layout
+   ═══════════════════════════════════════════════════════════ */
+.nav-inner {
+  gap: 0.75rem;          /* was 2rem */
+}
+.nav-links {
+  gap: 1.4rem;
+}
+.nav-links a {
+  font-size: 0.78rem;
+}
+
+/* Mini action buttons (replacing btn-outline + btn-primary in nav) */
+.btn-ghost-sm {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.38rem 0.9rem;
+  border-radius: 100px;
+  color: rgba(255,255,255,0.8);
+  border: 1px solid rgba(255,255,255,0.28);
+  transition: var(--transition);
+  background: transparent;
+  white-space: nowrap;
+}
+.btn-ghost-sm:hover {
+  color: var(--white);
+  background: rgba(255,255,255,0.1);
+}
+#navbar.scrolled .btn-ghost-sm {
+  color: var(--stone);
+  border-color: var(--paper-dark);
+}
+#navbar.scrolled .btn-ghost-sm:hover {
+  color: var(--ink);
+  background: var(--paper-dark);
+}
+
+.btn-vermilion-sm {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.38rem 0.9rem;
+  border-radius: 100px;
+  background: var(--vermilion);
+  color: var(--white);
+  border: none;
+  transition: var(--transition);
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(192,57,43,0.35);
+}
+.btn-vermilion-sm:hover {
+  background: var(--vermilion-light);
+  box-shadow: 0 4px 14px rgba(192,57,43,0.45);
+  transform: translateY(-1px);
+}
+
+/* Admin link — clean & minimal */
+.nav-admin-link {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--vermilion);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.38rem 0.9rem;
+  border-radius: 100px;
+  border: 1px solid var(--vermilion);
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.nav-admin-link:hover {
+  background: var(--vermilion);
+  color: var(--white);
+}
+#navbar.scrolled .nav-admin-link { /* same colors on scroll */ }
+
+/* lang-switcher inside nav-right-group — compact */
+.nav-right-group {
+  gap: 0.6rem;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+.nav-actions {
+  gap: 0.5rem;
 }

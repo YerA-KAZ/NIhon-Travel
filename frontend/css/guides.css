@@ -40,6 +40,17 @@ img { max-width:100%; display:block; }
 button { cursor:pointer; border:none; background:none; font-family:inherit; }
 ul { list-style:none; }
 
+/* Bilingual hint under RU (i18n.js): English original in small type */
+.i18n-ref {
+  display: block;
+  font-size: 0.86em;
+  font-weight: 400;
+  color: var(--stone);
+  margin-top: 0.2em;
+  line-height: 1.35;
+}
+.g-table .i18n-ref { font-size: 0.82em; }
+
 ::-webkit-scrollbar { width:6px; }
 ::-webkit-scrollbar-track { background:var(--paper-dark); }
 ::-webkit-scrollbar-thumb { background:var(--vermilion); border-radius:3px; }
@@ -358,4 +369,102 @@ ul { list-style:none; }
   .g-season-grid { grid-template-columns:1fr 1fr; }
   .g-card { padding:1.5rem; }
   .g-nav-links { display:none; }
+}
+/* ─────────────────────────────────────────────────────────
+   LANGUAGE SWITCHER
+   ───────────────────────────────────────────────────────── */
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 100px;
+  padding: 3px;
+  backdrop-filter: blur(8px);
+  transition: var(--transition);
+  margin-right: 0.75rem;
+}
+.g-nav.scrolled .lang-switcher {
+  background: var(--paper);
+  border-color: var(--paper-dark);
+}
+.lang-btn {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.7rem;
+  border-radius: 100px;
+  color: rgba(255, 255, 255, 0.65);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  line-height: 1;
+  white-space: nowrap;
+}
+.lang-btn:hover {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.15);
+}
+.lang-btn.active {
+  background: var(--vermilion);
+  color: var(--white);
+  box-shadow: 0 2px 8px rgba(192, 57, 43, 0.4);
+}
+.g-nav.scrolled .lang-btn {
+  color: var(--stone);
+}
+.g-nav.scrolled .lang-btn:hover {
+  color: var(--ink);
+  background: var(--paper-dark);
+}
+.g-nav.scrolled .lang-btn.active {
+  background: var(--vermilion);
+  color: var(--white);
+}
+
+/* Wrap back-link + switcher together */
+.g-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+/* ─────────────────────────────────────────────────────────
+   FONT AWESOME ICON SIZING — guide pages
+   ───────────────────────────────────────────────────────── */
+.g-card-title-icon .fa-solid,
+.g-card-title-icon .fa-regular,
+.g-card-title-icon i {
+  font-size: 1.4rem;
+  width: 1.6rem;
+  text-align: center;
+  color: var(--vermilion);
+}
+.g-highlight-icon i,
+.g-highlight-icon .fa-solid {
+  font-size: 1.1rem;
+  color: inherit;
+}
+.g-info-item-icon i,
+.g-info-item-icon .fa-solid {
+  font-size: 1.5rem;
+  color: var(--vermilion);
+}
+.g-widget-link-icon i,
+.g-widget-link-icon .fa-solid {
+  font-size: 0.9rem;
+  width: 1.2rem;
+  text-align: center;
+}
+.g-etiquette-icon i { font-size: 1rem; }
+
+
+/* g-nav-right: holds lang switcher + back link */
+.g-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }

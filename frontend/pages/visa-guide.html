@@ -6,6 +6,8 @@
   <title>Japan Visa Guide — Nihon Travel</title>
   <link rel="stylesheet" href="/css/guides.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <script src="/js/i18n.js" defer></script>
 </head>
 <body>
 
@@ -14,11 +16,18 @@
   <div class="g-nav-inner">
     <a href="/" class="g-nav-logo"><span class="kanji">日</span> Nihon Travel</a>
     <div class="g-nav-links">
-      <a href="/#destinations">Destinations</a>
-      <a href="/#about">About Japan</a>
-      <a href="/#contact">Contact</a>
+      <a href="/#destinations" data-i18n="nav.destinations">Destinations</a>
+      <a href="/#about" data-i18n="nav.about">About Japan</a>
+      <a href="/#contact" data-i18n="nav.contact">Contact</a>
     </div>
-    <a href="/pages/travel-tips.html" class="g-nav-back">← Travel Tips</a>
+        <div class="g-nav-right">
+      <div class="lang-switcher" role="group" aria-label="Language">
+        <button class="lang-btn active" data-lang="en" title="English">EN</button>
+        <button class="lang-btn" data-lang="ru" title="Русский">RU</button>
+        <button class="lang-btn" data-lang="kz" title="Қазақша">KZ</button>
+      </div>
+      <a href="/pages/travel-tips.html" class="g-nav-back" data-i18n="nav.back-tips"><i class="fa-solid fa-arrow-left"></i> Travel Tips</a>
+    </div>
   </div>
 </nav>
 
@@ -27,18 +36,18 @@
   <div class="g-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=1600&q=90')"></div>
   <div class="g-hero-overlay"></div>
   <div class="g-hero-content">
-    <span class="g-hero-tag">Entry Requirements</span>
-    <h1 class="g-hero-title">Japan Visa Guide</h1>
-    <p class="g-hero-subtitle">Everything you need to know about entering Japan — from visa-free access to application steps, documents and arrival tips.</p>
+    <span class="g-hero-tag" data-i18n="visa.hero.tag">Entry Requirements</span>
+    <h1 class="g-hero-title" data-i18n="visa.hero.title">Japan Visa Guide</h1>
+    <p class="g-hero-subtitle" data-i18n="visa.hero.subtitle">Everything you need to know about entering Japan — from visa-free access to application steps, documents and arrival tips.</p>
   </div>
 </section>
 
 <!-- BREADCRUMB -->
 <div class="g-breadcrumb">
   <div class="g-breadcrumb-inner">
-    <a href="/">Home</a><span class="g-breadcrumb-sep">›</span>
-    <a href="/pages/travel-tips.html">Travel Tips</a><span class="g-breadcrumb-sep">›</span>
-    <span class="g-breadcrumb-current">Visa Guide</span>
+    <a href="/" data-i18n="bc.home">Home</a><span class="g-breadcrumb-sep">›</span>
+    <a href="/pages/travel-tips.html" data-i18n="bc.tips">Travel Tips</a><span class="g-breadcrumb-sep">›</span>
+    <span class="g-breadcrumb-current" data-i18n="bc.visa">Visa Guide</span>
   </div>
 </div>
 
@@ -48,60 +57,60 @@
 
     <!-- Visa Free -->
     <div class="g-card" data-aos="fade-up">
-      <p class="g-label">Good News First</p>
-      <h2 class="g-card-title"><span class="g-card-title-icon">🎉</span> Visa-Free Access for Many Countries</h2>
-      <p class="g-card-text">Japan grants visa-free entry (visa waiver) to citizens of over 70 countries for stays up to 90 days for tourism. No prior application or visit to an embassy is needed — you simply arrive, pass immigration, and you're in.</p>
+      <p class="g-label" data-i18n="visa.free.label">Good News First</p>
+      <h2 class="g-card-title"><span class="g-card-title-icon"><i class="fa-solid fa-champagne-glasses"></i></span> <span data-i18n="visa.free.title">Visa-Free Access for Many Countries</span></h2>
+      <p class="g-card-text" data-i18n="visa.free.p1">Japan grants visa-free entry (visa waiver) to citizens of over 70 countries for stays up to 90 days for tourism. No prior application or visit to an embassy is needed — you simply arrive, pass immigration, and you're in.</p>
 
       <div class="g-highlight green">
-        <span class="g-highlight-icon">✅</span>
-        <span><strong>Visa-free countries include:</strong> USA, UK, EU countries, Canada, Australia, New Zealand, South Korea, Singapore, most Western nations. Your passport is your visa.</span>
+        <span class="g-highlight-icon"><i class="fa-solid fa-circle-check"></i></span>
+        <span data-i18n="visa.free.tip1"><strong>Visa-free countries include:</strong> USA, UK, EU countries, Canada, Australia, New Zealand, South Korea, Singapore, most Western nations. Your passport is your visa.</span>
       </div>
 
       <div class="g-highlight gold">
-        <span class="g-highlight-icon">⚠️</span>
-        <span><strong>Kazakhstan, Uzbekistan, and most Central Asian countries</strong> require a tourist visa. Apply at your nearest Japanese embassy 2–4 weeks before travel.</span>
+        <span class="g-highlight-icon"><i class="fa-solid fa-triangle-exclamation"></i></span>
+        <span data-i18n="visa.free.tip2"><strong>Kazakhstan, Uzbekistan, and most Central Asian countries</strong> require a tourist visa. Apply at your nearest Japanese embassy 2–4 weeks before travel.</span>
       </div>
     </div>
 
     <!-- Visa Application Steps -->
     <div class="g-card" data-aos="fade-up">
-      <p class="g-label">For Countries Requiring a Visa</p>
-      <h2 class="g-card-title"><span class="g-card-title-icon">📋</span> How to Apply — Step by Step</h2>
+      <p class="g-label" data-i18n="visa.apply.label">For Countries Requiring a Visa</p>
+      <h2 class="g-card-title"><span class="g-card-title-icon"><i class="fa-solid fa-clipboard-list"></i></span> <span data-i18n="visa.apply.title">How to Apply — Step by Step</span></h2>
 
       <div class="g-steps">
         <div class="g-step">
           <div class="g-step-num">1</div>
           <div>
-            <div class="g-step-title">Find Your Nearest Japanese Embassy or Consulate</div>
-            <div class="g-step-text">Japan has embassies in Astana (Kazakhstan), Tashkent (Uzbekistan), Baku (Azerbaijan) and other major cities. Check the official Ministry of Foreign Affairs Japan website for the correct office.</div>
+            <div class="g-step-title" data-i18n="visa.s1.title">Find Your Nearest Japanese Embassy or Consulate</div>
+            <div class="g-step-text" data-i18n="visa.s1.text">Japan has embassies in Astana (Kazakhstan), Tashkent (Uzbekistan), Baku (Azerbaijan) and other major cities. Check the official Ministry of Foreign Affairs Japan website for the correct office.</div>
           </div>
         </div>
         <div class="g-step">
           <div class="g-step-num">2</div>
           <div>
-            <div class="g-step-title">Prepare Required Documents</div>
-            <div class="g-step-text">Gather all required documents (see checklist below). Incomplete applications are returned immediately. Have both originals and copies ready.</div>
+            <div class="g-step-title" data-i18n="visa.s2.title">Prepare Required Documents</div>
+            <div class="g-step-text" data-i18n="visa.s2.text">Gather all required documents (see checklist below). Incomplete applications are returned immediately. Have both originals and copies ready.</div>
           </div>
         </div>
         <div class="g-step">
           <div class="g-step-num">3</div>
           <div>
-            <div class="g-step-title">Submit at the Embassy</div>
-            <div class="g-step-text">Submit in person or via a registered travel agency. Most Japanese embassies do not accept postal applications for first-time applicants.</div>
+            <div class="g-step-title" data-i18n="visa.s3.title">Submit at the Embassy</div>
+            <div class="g-step-text" data-i18n="visa.s3.text">Submit in person or via a registered travel agency. Most Japanese embassies do not accept postal applications for first-time applicants.</div>
           </div>
         </div>
         <div class="g-step">
           <div class="g-step-num">4</div>
           <div>
-            <div class="g-step-title">Wait for Processing (5–10 Business Days)</div>
-            <div class="g-step-text">Standard processing takes 5 working days. Apply at least 3–4 weeks before your planned travel date. Express processing is not typically available.</div>
+            <div class="g-step-title" data-i18n="visa.s4.title">Wait for Processing (5–10 Business Days)</div>
+            <div class="g-step-text" data-i18n="visa.s4.text">Standard processing takes 5 working days. Apply at least 3–4 weeks before your planned travel date. Express processing is not typically available.</div>
           </div>
         </div>
         <div class="g-step">
           <div class="g-step-num">5</div>
           <div>
-            <div class="g-step-title">Collect Your Passport with Visa</div>
-            <div class="g-step-text">Pick up in person or arrange collection through your travel agency. Check the visa dates carefully — single-entry visas cannot be extended inside Japan.</div>
+            <div class="g-step-title" data-i18n="visa.s5.title">Collect Your Passport with Visa</div>
+            <div class="g-step-text" data-i18n="visa.s5.text">Pick up in person or arrange collection through your travel agency. Check the visa dates carefully — single-entry visas cannot be extended inside Japan.</div>
           </div>
         </div>
       </div>
@@ -109,122 +118,122 @@
 
     <!-- Document Checklist -->
     <div class="g-card" data-aos="fade-up">
-      <p class="g-label">Document Checklist</p>
-      <h2 class="g-card-title"><span class="g-card-title-icon">📁</span> Required Documents</h2>
+      <p class="g-label" data-i18n="visa.docs.label">Document Checklist</p>
+      <h2 class="g-card-title"><span class="g-card-title-icon"><i class="fa-solid fa-folder-open"></i></span> <span data-i18n="visa.docs.title">Required Documents</span></h2>
 
       <div class="g-info-grid">
         <div class="g-info-item">
-          <div class="g-info-item-icon">📘</div>
-          <div class="g-info-item-title">Valid Passport</div>
-          <div class="g-info-item-text">At least 6 months validity beyond your return date. At least 2 blank pages. Original + copy of main page.</div>
+          <div class="g-info-item-icon"><i class="fa-solid fa-book"></i></div>
+          <div class="g-info-item-title" data-i18n="visa.doc.1.title">Valid Passport</div>
+          <div class="g-info-item-text" data-i18n="visa.doc.1.text">At least 6 months validity beyond your return date. At least 2 blank pages. Original + copy of main page.</div>
         </div>
         <div class="g-info-item">
-          <div class="g-info-item-icon">📸</div>
-          <div class="g-info-item-title">Visa Application Photo</div>
-          <div class="g-info-item-text">45mm × 45mm, white background, taken within 6 months. No glasses, neutral expression. Printed (not digital).</div>
+          <div class="g-info-item-icon"><i class="fa-solid fa-camera"></i></div>
+          <div class="g-info-item-title" data-i18n="visa.doc.2.title">Visa Application Photo</div>
+          <div class="g-info-item-text" data-i18n="visa.doc.2.text">45mm × 45mm, white background, taken within 6 months. No glasses, neutral expression. Printed (not digital).</div>
         </div>
         <div class="g-info-item">
-          <div class="g-info-item-icon">📝</div>
-          <div class="g-info-item-title">Application Form</div>
-          <div class="g-info-item-text">Downloaded from the embassy website. Filled in black ink (or typed). Signed by applicant. No corrections with correction fluid.</div>
+          <div class="g-info-item-icon"><i class="fa-solid fa-pen-to-square"></i></div>
+          <div class="g-info-item-title" data-i18n="visa.doc.3.title">Application Form</div>
+          <div class="g-info-item-text" data-i18n="visa.doc.3.text">Downloaded from the embassy website. Filled in black ink (or typed). Signed by applicant. No corrections with correction fluid.</div>
         </div>
         <div class="g-info-item">
-          <div class="g-info-item-icon">✈️</div>
-          <div class="g-info-item-title">Flight Itinerary</div>
-          <div class="g-info-item-text">Confirmed round-trip flight booking. A booking confirmation (not a ticket) is acceptable — you don't need to purchase yet.</div>
+          <div class="g-info-item-icon"><i class="fa-solid fa-plane-departure"></i></div>
+          <div class="g-info-item-title" data-i18n="visa.doc.4.title">Flight Itinerary</div>
+          <div class="g-info-item-text" data-i18n="visa.doc.4.text">Confirmed round-trip flight booking. A booking confirmation (not a ticket) is acceptable — you don't need to purchase yet.</div>
         </div>
         <div class="g-info-item">
-          <div class="g-info-item-icon">🏨</div>
-          <div class="g-info-item-title">Hotel Reservations</div>
-          <div class="g-info-item-text">Booking confirmation for all nights in Japan. Use cancellable bookings on Booking.com or Hotels.com during the application process.</div>
+          <div class="g-info-item-icon"><i class="fa-solid fa-hotel"></i></div>
+          <div class="g-info-item-title" data-i18n="visa.doc.5.title">Hotel Reservations</div>
+          <div class="g-info-item-text" data-i18n="visa.doc.5.text">Booking confirmation for all nights in Japan. Use cancellable bookings on Booking.com or Hotels.com during the application process.</div>
         </div>
         <div class="g-info-item">
-          <div class="g-info-item-icon">💰</div>
-          <div class="g-info-item-title">Bank Statement</div>
-          <div class="g-info-item-text">Last 3–6 months of bank statements. Must show sufficient funds (approx. $100/day or equivalent). Official stamp from the bank required.</div>
+          <div class="g-info-item-icon"><i class="fa-solid fa-sack-dollar"></i></div>
+          <div class="g-info-item-title" data-i18n="visa.doc.6.title">Bank Statement</div>
+          <div class="g-info-item-text" data-i18n="visa.doc.6.text">Last 3–6 months of bank statements. Must show sufficient funds (approx. $100/day or equivalent). Official stamp from the bank required.</div>
         </div>
         <div class="g-info-item">
-          <div class="g-info-item-icon">💼</div>
-          <div class="g-info-item-title">Employment Proof</div>
-          <div class="g-info-item-text">Employment certificate or letter from employer confirming your position, salary and approved leave. Self-employed: business registration documents.</div>
+          <div class="g-info-item-icon"><i class="fa-solid fa-briefcase"></i></div>
+          <div class="g-info-item-title" data-i18n="visa.doc.7.title">Employment Proof</div>
+          <div class="g-info-item-text" data-i18n="visa.doc.7.text">Employment certificate or letter from employer confirming your position, salary and approved leave. Self-employed: business registration documents.</div>
         </div>
         <div class="g-info-item">
-          <div class="g-info-item-icon">📅</div>
-          <div class="g-info-item-title">Travel Itinerary</div>
-          <div class="g-info-item-text">Day-by-day plan of your visit: cities you'll visit, activities planned. Can be self-prepared — no official format required.</div>
+          <div class="g-info-item-icon"><i class="fa-solid fa-calendar-check"></i></div>
+          <div class="g-info-item-title" data-i18n="visa.doc.8.title">Travel Itinerary</div>
+          <div class="g-info-item-text" data-i18n="visa.doc.8.text">Day-by-day plan of your visit: cities you'll visit, activities planned. Can be self-prepared — no official format required.</div>
         </div>
       </div>
 
       <div class="g-highlight blue">
         <span class="g-highlight-icon">ℹ️</span>
-        <span>Requirements can change. Always verify the current checklist on your country's Japanese Embassy website before applying. Some embassies may request additional documents.</span>
+        <span data-i18n="visa.docs.tip">Requirements can change. Always verify the current checklist on your country's Japanese Embassy website before applying. Some embassies may request additional documents.</span>
       </div>
     </div>
 
     <!-- Visa Types -->
     <div class="g-card" data-aos="fade-up">
-      <p class="g-label">Visa Options</p>
-      <h2 class="g-card-title"><span class="g-card-title-icon">🗂️</span> Types of Tourist Visas</h2>
+      <p class="g-label" data-i18n="visa.types.label">Visa Options</p>
+      <h2 class="g-card-title"><span class="g-card-title-icon"><i class="fa-solid fa-layer-group"></i></span> <span data-i18n="visa.types.title">Types of Tourist Visas</span></h2>
 
       <div class="g-table-wrap">
         <table class="g-table">
           <thead>
-            <tr><th>Visa Type</th><th>Stay Duration</th><th>Entries</th><th>Best For</th></tr>
+            <tr><th data-i18n="visa.tbl.h.type">Visa Type</th><th data-i18n="visa.tbl.h.stay">Stay Duration</th><th data-i18n="visa.tbl.h.entries">Entries</th><th data-i18n="visa.tbl.h.best">Best For</th></tr>
           </thead>
           <tbody>
-            <tr><td><strong>Single Entry</strong></td><td>Up to 15 or 30 days</td><td>1 entry</td><td>First-time visitors, short trips</td></tr>
-            <tr><td><strong>Double Entry</strong></td><td>Up to 30 days each</td><td>2 entries</td><td>Trips that include a side trip (e.g. Korea)</td></tr>
-            <tr><td><strong>Multiple Entry</strong></td><td>Up to 90 days per visit</td><td>Unlimited</td><td>Frequent travelers, issued for 3–5 years</td></tr>
-            <tr><td><strong>Transit Visa</strong></td><td>Up to 72 hours</td><td>1 entry</td><td>Layovers — though most nationalities transit visa-free</td></tr>
+            <tr><td><strong data-i18n="visa.tbl.r1.type">Single Entry</strong></td><td data-i18n="visa.tbl.r1.stay">Up to 15 or 30 days</td><td data-i18n="visa.tbl.r1.entries">1 entry</td><td data-i18n="visa.tbl.r1.best">First-time visitors, short trips</td></tr>
+            <tr><td><strong data-i18n="visa.tbl.r2.type">Double Entry</strong></td><td data-i18n="visa.tbl.r2.stay">Up to 30 days each</td><td data-i18n="visa.tbl.r2.entries">2 entries</td><td data-i18n="visa.tbl.r2.best">Trips that include a side trip (e.g. Korea)</td></tr>
+            <tr><td><strong data-i18n="visa.tbl.r3.type">Multiple Entry</strong></td><td data-i18n="visa.tbl.r3.stay">Up to 90 days per visit</td><td data-i18n="visa.tbl.r3.entries">Unlimited</td><td data-i18n="visa.tbl.r3.best">Frequent travelers, issued for 3–5 years</td></tr>
+            <tr><td><strong data-i18n="visa.tbl.r4.type">Transit Visa</strong></td><td data-i18n="visa.tbl.r4.stay">Up to 72 hours</td><td data-i18n="visa.tbl.r4.entries">1 entry</td><td data-i18n="visa.tbl.r4.best">Layovers — though most nationalities transit visa-free</td></tr>
           </tbody>
         </table>
       </div>
 
       <div class="g-highlight green">
-        <span class="g-highlight-icon">💡</span>
-        <span>First-time applicants are typically issued a <strong>single-entry 15-day visa</strong>. After demonstrating a clean travel history, subsequent applications are more likely to receive longer, multiple-entry visas.</span>
+        <span class="g-highlight-icon"><i class="fa-solid fa-lightbulb"></i></span>
+        <span data-i18n="visa.types.tip">First-time applicants are typically issued a <strong>single-entry 15-day visa</strong>. After demonstrating a clean travel history, subsequent applications are more likely to receive longer, multiple-entry visas.</span>
       </div>
     </div>
 
     <!-- At Arrival -->
     <div class="g-card" data-aos="fade-up">
-      <p class="g-label">Arriving in Japan</p>
-      <h2 class="g-card-title"><span class="g-card-title-icon">✈️</span> What Happens at the Airport</h2>
+      <p class="g-label" data-i18n="visa.arr.label">Arriving in Japan</p>
+      <h2 class="g-card-title"><span class="g-card-title-icon"><i class="fa-solid fa-plane-departure"></i></span> <span data-i18n="visa.arr.title">What Happens at the Airport</span></h2>
 
       <div class="g-steps">
         <div class="g-step">
           <div class="g-step-num">①</div>
           <div>
-            <div class="g-step-title">Immigration (入国審査)</div>
-            <div class="g-step-text">Join the "Non-Japanese Passport" queue. You will be fingerprinted (both index fingers) and photographed. Have your return ticket and hotel address ready. Officers may ask about your plans.</div>
+            <div class="g-step-title" data-i18n="visa.arr.s1.title">Immigration (入国審査)</div>
+            <div class="g-step-text" data-i18n="visa.arr.s1.text">Join the "Non-Japanese Passport" queue. You will be fingerprinted (both index fingers) and photographed. Have your return ticket and hotel address ready. Officers may ask about your plans.</div>
           </div>
         </div>
         <div class="g-step">
           <div class="g-step-num">②</div>
           <div>
-            <div class="g-step-title">Customs Declaration Card</div>
-            <div class="g-step-text">Fill in the paper card on the plane or use the electronic kiosk at arrival. Declare any goods exceeding your duty-free allowance. Customs in Japan is strict — declare honestly.</div>
+            <div class="g-step-title" data-i18n="visa.arr.s2.title">Customs Declaration Card</div>
+            <div class="g-step-text" data-i18n="visa.arr.s2.text">Fill in the paper card on the plane or use the electronic kiosk at arrival. Declare any goods exceeding your duty-free allowance. Customs in Japan is strict — declare honestly.</div>
           </div>
         </div>
         <div class="g-step">
           <div class="g-step-num">③</div>
           <div>
             <div class="g-step-title">Baggage Claim & Customs</div>
-            <div class="g-step-text">Collect your bags, then pass through customs. Green lane (nothing to declare) or red lane (items to declare). Spot checks are common. Do not bring: drugs of any kind, certain medications, more than ¥1,000,000 cash undeclared.</div>
+            <div class="g-step-text" data-i18n="visa.arr.s3.text">Collect your bags, then pass through customs. Green lane (nothing to declare) or red lane (items to declare). Spot checks are common. Do not bring: drugs of any kind, certain medications, more than ¥1,000,000 cash undeclared.</div>
           </div>
         </div>
         <div class="g-step">
           <div class="g-step-num">④</div>
           <div>
             <div class="g-step-title">Get Your IC Card & SIM</div>
-            <div class="g-step-text">Before leaving the airport: pick up your pocket WiFi or SIM card (pre-ordered online), and get a Suica or Pasmo IC card from any station machine. Both are essential for smooth travel.</div>
+            <div class="g-step-text" data-i18n="visa.arr.s4.text">Before leaving the airport: pick up your pocket WiFi or SIM card (pre-ordered online), and get a Suica or Pasmo IC card from any station machine. Both are essential for smooth travel.</div>
           </div>
         </div>
       </div>
 
       <div class="g-highlight red">
-        <span class="g-highlight-icon">🚫</span>
-        <span><strong>Important:</strong> Many common medications are prohibited in Japan, including codeine-containing drugs, some ADHD medications (Adderall), and certain stimulants. Check the Ministry of Health's import regulations before packing any prescription drugs.</span>
+        <span class="g-highlight-icon"><i class="fa-solid fa-ban"></i></span>
+        <span data-i18n="visa.arr.warn"><strong>Important:</strong> Many common medications are prohibited in Japan, including codeine-containing drugs, some ADHD medications (Adderall), and certain stimulants. Check the Ministry of Health's import regulations before packing any prescription drugs.</span>
       </div>
     </div>
 
@@ -233,51 +242,51 @@
   <!-- SIDEBAR -->
   <aside class="g-sidebar">
     <div class="g-widget" data-aos="fade-left">
-      <div class="g-widget-title">All Travel Guides</div>
+      <div class="g-widget-title" data-i18n="visa.sb.guides">All Travel Guides</div>
       <a href="/pages/when-to-visit.html" class="g-widget-link">
-        <span class="g-widget-link-icon">🗓️</span> When to Visit
+        <span class="g-widget-link-icon"><i class="fa-solid fa-calendar-days"></i></span> <span data-i18n="sb.lnk.when">When to Visit</span>
       </a>
       <a href="/pages/visa-guide.html" class="g-widget-link" style="color:var(--vermilion);font-weight:600">
-        <span class="g-widget-link-icon">🛂</span> Visa Guide
+        <span class="g-widget-link-icon"><i class="fa-solid fa-passport"></i></span> <span data-i18n="sb.lnk.visa">Visa Guide</span>
       </a>
       <a href="/pages/jr-pass.html" class="g-widget-link">
-        <span class="g-widget-link-icon">🚄</span> JR Pass Info
+        <span class="g-widget-link-icon"><i class="fa-solid fa-train"></i></span> <span data-i18n="sb.lnk.jr">JR Pass Info</span>
       </a>
       <a href="/pages/etiquette.html" class="g-widget-link">
-        <span class="g-widget-link-icon">🎌</span> Etiquette
+        <span class="g-widget-link-icon"><i class="fa-solid fa-flag"></i></span> <span data-i18n="sb.lnk.etq">Etiquette</span>
       </a>
     </div>
 
     <div class="g-widget" data-aos="fade-left" data-aos-delay="80">
-      <div class="g-widget-title">Visa at a Glance</div>
-      <div class="g-price-row"><span class="g-price-label">Tourist visa fee</span><span class="g-price-val">~$25–50</span></div>
-      <div class="g-price-row"><span class="g-price-label">Processing time</span><span class="g-price-val">5–10 days</span></div>
-      <div class="g-price-row"><span class="g-price-label">Max stay (tourist)</span><span class="g-price-val">90 days</span></div>
-      <div class="g-price-row"><span class="g-price-label">Visa-free countries</span><span class="g-price-val">70+</span></div>
+      <div class="g-widget-title" data-i18n="visa.sb.glance">Visa at a Glance</div>
+      <div class="g-price-row"><span class="g-price-label" data-i18n="visa.sb.fee">Tourist visa fee</span><span class="g-price-val">~$25–50</span></div>
+      <div class="g-price-row"><span class="g-price-label" data-i18n="visa.sb.proc">Processing time</span><span class="g-price-val">5–10 days</span></div>
+      <div class="g-price-row"><span class="g-price-label" data-i18n="visa.sb.stay">Max stay (tourist)</span><span class="g-price-val">90 days</span></div>
+      <div class="g-price-row"><span class="g-price-label" data-i18n="visa.sb.free">Visa-free countries</span><span class="g-price-val">70+</span></div>
     </div>
 
     <div class="g-widget" data-aos="fade-left" data-aos-delay="120">
-      <div class="g-widget-title">Official Resources</div>
+      <div class="g-widget-title" data-i18n="visa.sb.resources">Official Resources</div>
       <div style="display:flex;flex-direction:column;gap:0.75rem;margin-top:0.5rem">
         <a href="https://www.mofa.go.jp/j_info/visit/visa/index.html" target="_blank" rel="noopener"
            style="font-size:0.82rem;color:var(--vermilion);display:flex;align-items:center;gap:0.4rem">
-          🔗 Japan MOFA Visa Info
+          <i class="fa-solid fa-link"></i> Japan MOFA Visa Info
         </a>
         <a href="https://www.mhlw.go.jp/english/policy/health-medical/pharmaceuticals/01.html" target="_blank" rel="noopener"
            style="font-size:0.82rem;color:var(--vermilion);display:flex;align-items:center;gap:0.4rem">
-          🔗 Medication Import Rules
+          <i class="fa-solid fa-link"></i> Medication Import Rules
         </a>
         <a href="https://www.customs.go.jp/english/index.htm" target="_blank" rel="noopener"
            style="font-size:0.82rem;color:var(--vermilion);display:flex;align-items:center;gap:0.4rem">
-          🔗 Japan Customs
+          <i class="fa-solid fa-link"></i> Japan Customs
         </a>
       </div>
     </div>
 
     <div class="g-widget" data-aos="fade-left" data-aos-delay="160">
-      <div class="g-widget-title">Need Help Planning?</div>
-      <p style="font-size:0.83rem;color:var(--stone);margin-bottom:1rem;line-height:1.6">Our specialists can guide you through the visa process and plan your full itinerary.</p>
-      <a href="/#contact" class="g-btn g-btn-primary" style="width:100%;justify-content:center">Contact Us</a>
+      <div class="g-widget-title" data-i18n="visa.sb.help">Need Help Planning?</div>
+      <p style="font-size:0.83rem;color:var(--stone);margin-bottom:1rem;line-height:1.6" data-i18n="visa.sb.help.desc">Our specialists can guide you through the visa process and plan your full itinerary.</p>
+      <a href="/#contact" class="g-btn g-btn-primary" data-i18n="visa.sb.help.btn" style="width:100%;justify-content:center">Contact Us</a>
     </div>
   </aside>
 </div>

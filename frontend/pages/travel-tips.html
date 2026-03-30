@@ -132,6 +132,8 @@
       .quick-tips-grid { grid-template-columns: 1fr; }
     }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <script src="/js/i18n.js" defer></script>
 </head>
 <body>
 
@@ -140,11 +142,18 @@
   <div class="g-nav-inner">
     <a href="/" class="g-nav-logo"><span class="kanji">日</span> Nihon Travel</a>
     <div class="g-nav-links">
-      <a href="/#destinations">Destinations</a>
-      <a href="/#about">About Japan</a>
-      <a href="/#contact">Contact</a>
+      <a href="/#destinations" data-i18n="nav.destinations">Destinations</a>
+      <a href="/#about" data-i18n="nav.about">About Japan</a>
+      <a href="/#contact" data-i18n="nav.contact">Contact</a>
     </div>
-    <a href="/" class="g-nav-back">← Back to Home</a>
+        <div class="g-nav-right">
+      <div class="lang-switcher" role="group" aria-label="Language">
+        <button class="lang-btn active" data-lang="en" title="English">EN</button>
+        <button class="lang-btn" data-lang="ru" title="Русский">RU</button>
+        <button class="lang-btn" data-lang="kz" title="Қазақша">KZ</button>
+      </div>
+      <a href="/" class="g-nav-back" data-i18n="nav.back-home"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+    </div>
   </div>
 </nav>
 
@@ -153,17 +162,17 @@
   <div class="g-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=1600&q=90')"></div>
   <div class="g-hero-overlay"></div>
   <div class="g-hero-content">
-    <span class="g-hero-tag">Traveller Resources</span>
-    <h1 class="g-hero-title">Japan Travel Tips</h1>
-    <p class="g-hero-subtitle">Everything you need to know before, during, and after your journey to Japan — from visas and transport to culture and customs.</p>
+    <span class="g-hero-tag" data-i18n="tips.hero.tag" >Traveller Resources</span>
+    <h1 class="g-hero-title" data-i18n="tips.hero.title" >Japan Travel Tips</h1>
+    <p class="g-hero-subtitle" data-i18n="tips.hero.subtitle">Everything you need to know before, during, and after your journey to Japan — from visas and transport to culture and customs.</p>
   </div>
 </section>
 
 <!-- BREADCRUMB -->
 <div class="g-breadcrumb">
   <div class="g-breadcrumb-inner">
-    <a href="/">Home</a><span class="g-breadcrumb-sep">›</span>
-    <span class="g-breadcrumb-current">Travel Tips</span>
+    <a href="/" data-i18n="bc.home">Home</a><span class="g-breadcrumb-sep">›</span>
+    <span class="g-breadcrumb-current" data-i18n="bc.tips">Travel Tips</span>
   </div>
 </div>
 
@@ -172,160 +181,160 @@
 
   <!-- Guide Cards -->
   <div data-aos="fade-up">
-    <p class="g-label">Travel Guides</p>
-    <h2 style="font-family:var(--font-serif);font-size:2rem;color:var(--ink);margin-bottom:0.5rem">Essential Japan Guides</h2>
-    <p style="font-size:0.93rem;color:var(--stone);max-width:560px;line-height:1.8">Four comprehensive guides covering the most important aspects of planning and experiencing Japan.</p>
+    <p class="g-label" data-i18n="tips.guides.label" >Travel Guides</p>
+    <h2 style="font-family:var(--font-serif);font-size:2rem;color:var(--ink);margin-bottom:0.5rem" data-i18n="tips.guides.title" >Essential Japan Guides</h2>
+    <p style="font-size:0.93rem;color:var(--stone);max-width:560px;line-height:1.8" data-i18n="tips.guides.sub" >Four comprehensive guides covering the most important aspects of planning and experiencing Japan.</p>
   </div>
 
   <div class="hub-grid">
     <a href="/pages/when-to-visit.html" class="hub-card hub-card-1" data-aos="fade-up" data-aos-delay="0">
       <div class="hub-card-header">
-        <span class="hub-card-icon">🌸</span>
-        <h3 class="hub-card-title">When to Visit</h3>
-        <p class="hub-card-sub">Seasons & Timing</p>
+        <span class="hub-card-icon"><i class="fa-solid fa-spa"></i></span>
+        <h3 class="hub-card-title" data-i18n="tips.card1.title" >When to Visit</h3>
+        <p class="hub-card-sub" data-i18n="tips.card1.sub" >Seasons & Timing</p>
       </div>
       <div class="hub-card-body">
-        <p class="hub-card-desc">Navigate Japan's four dramatically different seasons. Find the best time for cherry blossoms, fall foliage, summer festivals, and winter skiing — matched to your travel style.</p>
+        <p class="hub-card-desc" data-i18n="tips.card1.desc" >Navigate Japan's four dramatically different seasons. Find the best time for cherry blossoms, fall foliage, summer festivals, and winter skiing — matched to your travel style.</p>
         <div class="hub-card-topics">
-          <span class="hub-topic">Cherry Blossoms</span>
-          <span class="hub-topic">Autumn Foliage</span>
-          <span class="hub-topic">Monthly Guide</span>
-          <span class="hub-topic">Regional Climate</span>
+          <span class="hub-topic" data-i18n="tips.card1.topic1" >Cherry Blossoms</span>
+          <span class="hub-topic" data-i18n="tips.card1.topic2" >Autumn Foliage</span>
+          <span class="hub-topic" data-i18n="tips.card1.topic3" >Monthly Guide</span>
+          <span class="hub-topic" data-i18n="tips.card1.topic4" >Regional Climate</span>
         </div>
-        <span class="hub-card-link">Read Guide →</span>
+        <span class="hub-card-link" data-i18n="tips.card1.link" >Read Guide →</span>
       </div>
     </a>
 
     <a href="/pages/visa-guide.html" class="hub-card hub-card-2" data-aos="fade-up" data-aos-delay="80">
       <div class="hub-card-header">
-        <span class="hub-card-icon">🛂</span>
-        <h3 class="hub-card-title">Visa Guide</h3>
-        <p class="hub-card-sub">Entry Requirements</p>
+        <span class="hub-card-icon"><i class="fa-solid fa-passport"></i></span>
+        <h3 class="hub-card-title" data-i18n="tips.card2.title" >Visa Guide</h3>
+        <p class="hub-card-sub" data-i18n="tips.card2.sub" >Entry Requirements</p>
       </div>
       <div class="hub-card-body">
-        <p class="hub-card-desc">Learn whether you need a visa, how to apply, what documents to prepare, and what to expect at Japanese immigration. Includes country-specific guidance.</p>
+        <p class="hub-card-desc" data-i18n="tips.card2.desc" >Learn whether you need a visa, how to apply, what documents to prepare, and what to expect at Japanese immigration. Includes country-specific guidance.</p>
         <div class="hub-card-topics">
-          <span class="hub-topic">Visa-Free Countries</span>
-          <span class="hub-topic">Application Steps</span>
-          <span class="hub-topic">Documents Checklist</span>
-          <span class="hub-topic">Airport Arrival</span>
+          <span class="hub-topic" data-i18n="tips.card2.topic1" >Visa-Free Countries</span>
+          <span class="hub-topic" data-i18n="tips.card2.topic2" >Application Steps</span>
+          <span class="hub-topic" data-i18n="tips.card2.topic3" >Documents Checklist</span>
+          <span class="hub-topic" data-i18n="tips.card2.topic4" >Airport Arrival</span>
         </div>
-        <span class="hub-card-link">Read Guide →</span>
+        <span class="hub-card-link" data-i18n="tips.card2.link" >Read Guide →</span>
       </div>
     </a>
 
     <a href="/pages/jr-pass.html" class="hub-card hub-card-3" data-aos="fade-up" data-aos-delay="120">
       <div class="hub-card-header">
-        <span class="hub-card-icon">🚄</span>
-        <h3 class="hub-card-title">JR Pass Info</h3>
-        <p class="hub-card-sub">Train & Transport</p>
+        <span class="hub-card-icon"><i class="fa-solid fa-train"></i></span>
+        <h3 class="hub-card-title" data-i18n="tips.card3.title" >JR Pass Info</h3>
+        <p class="hub-card-sub" data-i18n="tips.card3.sub" >Train & Transport</p>
       </div>
       <div class="hub-card-body">
-        <p class="hub-card-desc">The Japan Rail Pass unlocks unlimited Shinkansen travel for tourists. Understand pricing, what's covered, how to buy, and whether it's worth it for your itinerary.</p>
+        <p class="hub-card-desc" data-i18n="tips.card3.desc" >The Japan Rail Pass unlocks unlimited Shinkansen travel for tourists. Understand pricing, what's covered, how to buy, and whether it's worth it for your itinerary.</p>
         <div class="hub-card-topics">
-          <span class="hub-topic">Pass Prices</span>
-          <span class="hub-topic">What's Covered</span>
-          <span class="hub-topic">How to Buy</span>
-          <span class="hub-topic">Sample Routes</span>
+          <span class="hub-topic" data-i18n="tips.card3.topic1" >Pass Prices</span>
+          <span class="hub-topic" data-i18n="tips.card3.topic2" >What's Covered</span>
+          <span class="hub-topic" data-i18n="tips.card3.topic3" >How to Buy</span>
+          <span class="hub-topic" data-i18n="tips.card3.topic4" >Sample Routes</span>
         </div>
-        <span class="hub-card-link">Read Guide →</span>
+        <span class="hub-card-link" data-i18n="tips.card3.link" >Read Guide →</span>
       </div>
     </a>
 
     <a href="/pages/etiquette.html" class="hub-card hub-card-4" data-aos="fade-up" data-aos-delay="160">
       <div class="hub-card-header">
-        <span class="hub-card-icon">🎌</span>
-        <h3 class="hub-card-title">Etiquette</h3>
-        <p class="hub-card-sub">Culture & Customs</p>
+        <span class="hub-card-icon"><i class="fa-solid fa-flag"></i></span>
+        <h3 class="hub-card-title" data-i18n="tips.card4.title" >Etiquette</h3>
+        <p class="hub-card-sub" data-i18n="tips.card4.sub" >Culture & Customs</p>
       </div>
       <div class="hub-card-body">
-        <p class="hub-card-desc">Japan has a rich culture of unwritten rules. Understand the customs around dining, temples, onsen, transport and everyday interactions — and earn the deep respect of locals.</p>
+        <p class="hub-card-desc" data-i18n="tips.card4.desc" >Japan has a rich culture of unwritten rules. Understand the customs around dining, temples, onsen, transport and everyday interactions — and earn the deep respect of locals.</p>
         <div class="hub-card-topics">
-          <span class="hub-topic">Dos & Don'ts</span>
-          <span class="hub-topic">Onsen Rules</span>
-          <span class="hub-topic">Temple Customs</span>
-          <span class="hub-topic">Dining</span>
+          <span class="hub-topic" data-i18n="tips.card4.topic1" >Dos & Don'ts</span>
+          <span class="hub-topic" data-i18n="tips.card4.topic2" >Onsen Rules</span>
+          <span class="hub-topic" data-i18n="tips.card4.topic3" >Temple Customs</span>
+          <span class="hub-topic" data-i18n="tips.card4.topic4" >Dining</span>
         </div>
-        <span class="hub-card-link">Read Guide →</span>
+        <span class="hub-card-link" data-i18n="tips.card4.link" >Read Guide →</span>
       </div>
     </a>
   </div>
 
   <!-- Quick Tips Section -->
   <div style="margin-top:5rem" data-aos="fade-up">
-    <p class="g-label">At a Glance</p>
-    <h2 style="font-family:var(--font-serif);font-size:2rem;color:var(--ink);margin-bottom:0.5rem">12 Quick Tips for Every Traveller</h2>
-    <p style="font-size:0.93rem;color:var(--stone);max-width:560px;line-height:1.8;margin-bottom:0.5rem">The most important things to know, condensed.</p>
+    <p class="g-label" data-i18n="tips.quick.label" >At a Glance</p>
+    <h2 style="font-family:var(--font-serif);font-size:2rem;color:var(--ink);margin-bottom:0.5rem" data-i18n="tips.quick.title" >12 Quick Tips for Every Traveller</h2>
+    <p style="font-size:0.93rem;color:var(--stone);max-width:560px;line-height:1.8;margin-bottom:0.5rem" data-i18n="tips.quick.desc" >The most important things to know, condensed.</p>
   </div>
 
   <div class="quick-tips-grid">
     <div class="quick-tip" data-aos="fade-up" data-aos-delay="0">
-      <div class="quick-tip-icon">💴</div>
-      <div class="quick-tip-title">Carry Cash</div>
-      <div class="quick-tip-text">Many restaurants, shrines and small shops are cash-only. 7-Eleven ATMs reliably accept foreign cards.</div>
+      <div class="quick-tip-icon"><i class="fa-solid fa-yen-sign"></i></div>
+      <div class="quick-tip-title" data-i18n="tips.tip1.title" >Carry Cash</div>
+      <div class="quick-tip-text" data-i18n="tips.tip1.text" >Many restaurants, shrines and small shops are cash-only. 7-Eleven ATMs reliably accept foreign cards.</div>
     </div>
     <div class="quick-tip" data-aos="fade-up" data-aos-delay="40">
-      <div class="quick-tip-icon">🚫</div>
-      <div class="quick-tip-title">Never Tip</div>
-      <div class="quick-tip-text">Tipping is not part of Japanese culture and can be seen as rude or confusing. The price includes everything.</div>
+      <div class="quick-tip-icon"><i class="fa-solid fa-ban"></i></div>
+      <div class="quick-tip-title" data-i18n="tips.tip2.title" >Never Tip</div>
+      <div class="quick-tip-text" data-i18n="tips.tip2.text" >Tipping is not part of Japanese culture and can be seen as rude or confusing. The price includes everything.</div>
     </div>
     <div class="quick-tip" data-aos="fade-up" data-aos-delay="80">
-      <div class="quick-tip-icon">📶</div>
-      <div class="quick-tip-title">Get a SIM or WiFi</div>
-      <div class="quick-tip-text">Rent a pocket WiFi or buy a data SIM at the airport. Essential for Google Maps and Google Translate.</div>
+      <div class="quick-tip-icon"><i class="fa-solid fa-wifi"></i></div>
+      <div class="quick-tip-title" data-i18n="tips.tip3.title" >Get a SIM or WiFi</div>
+      <div class="quick-tip-text" data-i18n="tips.tip3.text" >Rent a pocket WiFi or buy a data SIM at the airport. Essential for Google Maps and Google Translate.</div>
     </div>
     <div class="quick-tip" data-aos="fade-up" data-aos-delay="120">
-      <div class="quick-tip-icon">🎌</div>
-      <div class="quick-tip-title">Learn 5 Japanese Words</div>
-      <div class="quick-tip-text">Arigatō, sumimasen, onegaishimasu, itadakimasu, and kanpai. Locals will light up when you use them.</div>
+      <div class="quick-tip-icon"><i class="fa-solid fa-flag"></i></div>
+      <div class="quick-tip-title" data-i18n="tips.tip4.title" >Learn 5 Japanese Words</div>
+      <div class="quick-tip-text" data-i18n="tips.tip4.text" >Arigatō, sumimasen, onegaishimasu, itadakimasu, and kanpai. Locals will light up when you use them.</div>
     </div>
     <div class="quick-tip" data-aos="fade-up" data-aos-delay="160">
-      <div class="quick-tip-icon">🗑️</div>
-      <div class="quick-tip-title">Carry a Trash Bag</div>
-      <div class="quick-tip-text">Public bins are extremely rare in Japan. Carry a small bag for wrappers and bottles until you find a convenience store bin.</div>
+      <div class="quick-tip-icon"><i class="fa-solid fa-trash-can"></i></div>
+      <div class="quick-tip-title" data-i18n="tips.tip5.title" >Carry a Trash Bag</div>
+      <div class="quick-tip-text" data-i18n="tips.tip5.text" >Public bins are extremely rare in Japan. Carry a small bag for wrappers and bottles until you find a convenience store bin.</div>
     </div>
     <div class="quick-tip" data-aos="fade-up" data-aos-delay="200">
-      <div class="quick-tip-icon">🤫</div>
-      <div class="quick-tip-title">Quiet on Trains</div>
-      <div class="quick-tip-text">Phone calls are strictly taboo on public transport. Keep voice low. Use headphones. Priority seats are for elderly and pregnant.</div>
+      <div class="quick-tip-icon"><i class="fa-solid fa-ear-deaf"></i></div>
+      <div class="quick-tip-title" data-i18n="tips.tip6.title" >Quiet on Trains</div>
+      <div class="quick-tip-text" data-i18n="tips.tip6.text" >Phone calls are strictly taboo on public transport. Keep voice low. Use headphones. Priority seats are for elderly and pregnant.</div>
     </div>
     <div class="quick-tip" data-aos="fade-up" data-aos-delay="0">
-      <div class="quick-tip-icon">👟</div>
-      <div class="quick-tip-title">Slip-On Shoes</div>
-      <div class="quick-tip-text">You'll remove shoes constantly — at ryokan, many restaurants, temples. Wear shoes you can take off quickly and easily.</div>
+      <div class="quick-tip-icon"><i class="fa-solid fa-shoe-prints"></i></div>
+      <div class="quick-tip-title" data-i18n="tips.tip7.title" >Slip-On Shoes</div>
+      <div class="quick-tip-text" data-i18n="tips.tip7.text" >You'll remove shoes constantly — at ryokan, many restaurants, temples. Wear shoes you can take off quickly and easily.</div>
     </div>
     <div class="quick-tip" data-aos="fade-up" data-aos-delay="40">
-      <div class="quick-tip-icon">🏪</div>
-      <div class="quick-tip-title">Love Your Convenience Store</div>
-      <div class="quick-tip-text">7-Eleven, Lawson and FamilyMart sell genuinely delicious food, hot drinks, medicines, ATM access and more. They're lifesavers.</div>
+      <div class="quick-tip-icon"><i class="fa-solid fa-store"></i></div>
+      <div class="quick-tip-title" data-i18n="tips.tip8.title" >Love Your Convenience Store</div>
+      <div class="quick-tip-text" data-i18n="tips.tip8.text" >7-Eleven, Lawson and FamilyMart sell genuinely delicious food, hot drinks, medicines, ATM access and more. They're lifesavers.</div>
     </div>
     <div class="quick-tip" data-aos="fade-up" data-aos-delay="80">
-      <div class="quick-tip-icon">🚶</div>
-      <div class="quick-tip-title">Walk on the Left</div>
-      <div class="quick-tip-text">Escalators: stand on the left (except in Osaka — stand on the right). Walk on the left side of paths and corridors.</div>
+      <div class="quick-tip-icon"><i class="fa-solid fa-person-walking"></i></div>
+      <div class="quick-tip-title" data-i18n="tips.tip9.title" >Walk on the Left</div>
+      <div class="quick-tip-text" data-i18n="tips.tip9.text" >Escalators: stand on the left (except in Osaka — stand on the right). Walk on the left side of paths and corridors.</div>
     </div>
     <div class="quick-tip" data-aos="fade-up" data-aos-delay="120">
-      <div class="quick-tip-icon">📱</div>
-      <div class="quick-tip-title">Download Offline Maps</div>
-      <div class="quick-tip-text">Download your Japan cities offline in Google Maps before arriving. Also download Google Translate with Japanese for camera translation.</div>
+      <div class="quick-tip-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+      <div class="quick-tip-title" data-i18n="tips.tip10.title" >Download Offline Maps</div>
+      <div class="quick-tip-text" data-i18n="tips.tip10.text" >Download your Japan cities offline in Google Maps before arriving. Also download Google Translate with Japanese for camera translation.</div>
     </div>
     <div class="quick-tip" data-aos="fade-up" data-aos-delay="160">
-      <div class="quick-tip-icon">🌡️</div>
-      <div class="quick-tip-title">Layer Your Clothes</div>
-      <div class="quick-tip-text">Japan's seasons are extreme. Check forecasts daily. Summers are brutal (35°C+) — lightweight, breathable fabrics are essential.</div>
+      <div class="quick-tip-icon"><i class="fa-solid fa-temperature-half"></i></div>
+      <div class="quick-tip-title" data-i18n="tips.tip11.title" >Layer Your Clothes</div>
+      <div class="quick-tip-text" data-i18n="tips.tip11.text" >Japan's seasons are extreme. Check forecasts daily. Summers are brutal (35°C+) — lightweight, breathable fabrics are essential.</div>
     </div>
     <div class="quick-tip" data-aos="fade-up" data-aos-delay="200">
-      <div class="quick-tip-icon">🏥</div>
-      <div class="quick-tip-title">Get Travel Insurance</div>
-      <div class="quick-tip-text">Japan's healthcare is excellent but expensive for foreigners without insurance. Typhoons and natural events can also disrupt travel plans.</div>
+      <div class="quick-tip-icon"><i class="fa-solid fa-hospital"></i></div>
+      <div class="quick-tip-title" data-i18n="tips.tip12.title" >Get Travel Insurance</div>
+      <div class="quick-tip-text" data-i18n="tips.tip12.text" >Japan's healthcare is excellent but expensive for foreigners without insurance. Typhoons and natural events can also disrupt travel plans.</div>
     </div>
   </div>
 
 </div>
 
 <!-- Footer -->
-<footer class="g-footer" style="margin-top:5rem">
-  <p>© 2025 <a href="/">Nihon Travel</a> · All rights reserved</p>
+<footer class="g-footer" style="margin-top:5rem" >
+  <p>© 2025 <a href="/">Nihon Travel</a></p>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>

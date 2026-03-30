@@ -1069,3 +1069,29 @@ img {
     flex-direction: column;
   }
 }
+
+/* ── Lang Switcher (profile / admin) ── */
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--paper);
+  border: 1px solid var(--paper-dark);
+  border-radius: 100px;
+  padding: 3px;
+}
+.lang-btn {
+  font-family: var(--font-body);
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0.28rem 0.65rem;
+  border-radius: 100px;
+  color: var(--stone);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.lang-btn:hover { color: var(--ink); background: var(--paper-dark); }
+.lang-btn.active { background: var(--vermilion); color: var(--white); }

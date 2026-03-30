@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Panel — Nihon Travel</title>
   <link rel="stylesheet" href="/css/profile.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <style>
     .admin-topbar { background: var(--vermilion); }
     .admin-topbar .topbar-title { color: var(--white); font-size: 1.2rem; }
@@ -46,6 +47,8 @@
     .admin-tab.active { color: var(--vermilion); border-bottom-color: var(--vermilion); background: var(--paper); }
     .admin-tab:hover { color: var(--ink); }
   </style>
+
+  <script src="/js/i18n.js" defer></script>
 </head>
 <body>
 
@@ -60,19 +63,19 @@
     </div>
     <nav class="sidebar-nav">
       <div class="sidebar-nav-item active" onclick="showAdminTab('dashboard', this)">
-        <span class="nav-icon">📊</span> Dashboard
+        <span class="nav-icon"><i class="fa-solid fa-chart-simple"></i></span> <span data-i18n="admin.nav.dashboard">Dashboard</span>
       </div>
       <div class="sidebar-nav-item" onclick="showAdminTab('destinations', this)">
-        <span class="nav-icon">🗾</span> Destinations
+        <span class="nav-icon"><i class="fa-solid fa-map"></i></span> <span data-i18n="admin.nav.destinations">Destinations</span>
       </div>
       <div class="sidebar-nav-item" onclick="showAdminTab('messages', this)">
-        <span class="nav-icon">📩</span> Messages
+        <span class="nav-icon"><i class="fa-solid fa-envelope"></i></span> <span data-i18n="admin.nav.messages">Messages</span>
       </div>
       <div class="sidebar-nav-item" onclick="showAdminTab('users', this)">
-        <span class="nav-icon">👥</span> Users
+        <span class="nav-icon"><i class="fa-solid fa-users"></i></span> <span data-i18n="admin.nav.users">Users</span>
       </div>
       <div class="sidebar-nav-item" onclick="window.location.href='/pages/profile.html'">
-        <span class="nav-icon">👤</span> My Profile
+        <span class="nav-icon"><i class="fa-solid fa-user"></i></span> <span data-i18n="admin.nav.profile">My Profile</span>
       </div>
     </nav>
     <div class="sidebar-footer">
@@ -83,8 +86,13 @@
   <!-- MAIN -->
   <main class="profile-main">
     <div class="profile-topbar admin-topbar">
-      <h1 class="topbar-title" id="admin-page-title">🛡️ Admin Dashboard</h1>
+      <h1 class="topbar-title" id="admin-page-title"><i class="fa-solid fa-shield-halved"></i> <span id="admin-page-title-text" data-i18n="admin.page.title.dashboard">Admin Dashboard</span></h1>
       <div class="topbar-actions">
+        <div class="lang-switcher" style="margin-right:0.5rem">
+          <button class="lang-btn active" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ru">RU</button>
+          <button class="lang-btn" data-lang="kz">KZ</button>
+        </div>
         <a href="/" class="btn btn-outline" style="background:rgba(255,255,255,0.2);color:#fff;border-color:rgba(255,255,255,0.4)">← Back to Site</a>
       </div>
     </div>
@@ -101,8 +109,8 @@
       <!-- Destinations -->
       <div id="admin-tab-destinations" style="display:none">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
-          <h3 style="font-family:var(--font-serif);font-size:1.3rem">Manage Destinations</h3>
-          <button class="btn btn-primary" onclick="openDestModal()">+ Add Destination</button>
+          <h3 style="font-family:var(--font-serif);font-size:1.3rem" data-i18n="admin.tab.destinations.heading">Manage Destinations</h3>
+          <button class="btn btn-primary" onclick="openDestModal()" data-i18n="admin.dest.addBtn">+ Add Destination</button>
         </div>
         <div id="admin-dest-table">
           <div class="loader"><div class="loader-dots"><span></span><span></span><span></span></div></div>
@@ -111,7 +119,7 @@
 
       <!-- Messages -->
       <div id="admin-tab-messages" style="display:none">
-        <h3 style="font-family:var(--font-serif);font-size:1.3rem;margin-bottom:1.5rem">All Contact Messages</h3>
+        <h3 style="font-family:var(--font-serif);font-size:1.3rem;margin-bottom:1.5rem" data-i18n="admin.tab.messages.heading">All Contact Messages</h3>
         <div id="admin-messages-table">
           <div class="loader"><div class="loader-dots"><span></span><span></span><span></span></div></div>
         </div>
@@ -119,7 +127,7 @@
 
       <!-- Users -->
       <div id="admin-tab-users" style="display:none">
-        <h3 style="font-family:var(--font-serif);font-size:1.3rem;margin-bottom:1.5rem">Registered Users</h3>
+        <h3 style="font-family:var(--font-serif);font-size:1.3rem;margin-bottom:1.5rem" data-i18n="admin.tab.users.heading">Registered Users</h3>
         <div id="admin-users-table">
           <div class="loader"><div class="loader-dots"><span></span><span></span><span></span></div></div>
         </div>
@@ -133,47 +141,47 @@
 <div class="modal-overlay" id="dest-form-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeDestModal()">✕</button>
-    <h2 id="dest-form-title" style="font-family:var(--font-serif);font-size:1.6rem;margin-bottom:0.5rem">Add Destination</h2>
-    <p style="color:var(--stone);font-size:0.85rem;margin-bottom:1.5rem">Fill in the details below</p>
+    <h2 id="dest-form-title" style="font-family:var(--font-serif);font-size:1.6rem;margin-bottom:0.5rem" data-i18n="admin.dest.modal.add.title">Add Destination</h2>
+    <p style="color:var(--stone);font-size:0.85rem;margin-bottom:1.5rem" data-i18n="admin.dest.modal.subtitle">Fill in the details below</p>
     <form id="dest-form" onsubmit="submitDestForm(event)">
       <input type="hidden" name="id" id="dest-form-id">
       <div class="form-group">
-        <label>Name *</label>
-        <input type="text" name="name" required placeholder="e.g. Mount Fuji">
+        <label data-i18n="admin.dest.form.lbl.name">Name *</label>
+        <input type="text" name="name" required placeholder="e.g. Mount Fuji" data-i18n-ph="admin.dest.form.ph.name">
       </div>
       <div class="form-group">
-        <label>Location</label>
-        <input type="text" name="location" placeholder="e.g. Shizuoka Prefecture">
+        <label data-i18n="admin.dest.form.lbl.location">Location</label>
+        <input type="text" name="location" placeholder="e.g. Shizuoka Prefecture" data-i18n-ph="admin.dest.form.ph.location">
       </div>
       <div class="form-group">
-        <label>Category</label>
+        <label data-i18n="admin.dest.form.lbl.category">Category</label>
         <select name="category">
-          <option value="nature">Nature</option>
-          <option value="temple">Temple</option>
-          <option value="city">City</option>
-          <option value="history">History</option>
-          <option value="beach">Beach</option>
-          <option value="wellness">Wellness</option>
-          <option value="festival">Festival</option>
-          <option value="culture">Culture</option>
-          <option value="general">General</option>
+          <option value="nature" data-i18n="admin.dest.cat.nature">Nature</option>
+          <option value="temple" data-i18n="admin.dest.cat.temple">Temple</option>
+          <option value="city" data-i18n="admin.dest.cat.city">City</option>
+          <option value="history" data-i18n="admin.dest.cat.history">History</option>
+          <option value="beach" data-i18n="admin.dest.cat.beach">Beach</option>
+          <option value="wellness" data-i18n="admin.dest.cat.wellness">Wellness</option>
+          <option value="festival" data-i18n="admin.dest.cat.festival">Festival</option>
+          <option value="culture" data-i18n="admin.dest.cat.culture">Culture</option>
+          <option value="general" data-i18n="admin.dest.cat.general">General</option>
         </select>
       </div>
       <div class="form-group">
-        <label>Image URL</label>
-        <input type="url" name="image_url" placeholder="https://images.unsplash.com/...">
+        <label data-i18n="admin.dest.form.lbl.imageUrl">Image URL</label>
+        <input type="url" name="image_url" placeholder="https://images.unsplash.com/..." data-i18n-ph="admin.dest.form.ph.imageUrl">
       </div>
       <div class="form-group">
-        <label>Rating (0-5)</label>
-        <input type="number" name="rating" min="0" max="5" step="0.1" placeholder="4.8">
+        <label data-i18n="admin.dest.form.lbl.rating">Rating (0-5)</label>
+        <input type="number" name="rating" min="0" max="5" step="0.1" placeholder="4.8" data-i18n-ph="admin.dest.form.ph.rating">
       </div>
       <div class="form-group">
-        <label>Description</label>
-        <textarea name="description" style="height:100px" placeholder="Describe this destination..."></textarea>
+        <label data-i18n="admin.dest.form.lbl.description">Description</label>
+        <textarea name="description" style="height:100px" placeholder="Describe this destination..." data-i18n-ph="admin.dest.form.ph.description"></textarea>
       </div>
       <div style="display:flex;gap:1rem">
-        <button type="submit" class="btn btn-primary" id="dest-submit-btn">Add Destination</button>
-        <button type="button" onclick="closeDestModal()" class="btn btn-outline">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="dest-submit-btn" data-i18n="admin.dest.modal.add.submit">Add Destination</button>
+        <button type="button" onclick="closeDestModal()" class="btn btn-outline" data-i18n="admin.dest.modal.cancel">Cancel</button>
       </div>
     </form>
   </div>
@@ -197,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <img src="${avatar}" alt="" class="sidebar-avatar">
     <p class="sidebar-name">${currentUser.name}</p>
     <p class="sidebar-email">${currentUser.email}</p>
-    <span class="sidebar-badge">Admin</span>
+    <span class="sidebar-badge" data-i18n="admin.role.admin">Admin</span>
   `;
 
   loadStats();
@@ -218,8 +226,25 @@ function showAdminTab(name, el) {
   document.getElementById(`admin-tab-${name}`).style.display = 'block';
   if (el) el.classList.add('active');
 
-  const titles = { dashboard: '📊 Admin Dashboard', destinations: '🗾 Manage Destinations', messages: '📩 Contact Messages', users: '👥 Registered Users' };
-  document.getElementById('admin-page-title').textContent = titles[name] || name;
+  const titleKeyByTab = {
+    dashboard: 'admin.page.title.dashboard',
+    destinations: 'admin.page.title.destinations',
+    messages: 'admin.page.title.messages',
+    users: 'admin.page.title.users'
+  };
+  const titleTextByTab = {
+    dashboard: 'Admin Dashboard',
+    destinations: 'Manage Destinations',
+    messages: 'Contact Messages',
+    users: 'Registered Users'
+  };
+  const titleText = document.getElementById('admin-page-title-text');
+  titleText.textContent = titleTextByTab[name] || titleTextByTab.dashboard;
+  titleText.setAttribute('data-i18n', titleKeyByTab[name] || 'admin.page.title.dashboard');
+  if (window.NihonI18n) {
+    window.NihonI18n.cacheElements();
+    window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
+  }
 
   if (name === 'destinations') loadAdminDestinations();
   if (name === 'messages') loadAdminMessages();
@@ -231,11 +256,15 @@ async function loadStats() {
     const data = await apiCall('/admin/stats');
     const { users, destinations, messages, favorites } = data.stats;
     document.getElementById('stat-cards').innerHTML = `
-      <div class="stat-card"><div class="stat-card-num">${users}</div><div class="stat-card-label">Users</div></div>
-      <div class="stat-card"><div class="stat-card-num">${destinations}</div><div class="stat-card-label">Destinations</div></div>
-      <div class="stat-card"><div class="stat-card-num">${messages}</div><div class="stat-card-label">Messages</div></div>
-      <div class="stat-card"><div class="stat-card-num">${favorites}</div><div class="stat-card-label">Favorites</div></div>
+      <div class="stat-card"><div class="stat-card-num">${users}</div><div class="stat-card-label" data-i18n="admin.stat.users">Users</div></div>
+      <div class="stat-card"><div class="stat-card-num">${destinations}</div><div class="stat-card-label" data-i18n="admin.stat.destinations">Destinations</div></div>
+      <div class="stat-card"><div class="stat-card-num">${messages}</div><div class="stat-card-label" data-i18n="admin.stat.messages">Messages</div></div>
+      <div class="stat-card"><div class="stat-card-num">${favorites}</div><div class="stat-card-label" data-i18n="admin.stat.favorites">Favorites</div></div>
     `;
+    if (window.NihonI18n) {
+      window.NihonI18n.cacheElements();
+      window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
+    }
   } catch (err) {
     document.getElementById('stat-cards').innerHTML = `<p>Connect your backend to see stats</p>`;
   }
@@ -250,7 +279,12 @@ async function loadAdminDestinations() {
       <div style="overflow-x:auto">
       <table class="data-table">
         <thead><tr>
-          <th>Image</th><th>Name</th><th>Location</th><th>Category</th><th>Rating</th><th>Actions</th>
+          <th data-i18n="admin.table.header.image">Image</th>
+          <th data-i18n="admin.table.header.name">Name</th>
+          <th data-i18n="admin.table.header.location">Location</th>
+          <th data-i18n="admin.table.header.category">Category</th>
+          <th data-i18n="admin.table.header.rating">Rating</th>
+          <th data-i18n="admin.table.header.actions">Actions</th>
         </tr></thead>
         <tbody>${data.destinations.map(d => `
           <tr>
@@ -258,14 +292,18 @@ async function loadAdminDestinations() {
             <td><strong>${d.name}</strong></td>
             <td>${d.location || '—'}</td>
             <td><span class="badge badge-${d.category || 'default'}">${d.category || 'general'}</span></td>
-            <td>⭐ ${d.rating || '—'}</td>
+            <td><i class="fa-solid fa-star" style="color:var(--gold)"></i> ${d.rating || '—'}</td>
             <td><div class="action-btns">
-              <button class="action-btn action-btn-edit" onclick="editDest(${JSON.stringify(d).replace(/"/g, '&quot;')})">Edit</button>
-              <button class="action-btn action-btn-delete" onclick="deleteDest(${d.id})">Delete</button>
+              <button class="action-btn action-btn-edit" onclick="editDest(${JSON.stringify(d).replace(/"/g, '&quot;')})" data-i18n="admin.action.edit">Edit</button>
+              <button class="action-btn action-btn-delete" onclick="deleteDest(${d.id})" data-i18n="admin.action.delete">Delete</button>
             </div></td>
           </tr>
         `).join('')}</tbody>
       </table></div>`;
+    if (window.NihonI18n) {
+      window.NihonI18n.cacheElements();
+      window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
+    }
   } catch (err) {
     container.innerHTML = `<div class="empty-state"><p>Error: ${err.message}</p></div>`;
   }
@@ -275,6 +313,12 @@ function openDestModal() {
   editingDestId = null;
   document.getElementById('dest-form-title').textContent = 'Add Destination';
   document.getElementById('dest-submit-btn').textContent = 'Add Destination';
+  document.getElementById('dest-form-title').setAttribute('data-i18n', 'admin.dest.modal.add.title');
+  document.getElementById('dest-submit-btn').setAttribute('data-i18n', 'admin.dest.modal.add.submit');
+  if (window.NihonI18n) {
+    window.NihonI18n.cacheElements();
+    window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
+  }
   document.getElementById('dest-form').reset();
   document.getElementById('dest-form-modal').classList.add('open');
 }
@@ -283,6 +327,12 @@ function editDest(dest) {
   editingDestId = dest.id;
   document.getElementById('dest-form-title').textContent = 'Edit Destination';
   document.getElementById('dest-submit-btn').textContent = 'Save Changes';
+  document.getElementById('dest-form-title').setAttribute('data-i18n', 'admin.dest.modal.edit.title');
+  document.getElementById('dest-submit-btn').setAttribute('data-i18n', 'admin.dest.modal.edit.submit');
+  if (window.NihonI18n) {
+    window.NihonI18n.cacheElements();
+    window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
+  }
   const form = document.getElementById('dest-form');
   form.querySelector('[name="name"]').value = dest.name || '';
   form.querySelector('[name="location"]').value = dest.location || '';
@@ -347,9 +397,22 @@ async function loadAdminMessages() {
   container.innerHTML = '<div class="loader"><div class="loader-dots"><span></span><span></span><span></span></div></div>';
   try {
     const data = await apiCall('/admin/messages');
-    if (!data.messages.length) { container.innerHTML = '<div class="empty-state"><div class="empty-icon">📩</div><h3 class="empty-title">No messages yet</h3></div>'; return; }
+    if (!data.messages.length) {
+      container.innerHTML = `<div class="empty-state"><div class="empty-icon"><i class="fa-solid fa-envelope"></i></div><h3 class="empty-title" data-i18n="admin.messages.empty.title">No messages yet</h3></div>`;
+      if (window.NihonI18n) {
+        window.NihonI18n.cacheElements();
+        window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
+      }
+      return;
+    }
     container.innerHTML = `<div style="overflow-x:auto"><table class="data-table">
-      <thead><tr><th>From</th><th>Email</th><th>Subject</th><th>Message</th><th>Date</th></tr></thead>
+      <thead><tr>
+        <th data-i18n="admin.table.header.from">From</th>
+        <th data-i18n="admin.table.header.email">Email</th>
+        <th data-i18n="admin.table.header.subject">Subject</th>
+        <th data-i18n="admin.table.header.message">Message</th>
+        <th data-i18n="admin.table.header.date">Date</th>
+      </tr></thead>
       <tbody>${data.messages.map(m => `
         <tr>
           <td><strong>${m.name}</strong>${m.user_name ? `<br><small style="color:var(--stone)">${m.user_name}</small>` : ''}</td>
@@ -360,6 +423,10 @@ async function loadAdminMessages() {
         </tr>
       `).join('')}</tbody>
     </table></div>`;
+    if (window.NihonI18n) {
+      window.NihonI18n.cacheElements();
+      window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
+    }
   } catch (err) {
     container.innerHTML = `<div class="empty-state"><p>Error: ${err.message}</p></div>`;
   }
@@ -371,7 +438,12 @@ async function loadAdminUsers() {
   try {
     const data = await apiCall('/admin/users');
     container.innerHTML = `<div style="overflow-x:auto"><table class="data-table">
-      <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Joined</th></tr></thead>
+      <thead><tr>
+        <th data-i18n="admin.table.header.userName">Name</th>
+        <th data-i18n="admin.table.header.email">Email</th>
+        <th data-i18n="admin.table.header.role">Role</th>
+        <th data-i18n="admin.table.header.joined">Joined</th>
+      </tr></thead>
       <tbody>${data.users.map(u => `
         <tr>
           <td><strong>${u.name}</strong></td>
@@ -381,6 +453,10 @@ async function loadAdminUsers() {
         </tr>
       `).join('')}</tbody>
     </table></div>`;
+    if (window.NihonI18n) {
+      window.NihonI18n.cacheElements();
+      window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
+    }
   } catch (err) {
     container.innerHTML = `<div class="empty-state"><p>Error: ${err.message}</p></div>`;
   }
@@ -398,10 +474,14 @@ document.addEventListener('click', (e) => {
 
 function showToast(message, type = 'info') {
   const container = document.getElementById('toast-container');
-  const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+  const icons = {
+    success: '<i class="fa-solid fa-circle-check"></i>',
+    error: '<i class="fa-solid fa-circle-xmark"></i>',
+    info: '<i class="fa-solid fa-circle-info"></i>'
+  };
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
-  toast.innerHTML = `<span>${icons[type]||'ℹ️'}</span><span>${message}</span>`;
+  toast.innerHTML = `<span>${icons[type] || icons.info}</span><span>${message}</span>`;
   container.appendChild(toast);
   requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('show')));
   setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 3500);

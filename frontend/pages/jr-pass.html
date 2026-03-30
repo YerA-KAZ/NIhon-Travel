@@ -6,6 +6,8 @@
   <title>JR Pass Guide — Nihon Travel</title>
   <link rel="stylesheet" href="/css/guides.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <script src="/js/i18n.js" defer></script>
 </head>
 <body>
 
@@ -14,11 +16,18 @@
   <div class="g-nav-inner">
     <a href="/" class="g-nav-logo"><span class="kanji">日</span> Nihon Travel</a>
     <div class="g-nav-links">
-      <a href="/#destinations">Destinations</a>
-      <a href="/#about">About Japan</a>
-      <a href="/#contact">Contact</a>
+      <a href="/#destinations" data-i18n="nav.destinations">Destinations</a>
+      <a href="/#about" data-i18n="nav.about">About Japan</a>
+      <a href="/#contact" data-i18n="nav.contact">Contact</a>
     </div>
-    <a href="/pages/travel-tips.html" class="g-nav-back">← Travel Tips</a>
+        <div class="g-nav-right">
+      <div class="lang-switcher" role="group" aria-label="Language">
+        <button class="lang-btn active" data-lang="en" title="English">EN</button>
+        <button class="lang-btn" data-lang="ru" title="Русский">RU</button>
+        <button class="lang-btn" data-lang="kz" title="Қазақша">KZ</button>
+      </div>
+      <a href="/pages/travel-tips.html" class="g-nav-back" data-i18n="nav.back-tips"><i class="fa-solid fa-arrow-left"></i> Travel Tips</a>
+    </div>
   </div>
 </nav>
 
@@ -27,18 +36,18 @@
   <div class="g-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?w=1600&q=90')"></div>
   <div class="g-hero-overlay"></div>
   <div class="g-hero-content">
-    <span class="g-hero-tag">Getting Around Japan</span>
-    <h1 class="g-hero-title">JR Pass — The Complete Guide</h1>
-    <p class="g-hero-subtitle">Japan's Shinkansen bullet train network is legendary. Here's everything you need to know about the JR Pass — the tourist's golden ticket for unlimited rail travel.</p>
+    <span class="g-hero-tag" data-i18n="jr.hero.tag">Getting Around Japan</span>
+    <h1 class="g-hero-title" data-i18n="jr.hero.title">JR Pass — The Complete Guide</h1>
+    <p class="g-hero-subtitle" data-i18n="jr.hero.subtitle">Japan's Shinkansen bullet train network is legendary. Here's everything you need to know about the JR Pass — the tourist's golden ticket for unlimited rail travel.</p>
   </div>
 </section>
 
 <!-- BREADCRUMB -->
 <div class="g-breadcrumb">
   <div class="g-breadcrumb-inner">
-    <a href="/">Home</a><span class="g-breadcrumb-sep">›</span>
-    <a href="/pages/travel-tips.html">Travel Tips</a><span class="g-breadcrumb-sep">›</span>
-    <span class="g-breadcrumb-current">JR Pass Info</span>
+    <a href="/" data-i18n="bc.home">Home</a><span class="g-breadcrumb-sep">›</span>
+    <a href="/pages/travel-tips.html" data-i18n="bc.tips">Travel Tips</a><span class="g-breadcrumb-sep">›</span>
+    <span class="g-breadcrumb-current" data-i18n="bc.jr">JR Pass Info</span>
   </div>
 </div>
 
@@ -48,105 +57,105 @@
 
     <!-- What is JR Pass -->
     <div class="g-card" data-aos="fade-up">
-      <p class="g-label">The Basics</p>
-      <h2 class="g-card-title"><span class="g-card-title-icon">🚄</span> What is the JR Pass?</h2>
-      <p class="g-card-text">The Japan Rail Pass (JR Pass) is an unlimited rail pass available exclusively to foreign tourists visiting Japan. It covers JR trains nationwide including most Shinkansen (bullet train) services, JR local trains, buses, and even some ferry services.</p>
-      <p class="g-card-text">A single Tokyo → Kyoto → Osaka → Hiroshima round trip on the Shinkansen costs around ¥50,000+ without the pass. The 7-day JR Pass costs ¥50,000 — making it excellent value for multi-city itineraries.</p>
+      <p class="g-label" data-i18n="jr.basics.label">The Basics</p>
+      <h2 class="g-card-title" data-i18n="jr.basics.title"><span class="g-card-title-icon"><i class="fa-solid fa-train"></i></span> What is the JR Pass?</h2>
+      <p class="g-card-text" data-i18n="jr.basics.p1">The Japan Rail Pass (JR Pass) is an unlimited rail pass available exclusively to foreign tourists visiting Japan. It covers JR trains nationwide including most Shinkansen (bullet train) services, JR local trains, buses, and even some ferry services.</p>
+      <p class="g-card-text" data-i18n="jr.basics.p2">A roundtrip trip from Tokyo to Kyoto, Osaka to Hiroshima costs approximately ¥90,000–¥110,000+ without a pass. A standard adult JR Pass for 7 days throughout Japan costs ¥50,000, making it a good value for most travelers planning to visit multiple cities.</p>
 
       <div class="g-highlight green">
-        <span class="g-highlight-icon">💡</span>
-        <span><strong>Is it worth it?</strong> Yes, if you plan to travel between 3+ cities by Shinkansen. For Tokyo-only trips or single-route travel, individual tickets may be cheaper. Use the JR Pass Calculator (hyperdia.com) to compare.</span>
+        <span class="g-highlight-icon"><i class="fa-solid fa-lightbulb"></i></span>
+        <span><strong data-i18n="jr.basics.tip.q">Is it worth it?</strong><span data-i18n="jr.basics.tip.text"> Yes, if you plan to travel between 3+ cities by Shinkansen. For Tokyo-only trips or single-route travel, individual tickets may be cheaper. Use the JR Pass Calculator (hyperdia.com) to compare.</span></span>
       </div>
     </div>
 
     <!-- Pass Types & Prices -->
     <div class="g-card" data-aos="fade-up">
-      <p class="g-label">Pass Options</p>
-      <h2 class="g-card-title"><span class="g-card-title-icon">🎫</span> Pass Types & Prices (2024)</h2>
+      <p class="g-label" data-i18n="jr.prices.label">Pass Options</p>
+      <h2 class="g-card-title"><span class="g-card-title-icon"><i class="fa-solid fa-ticket"></i></span> <span data-i18n="jr.prices.title">Pass Types & Prices (2025)</span></h2>
 
       <div class="g-table-wrap">
         <table class="g-table">
           <thead>
-            <tr><th>Pass Type</th><th>Duration</th><th>Ordinary Class</th><th>Green Class (1st)</th><th>Best For</th></tr>
+            <tr><th data-i18n="jr.tbl.h.type">Pass Type</th><th data-i18n="jr.tbl.h.dur">Duration</th><th data-i18n="jr.tbl.h.ord">Ordinary Class</th><th data-i18n="jr.tbl.h.grn">Green Class (1st)</th><th data-i18n="jr.tbl.h.best">Best For</th></tr>
           </thead>
           <tbody>
             <tr>
-              <td><strong>7-Day Pass</strong></td><td>7 consecutive days</td>
+              <td><strong data-i18n="jr.tbl.7d.name">7-Day Pass</strong></td><td data-i18n="jr.tbl.7d.dur">7 consecutive days</td>
               <td class="good">¥50,000</td><td>¥70,000</td>
-              <td>Tokyo → Kyoto → Osaka → Hiroshima loop</td>
+              <td data-i18n="jr.tbl.7d.best">Tokyo → Kyoto → Osaka → Hiroshima loop</td>
             </tr>
             <tr>
-              <td><strong>14-Day Pass</strong></td><td>14 consecutive days</td>
+              <td><strong data-i18n="jr.tbl.14d.name">14-Day Pass</strong></td><td data-i18n="jr.tbl.14d.dur">14 consecutive days</td>
               <td class="good">¥80,000</td><td>¥113,000</td>
-              <td>Extended Japan trip, multiple regions</td>
+              <td data-i18n="jr.tbl.14d.best">Extended Japan trip, multiple regions</td>
             </tr>
             <tr>
-              <td><strong>21-Day Pass</strong></td><td>21 consecutive days</td>
+              <td><strong data-i18n="jr.tbl.21d.name">21-Day Pass</strong></td><td data-i18n="jr.tbl.21d.dur">21 consecutive days</td>
               <td class="good">¥100,000</td><td>¥140,000</td>
-              <td>Full Japan exploration, north to south</td>
+              <td data-i18n="jr.tbl.21d.best">Full Japan exploration, north to south</td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <div class="g-highlight gold">
-        <span class="g-highlight-icon">⚠️</span>
-        <span>Children aged 6–11 pay half price. Under 6 travel free. Green Class (first class) has wider seats, quieter carriages and more leg room — worth it for 14+ day passes on long journeys.</span>
+        <span class="g-highlight-icon"><i class="fa-solid fa-triangle-exclamation"></i></span>
+        <span data-i18n="jr.prices.warn">Children aged 6–11 pay half price. Under 6 travel free. Green Class (first class) has wider seats, quieter carriages and more leg room — worth it for 14+ day passes on long journeys.</span>
       </div>
 
       <div class="g-info-grid" style="margin-top:1.5rem">
         <div class="g-info-item">
-          <div class="g-info-item-icon">🗾</div>
-          <div class="g-info-item-title">Regional JR Passes</div>
-          <div class="g-info-item-text">Cheaper passes cover specific regions: Hokkaido, Tohoku, Kyushu, Sanyo, etc. Great if you're only visiting one area.</div>
+          <div class="g-info-item-icon"><i class="fa-solid fa-map"></i></div>
+          <div class="g-info-item-title" data-i18n="jr.info.regional.title">Regional JR Passes</div>
+          <div class="g-info-item-text" data-i18n="jr.info.regional.text">Cheaper passes cover specific regions: Hokkaido, Tohoku, Kyushu, Sanyo, etc. Great if you're only visiting one area.</div>
         </div>
         <div class="g-info-item">
-          <div class="g-info-item-icon">🏙️</div>
-          <div class="g-info-item-title">IC Cards (Suica/Pasmo)</div>
-          <div class="g-info-item-text">For city transport (subway, bus), use IC cards — JR Pass doesn't cover Tokyo Metro or Osaka Subway. Get Suica at any JR station.</div>
+          <div class="g-info-item-icon"><i class="fa-solid fa-city"></i></div>
+          <div class="g-info-item-title" data-i18n="jr.info.ic.title">IC Cards (Suica/Pasmo)</div>
+          <div class="g-info-item-text" data-i18n="jr.info.ic.text">For city transport (subway, bus), use IC cards — JR Pass doesn't cover Tokyo Metro or Osaka Subway. Get Suica at any JR station.</div>
         </div>
       </div>
     </div>
 
     <!-- How to Buy -->
     <div class="g-card" data-aos="fade-up">
-      <p class="g-label">Purchase Guide</p>
-      <h2 class="g-card-title"><span class="g-card-title-icon">🛒</span> How to Buy the JR Pass</h2>
+      <p class="g-label" data-i18n="jr.how.label">Purchase Guide</p>
+      <h2 class="g-card-title"><span class="g-card-title-icon"><i class="fa-solid fa-cart-shopping"></i></span> <span data-i18n="jr.how.title">How to Buy the JR Pass</span></h2>
 
       <div class="g-steps">
         <div class="g-step">
           <div class="g-step-num">1</div>
           <div>
-            <div class="g-step-title">Buy Online Before You Arrive (Recommended)</div>
-            <div class="g-step-text">Purchase through the official JR Pass website (japanrailpass.net) or authorized sellers like JRailPass, Klook, or your local travel agency. You'll receive a voucher (Exchange Order) by mail or email. This is much faster than buying in Japan.</div>
+            <div class="g-step-title" data-i18n="jr.step1.title">Buy Online Before You Arrive (Recommended)</div>
+            <div class="g-step-text" data-i18n="jr.step1.text">Purchase through the official JR Pass website (japanrailpass.net) or authorized sellers like JRailPass, Klook, or your local travel agency. You'll receive a voucher (Exchange Order) by mail or email. This is much faster than buying in Japan.</div>
           </div>
         </div>
         <div class="g-step">
           <div class="g-step-num">2</div>
           <div>
-            <div class="g-step-title">Or Buy at the Airport on Arrival (2023 change)</div>
-            <div class="g-step-text">Since 2023, you can also purchase the JR Pass at major JR offices in Japan (Narita, Haneda, Kansai airports + major stations). Prices are the same. Queues can be long during peak season.</div>
+            <div class="g-step-title" data-i18n="jr.step2.title">Or Buy at the Airport on Arrival (2023 change)</div>
+            <div class="g-step-text" data-i18n="jr.step2.text">Since 2023, you can also purchase the JR Pass at major JR offices in Japan (Narita, Haneda, Kansai airports + major stations). Prices are the same. Queues can be long during peak season.</div>
           </div>
         </div>
         <div class="g-step">
           <div class="g-step-num">3</div>
           <div>
-            <div class="g-step-title">Exchange Your Voucher at a JR Office</div>
-            <div class="g-step-text">If you bought online, take your Exchange Order to any JR Travel Service Center or Green Window (Midori no Madoguchi) at major train stations. Show your foreign passport. They'll issue your actual pass.</div>
+            <div class="g-step-title" data-i18n="jr.step3.title">Exchange Your Voucher at a JR Office</div>
+            <div class="g-step-text" data-i18n="jr.step3.text">If you bought online, take your Exchange Order to any JR Travel Service Center or Green Window (Midori no Madoguchi) at major train stations. Show your foreign passport. They'll issue your actual pass.</div>
           </div>
         </div>
         <div class="g-step">
           <div class="g-step-num">4</div>
           <div>
-            <div class="g-step-title">Activate Your Pass on the Day You First Use It</div>
-            <div class="g-step-text">You choose your start date when exchanging. Your 7 (or 14/21) days count from activation day. Don't activate it the night before an early flight — waste one full day.</div>
+            <div class="g-step-title" data-i18n="jr.step4.title">Activate Your Pass on the Day You First Use It</div>
+            <div class="g-step-text" data-i18n="jr.step4.text">You choose your start date when exchanging. Your 7 (or 14/21) days count from activation day. Don't activate it the night before an early flight — waste one full day.</div>
           </div>
         </div>
         <div class="g-step">
           <div class="g-step-num">5</div>
           <div>
-            <div class="g-step-title">Show Your Pass at Staffed Gates</div>
-            <div class="g-step-text">The JR Pass doesn't work in IC card readers. Use staffed gates (有人改札口) at every station — show your pass to the staff member. It takes 2 seconds and is totally normal.</div>
+            <div class="g-step-title" data-i18n="jr.step5.title">Show Your Pass at Staffed Gates</div>
+            <div class="g-step-text" data-i18n="jr.step5.text">The JR Pass doesn't work in IC card readers. Use staffed gates (有人改札口) at every station — show your pass to the staff member. It takes 2 seconds and is totally normal.</div>
           </div>
         </div>
       </div>
@@ -154,23 +163,23 @@
 
     <!-- What's Covered -->
     <div class="g-card" data-aos="fade-up">
-      <p class="g-label">Coverage</p>
-      <h2 class="g-card-title"><span class="g-card-title-icon">✅</span> What's Included & What's Not</h2>
+      <p class="g-label" data-i18n="jr.cov.label">Coverage</p>
+      <h2 class="g-card-title"><span class="g-card-title-icon"><i class="fa-solid fa-circle-check"></i></span> <span data-i18n="jr.cov.title">What's Included & What's Not</span></h2>
 
       <div class="g-table-wrap">
         <table class="g-table">
-          <thead><tr><th>Service</th><th>Covered?</th><th>Notes</th></tr></thead>
+          <thead><tr><th data-i18n="jr.cov.h.service">Service</th><th data-i18n="jr.cov.h.covered">Covered?</th><th data-i18n="jr.cov.h.notes">Notes</th></tr></thead>
           <tbody>
-            <tr><td>Shinkansen Hikari & Kodama</td><td class="good">✅ Included</td><td>Free seat reservations included</td></tr>
-            <tr><td>Shinkansen Nozomi & Mizuho</td><td class="bad">❌ Not covered</td><td>Fastest trains — buy separately if needed</td></tr>
-            <tr><td>JR Limited Express trains</td><td class="good">✅ Included</td><td>Narita Express (N'EX), Haruka, Thunderbird</td></tr>
-            <tr><td>JR Local & Rapid trains</td><td class="good">✅ Included</td><td>All non-reserved cars</td></tr>
-            <tr><td>JR Buses (long-distance)</td><td class="good">✅ Included</td><td>Select routes only, check schedule</td></tr>
-            <tr><td>JR Ferry (Miyajima)</td><td class="good">✅ Included</td><td>JR ferry to Miyajima island (Itsukushima)</td></tr>
-            <tr><td>Tokyo Metro / Toei Subway</td><td class="bad">❌ Not covered</td><td>Use Suica IC card</td></tr>
-            <tr><td>Osaka Metro</td><td class="bad">❌ Not covered</td><td>Use Suica or Icoca IC card</td></tr>
-            <tr><td>Private railways (Kintetsu etc)</td><td class="bad">❌ Not covered</td><td>Buy separate tickets</td></tr>
-            <tr><td>Seat reservations</td><td class="good">✅ Free</td><td>Reserve at any JR office or green machine</td></tr>
+            <tr><td data-i18n="jr.cov.r1.service">Shinkansen Hikari & Kodama</td><td class="good" data-i18n="jr.cov.r1.status"><i class="fa-solid fa-circle-check"></i> Included</td><td data-i18n="jr.cov.r1.note">Free seat reservations included</td></tr>
+            <tr><td data-i18n="jr.cov.r2.service">Shinkansen Nozomi & Mizuho</td><td class="bad" data-i18n="jr.cov.r2.status"><i class="fa-solid fa-circle-xmark"></i> Not covered</td><td data-i18n="jr.cov.r2.note">Fastest trains — buy separately if needed</td></tr>
+            <tr><td data-i18n="jr.cov.r3.service">JR Limited Express trains</td><td class="good" data-i18n="jr.cov.r3.status"><i class="fa-solid fa-circle-check"></i> Included</td><td data-i18n="jr.cov.r3.note">Narita Express (N'EX), Haruka, Thunderbird</td></tr>
+            <tr><td data-i18n="jr.cov.r4.service">JR Local & Rapid trains</td><td class="good" data-i18n="jr.cov.r4.status"><i class="fa-solid fa-circle-check"></i> Included</td><td data-i18n="jr.cov.r4.note">All non-reserved cars</td></tr>
+            <tr><td data-i18n="jr.cov.r5.service">JR Buses (long-distance)</td><td class="good" data-i18n="jr.cov.r5.status"><i class="fa-solid fa-circle-check"></i> Included</td><td data-i18n="jr.cov.r5.note">Select routes only, check schedule</td></tr>
+            <tr><td data-i18n="jr.cov.r6.service">JR Ferry (Miyajima)</td><td class="good" data-i18n="jr.cov.r6.status"><i class="fa-solid fa-circle-check"></i> Included</td><td data-i18n="jr.cov.r6.note">JR ferry to Miyajima island (Itsukushima)</td></tr>
+            <tr><td data-i18n="jr.cov.r7.service">Tokyo Metro / Toei Subway</td><td class="bad" data-i18n="jr.cov.r7.status"><i class="fa-solid fa-circle-xmark"></i> Not covered</td><td data-i18n="jr.cov.r7.note">Use Suica IC card</td></tr>
+            <tr><td data-i18n="jr.cov.r8.service">Osaka Metro</td><td class="bad" data-i18n="jr.cov.r8.status"><i class="fa-solid fa-circle-xmark"></i> Not covered</td><td data-i18n="jr.cov.r8.note">Use Suica or Icoca IC card</td></tr>
+            <tr><td data-i18n="jr.cov.r9.service">Private railways (Kintetsu etc)</td><td class="bad" data-i18n="jr.cov.r9.status"><i class="fa-solid fa-circle-xmark"></i> Not covered</td><td data-i18n="jr.cov.r9.note">Buy separate tickets</td></tr>
+            <tr><td data-i18n="jr.cov.r10.service">Seat reservations</td><td class="good" data-i18n="jr.cov.r10.status"><i class="fa-solid fa-circle-check"></i> Free</td><td data-i18n="jr.cov.r10.note">Reserve at any JR office or green machine</td></tr>
           </tbody>
         </table>
       </div>
@@ -178,41 +187,41 @@
 
     <!-- Sample Itinerary -->
     <div class="g-card" data-aos="fade-up">
-      <p class="g-label">Sample Trip</p>
-      <h2 class="g-card-title"><span class="g-card-title-icon">🗺️</span> Classic 7-Day JR Pass Route</h2>
-      <p class="g-card-text">This is the most popular route for first-time visitors — the "Golden Route" covering Japan's highlights:</p>
+      <p class="g-label" data-i18n="jr.sample.label">Sample Trip</p>
+      <h2 class="g-card-title"><span class="g-card-title-icon"><i class="fa-solid fa-map-location-dot"></i></span> <span data-i18n="jr.sample.title">Classic 7-Day JR Pass Route</span></h2>
+      <p class="g-card-text" data-i18n="jr.sample.intro">This is the most popular route for first-time visitors — the "Golden Route" covering Japan's highlights:</p>
 
       <div class="g-timeline">
         <div class="g-timeline-item">
           <div class="g-timeline-dot"></div>
-          <div class="g-timeline-title">Day 1–3: Tokyo (Activate pass on Day 1)</div>
-          <div class="g-timeline-text">Use JR Yamanote Line for free around Tokyo. Day trip to Nikko via JR. Explore Shibuya, Shinjuku, Asakusa.</div>
+          <div class="g-timeline-title" data-i18n="jr.tl.1.title">Day 1–3: Tokyo (Activate pass on Day 1)</div>
+          <div class="g-timeline-text" data-i18n="jr.tl.1.text">Use JR Yamanote Line for free around Tokyo. Day trip to Nikko via JR. Explore Shibuya, Shinjuku, Asakusa.</div>
         </div>
         <div class="g-timeline-item">
           <div class="g-timeline-dot"></div>
-          <div class="g-timeline-title">Day 4: Tokyo → Kyoto (2h 15min Shinkansen)</div>
-          <div class="g-timeline-text">Take Hikari or Kodama Shinkansen. Covered by JR Pass. Single trip value: ¥13,720.</div>
+          <div class="g-timeline-title" data-i18n="jr.tl.2.title">Day 4: Tokyo → Kyoto (2h 15min Shinkansen)</div>
+          <div class="g-timeline-text" data-i18n="jr.tl.2.text">Take Hikari or Kodama Shinkansen. Covered by JR Pass. Single trip value: ¥13,720.</div>
         </div>
         <div class="g-timeline-item">
           <div class="g-timeline-dot"></div>
-          <div class="g-timeline-title">Day 5: Kyoto day trip to Nara</div>
-          <div class="g-timeline-text">Nara is 45 min from Kyoto by JR. Covered. Explore deer park and Todai-ji. Return for Kyoto evening.</div>
+          <div class="g-timeline-title" data-i18n="jr.tl.3.title">Day 5: Kyoto day trip to Nara</div>
+          <div class="g-timeline-text" data-i18n="jr.tl.3.text">Nara is 45 min from Kyoto by JR. Covered. Explore deer park and Todai-ji. Return for Kyoto evening.</div>
         </div>
         <div class="g-timeline-item">
           <div class="g-timeline-dot"></div>
-          <div class="g-timeline-title">Day 6: Kyoto → Hiroshima (1h 40min) + Miyajima</div>
-          <div class="g-timeline-text">JR Shinkansen to Hiroshima. JR ferry to Miyajima (covered). Itsukushima shrine + floating torii gate.</div>
+          <div class="g-timeline-title" data-i18n="jr.tl.4.title">Day 6: Kyoto → Hiroshima (1h 40min) + Miyajima</div>
+          <div class="g-timeline-text" data-i18n="jr.tl.4.text">JR Shinkansen to Hiroshima. JR ferry to Miyajima (covered). Itsukushima shrine + floating torii gate.</div>
         </div>
         <div class="g-timeline-item">
           <div class="g-timeline-dot"></div>
-          <div class="g-timeline-title">Day 7: Hiroshima → Osaka (30min) or back to Tokyo</div>
-          <div class="g-timeline-text">Explore Osaka on your final day, or head back to Tokyo for your flight. Pass expires midnight.</div>
+          <div class="g-timeline-title" data-i18n="jr.tl.5.title">Day 7: Hiroshima → Osaka (30min) or back to Tokyo</div>
+          <div class="g-timeline-text" data-i18n="jr.tl.5.text">Explore Osaka on your final day, or head back to Tokyo for your flight. Pass expires midnight.</div>
         </div>
       </div>
 
       <div class="g-highlight green">
-        <span class="g-highlight-icon">💰</span>
-        <span><strong>7-day pass cost: ¥50,000.</strong> This route's individual tickets would cost ¥65,000–75,000. You save ¥15,000–25,000 and travel with zero hassle.</span>
+        <span class="g-highlight-icon"><i class="fa-solid fa-sack-dollar"></i></span>
+        <span><strong data-i18n="jr.sample.tip">7-day pass cost: ¥50,000.</strong> <span data-i18n="jr.sample.tip2">This route's individual tickets would cost ¥65,000–75,000. You save ¥15,000–25,000 and travel with zero hassle.</span></span>
       </div>
     </div>
 
@@ -221,45 +230,45 @@
   <!-- SIDEBAR -->
   <aside class="g-sidebar">
     <div class="g-widget" data-aos="fade-left">
-      <div class="g-widget-title">All Travel Guides</div>
+      <div class="g-widget-title" data-i18n="jr.sb.guides">All Travel Guides</div>
       <a href="/pages/when-to-visit.html" class="g-widget-link">
-        <span class="g-widget-link-icon">🗓️</span> When to Visit
+        <span class="g-widget-link-icon"><i class="fa-solid fa-calendar-days"></i></span> <span data-i18n="sb.lnk.when">When to Visit</span>
       </a>
       <a href="/pages/visa-guide.html" class="g-widget-link">
-        <span class="g-widget-link-icon">🛂</span> Visa Guide
+        <span class="g-widget-link-icon"><i class="fa-solid fa-passport"></i></span> <span data-i18n="sb.lnk.visa">Visa Guide</span>
       </a>
       <a href="/pages/jr-pass.html" class="g-widget-link" style="color:var(--vermilion);font-weight:600">
-        <span class="g-widget-link-icon">🚄</span> JR Pass Info
+        <span class="g-widget-link-icon"><i class="fa-solid fa-train"></i></span> <span data-i18n="sb.lnk.jr">JR Pass Info</span>
       </a>
       <a href="/pages/etiquette.html" class="g-widget-link">
-        <span class="g-widget-link-icon">🎌</span> Etiquette
+        <span class="g-widget-link-icon"><i class="fa-solid fa-flag"></i></span> <span data-i18n="sb.lnk.etq">Etiquette</span>
       </a>
     </div>
 
     <div class="g-widget" data-aos="fade-left" data-aos-delay="80">
-      <div class="g-widget-title">Pass Prices</div>
-      <div class="g-price-row"><span class="g-price-label">7-Day Ordinary</span><span class="g-price-val">¥50,000</span></div>
-      <div class="g-price-row"><span class="g-price-label">14-Day Ordinary</span><span class="g-price-val">¥80,000</span></div>
-      <div class="g-price-row"><span class="g-price-label">21-Day Ordinary</span><span class="g-price-val">¥100,000</span></div>
-      <div class="g-price-row"><span class="g-price-label">Children (6–11)</span><span class="g-price-val">Half price</span></div>
+      <div class="g-widget-title" data-i18n="jr.sb.prices">Pass Prices</div>
+      <div class="g-price-row"><span class="g-price-label" data-i18n="jr.sb.pr.7d">7-Day Ordinary</span><span class="g-price-val">¥50,000</span></div>
+      <div class="g-price-row"><span class="g-price-label" data-i18n="jr.sb.pr.14d">14-Day Ordinary</span><span class="g-price-val">¥80,000</span></div>
+      <div class="g-price-row"><span class="g-price-label" data-i18n="jr.sb.pr.21d">21-Day Ordinary</span><span class="g-price-val">¥100,000</span></div>
+      <div class="g-price-row"><span class="g-price-label" data-i18n="jr.sb.pr.kids">Children (6–11)</span><span class="g-price-val" data-i18n="jr.sb.pr.kids.val">Half price</span></div>
     </div>
 
     <div class="g-widget" data-aos="fade-left" data-aos-delay="120">
-      <div class="g-widget-title">Shinkansen Speed</div>
-      <div class="g-widget-stat"><span class="g-widget-stat-num">320</span><span class="g-widget-stat-label">km/h top speed</span></div>
-      <div class="g-widget-stat"><span class="g-widget-stat-num">2h 15m</span><span class="g-widget-stat-label">Tokyo → Kyoto</span></div>
-      <div class="g-widget-stat"><span class="g-widget-stat-num">0</span><span class="g-widget-stat-label">Accidents since 1964</span></div>
+      <div class="g-widget-title" data-i18n="jr.sb.speed">Shinkansen Speed</div>
+      <div class="g-widget-stat"><span class="g-widget-stat-num">320</span><span class="g-widget-stat-label" data-i18n="jr.sb.spd.kmh">km/h top speed</span></div>
+      <div class="g-widget-stat"><span class="g-widget-stat-num">2h 15m</span><span class="g-widget-stat-label" data-i18n="jr.sb.spd.route">Tokyo → Kyoto</span></div>
+      <div class="g-widget-stat"><span class="g-widget-stat-num">0</span><span class="g-widget-stat-label" data-i18n="jr.sb.spd.accidents">Accidents since 1964</span></div>
     </div>
 
     <div class="g-widget" data-aos="fade-left" data-aos-delay="160">
-      <div class="g-widget-title">Official Links</div>
+      <div class="g-widget-title" data-i18n="jr.sb.links">Official Links</div>
       <a href="https://japanrailpass.net" target="_blank" rel="noopener"
          style="font-size:0.82rem;color:var(--vermilion);display:flex;align-items:center;gap:0.4rem;margin-bottom:0.75rem">
-        🔗 JR Pass Official Site
+        <i class="fa-solid fa-link"></i> JR Pass Official Site
       </a>
       <a href="https://www.hyperdia.com" target="_blank" rel="noopener"
          style="font-size:0.82rem;color:var(--vermilion);display:flex;align-items:center;gap:0.4rem">
-        🔗 Hyperdia (Train Search)
+        <i class="fa-solid fa-link"></i> Hyperdia (Train Search)
       </a>
     </div>
   </aside>

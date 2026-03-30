@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Profile — Nihon Travel</title>
   <link rel="stylesheet" href="/css/profile.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <script src="/js/i18n.js" defer></script>
 </head>
 <body>
 
@@ -21,37 +23,42 @@
       </div>
     </div>
 
-    <nav class="sidebar-nav">
-      <div class="sidebar-nav-item active" onclick="showTab('overview')">
-        <span class="nav-icon">🏠</span> Overview
-      </div>
-      <div class="sidebar-nav-item" onclick="showTab('favorites')">
-        <span class="nav-icon">❤️</span> Favorites
-      </div>
-      <div class="sidebar-nav-item" onclick="showTab('history')">
-        <span class="nav-icon">🕐</span> Viewed History
-      </div>
-      <div class="sidebar-nav-item" onclick="showTab('messages')">
-        <span class="nav-icon">📩</span> My Messages
-      </div>
-      <div class="sidebar-nav-item" onclick="showTab('settings')">
-        <span class="nav-icon">⚙️</span> Settings
-      </div>
-    </nav>
+<nav class="sidebar-nav">
+  <div class="sidebar-nav-item active" onclick="showTab('overview', event)">
+    <span class="nav-icon"><i class="fa-solid fa-house"></i></span> <span data-i18n="profile.nav.overview">Overview</span>
+  </div>
+  <div class="sidebar-nav-item" onclick="showTab('favorites', event)">
+    <span class="nav-icon"><i class="fa-solid fa-heart"></i></span> <span data-i18n="profile.nav.favorites">Favorites</span>
+  </div>
+  <div class="sidebar-nav-item" onclick="showTab('history', event)">
+    <span class="nav-icon"><i class="fa-regular fa-clock"></i></span> <span data-i18n="profile.nav.history">Viewed History</span>
+  </div>
+  <div class="sidebar-nav-item" onclick="showTab('messages', event)">
+    <span class="nav-icon"><i class="fa-solid fa-envelope"></i></span> <span data-i18n="profile.nav.messages">My Messages</span>
+  </div>
+  <div class="sidebar-nav-item" onclick="showTab('settings', event)">
+    <span class="nav-icon"><i class="fa-solid fa-gear"></i></span> <span data-i18n="profile.nav.settings">Settings</span>
+  </div>
+</nav>
 
     <div class="sidebar-footer">
-      <button onclick="logout()" class="btn btn-danger" style="width:100%;justify-content:center;padding:0.65rem 1rem">
+      <button onclick="logout()" class="btn btn-danger" style="width:100%;justify-content:center;padding:0.65rem 1rem" data-i18n="profile.signout">
         Sign Out
       </button>
-    </div>
+    </div>  
   </aside>
 
   <!-- ══════════════════ MAIN ══════════════════ -->
   <main class="profile-main">
     <div class="profile-topbar">
-      <h1 class="topbar-title" id="page-title">Overview</h1>
+      <h1 class="topbar-title" id="page-title" data-i18n="profile.nav.overview">Overview</h1>
       <div class="topbar-actions">
-        <a href="/" class="btn btn-outline">← Back to Site</a>
+        <div class="lang-switcher" style="margin-right:0.5rem">
+          <button class="lang-btn active" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ru">RU</button>
+          <button class="lang-btn" data-lang="kz">KZ</button>
+        </div>
+        <a href="/" class="btn btn-outline" data-i18n="profile.back">← Back to Site</a>
       </div>
     </div>
 
@@ -61,30 +68,30 @@
       <div class="tab-panel active" id="tab-overview">
         <div class="profile-overview-grid">
           <div class="overview-card">
-            <div class="overview-icon">❤️</div>
+            <div class="overview-icon"><i class="fa-solid fa-heart"></i></div>
             <div>
               <span class="overview-num" id="fav-count">—</span>
-              <span class="overview-label">Saved Favorites</span>
+              <span class="overview-label" data-i18n="profile.overview.favs">Saved Favorites</span>
             </div>
           </div>
           <div class="overview-card">
-            <div class="overview-icon">👁️</div>
+            <div class="overview-icon"><i class="fa-regular fa-eye"></i></div>
             <div>
               <span class="overview-num" id="hist-count">—</span>
-              <span class="overview-label">Destinations Viewed</span>
+              <span class="overview-label" data-i18n="profile.overview.hist">Destinations Viewed</span>
             </div>
           </div>
           <div class="overview-card">
-            <div class="overview-icon">📩</div>
+            <div class="overview-icon"><i class="fa-solid fa-envelope"></i></div>
             <div>
               <span class="overview-num" id="msg-count">—</span>
-              <span class="overview-label">Messages Sent</span>
+              <span class="overview-label" data-i18n="profile.overview.msgs">Messages Sent</span>
             </div>
           </div>
         </div>
 
         <div style="background:var(--white);border-radius:var(--radius-lg);padding:2rem;box-shadow:var(--shadow-soft);max-width:600px">
-          <h3 style="font-family:var(--font-serif);font-size:1.3rem;margin-bottom:1.5rem">Account Details</h3>
+          <h3 style="font-family:var(--font-serif);font-size:1.3rem;margin-bottom:1.5rem" data-i18n="profile.overview.account">Account Details</h3>
           <div id="account-details" style="display:flex;flex-direction:column;gap:1rem">
             <div class="loader"><div class="loader-dots"><span></span><span></span><span></span></div></div>
           </div>
@@ -101,8 +108,8 @@
       <!-- History Tab -->
       <div class="tab-panel" id="tab-history">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
-          <h3 style="font-family:var(--font-serif);font-size:1.2rem">Destinations You've Viewed</h3>
-          <button onclick="clearHistory()" class="btn btn-danger" style="padding:0.5rem 1rem;font-size:0.78rem">Clear All</button>
+          <h3 style="font-family:var(--font-serif);font-size:1.2rem" data-i18n="profile.history.title">Destinations You've Viewed</h3>
+          <button onclick="clearHistory()" class="btn btn-danger" style="padding:0.5rem 1rem;font-size:0.78rem" data-i18n="profile.history.clearAll">Clear All</button>
         </div>
         <div id="history-content">
           <div class="loader"><div class="loader-dots"><span></span><span></span><span></span></div></div>
@@ -120,36 +127,36 @@
       <div class="tab-panel" id="tab-settings">
         <div style="display:grid;gap:2rem;max-width:600px">
           <div class="profile-form-card">
-            <h3 style="font-family:var(--font-serif);font-size:1.3rem;margin-bottom:1.5rem">Edit Profile</h3>
+            <h3 style="font-family:var(--font-serif);font-size:1.3rem;margin-bottom:1.5rem" data-i18n="profile.settings.editTitle">Edit Profile</h3>
             <form id="profile-form" onsubmit="updateProfile(event)">
               <div class="form-group">
-                <label>Display Name</label>
-                <input type="text" name="name" id="profile-name-input" placeholder="Your name">
+                <label data-i18n="profile.settings.lbl.displayName">Display Name</label>
+                <input type="text" name="name" id="profile-name-input" placeholder="Your name" data-i18n-ph="profile.settings.ph.displayName">
               </div>
               <div class="form-group">
-                <label>Avatar URL</label>
-                <input type="url" name="avatar" id="profile-avatar-input" placeholder="https://...">
+                <label data-i18n="profile.settings.lbl.avatarUrl">Avatar URL</label>
+                <input type="url" name="avatar" id="profile-avatar-input" placeholder="https://..." data-i18n-ph="profile.settings.ph.avatarUrl">
               </div>
-              <button type="submit" class="btn btn-primary">Save Changes</button>
+              <button type="submit" class="btn btn-primary" data-i18n="profile.settings.btn.save">Save Changes</button>
             </form>
           </div>
 
           <div class="profile-form-card">
-            <h3 style="font-family:var(--font-serif);font-size:1.3rem;margin-bottom:1.5rem">Change Password</h3>
+            <h3 style="font-family:var(--font-serif);font-size:1.3rem;margin-bottom:1.5rem" data-i18n="profile.settings.changePasswordTitle">Change Password</h3>
             <form id="password-form" onsubmit="changePassword(event)">
               <div class="form-group">
-                <label>Current Password</label>
+                <label data-i18n="profile.settings.lbl.currentPassword">Current Password</label>
                 <input type="password" name="current_password" placeholder="••••••••" required>
               </div>
               <div class="form-group">
-                <label>New Password</label>
-                <input type="password" name="new_password" placeholder="Min 6 characters" required>
+                <label data-i18n="profile.settings.lbl.newPassword">New Password</label>
+                <input type="password" name="new_password" placeholder="Min 6 characters" data-i18n-ph="profile.settings.ph.newPassword" required>
               </div>
               <div class="form-group">
-                <label>Confirm New Password</label>
-                <input type="password" name="confirm_password" placeholder="Repeat new password" required>
+                <label data-i18n="profile.settings.lbl.confirmNewPassword">Confirm New Password</label>
+                <input type="password" name="confirm_password" placeholder="Repeat new password" data-i18n-ph="profile.settings.ph.confirmNewPassword" required>
               </div>
-              <button type="submit" class="btn btn-primary">Update Password</button>
+              <button type="submit" class="btn btn-primary" data-i18n="profile.settings.btn.updatePassword">Update Password</button>
             </form>
           </div>
         </div>
@@ -191,7 +198,7 @@ function renderSidebar() {
     <img src="${avatar}" alt="${currentUser.name}" class="sidebar-avatar">
     <p class="sidebar-name">${currentUser.name}</p>
     <p class="sidebar-email">${currentUser.email}</p>
-    ${currentUser.role === 'admin' ? '<span class="sidebar-badge">Admin</span>' : ''}
+    ${currentUser.role === 'admin' ? '<span class="sidebar-badge" data-i18n="profile.role.admin">Admin</span>' : ''}
   `;
 
   // Pre-fill settings
@@ -253,11 +260,20 @@ function showTab(name) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.sidebar-nav-item').forEach(i => i.classList.remove('active'));
 
-  document.getElementById(`tab-${name}`).classList.add('active');
-  event.currentTarget.classList.add('active');
 
-  const titles = { overview: 'Overview', favorites: 'My Favorites', history: 'Viewed History', messages: 'My Messages', settings: 'Settings' };
-  document.getElementById('page-title').textContent = titles[name] || name;
+  document.getElementById(`tab-${name}`).classList.add('active');
+  const el = document.querySelector(`.sidebar-nav-item[onclick*="'${name}'"]`);
+
+  const titleKeyByTab = {
+    overview: 'profile.nav.overview',
+    favorites: 'profile.nav.favorites',
+    history: 'profile.nav.history',
+    messages: 'profile.nav.messages',
+    settings: 'profile.nav.settings'
+  };
+  const pageTitle = document.getElementById('page-title');
+  pageTitle.setAttribute('data-i18n', titleKeyByTab[name] || 'profile.nav.overview');
+  if (window.NihonI18n) window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
 
   if (name === 'favorites') loadFavorites();
   if (name === 'history') loadHistory();
@@ -274,11 +290,15 @@ async function loadFavorites() {
     
     if (!data.favorites.length) {
       container.innerHTML = `<div class="empty-state">
-        <div class="empty-icon">🤍</div>
-        <h3 class="empty-title">No favorites yet</h3>
-        <p class="empty-desc">Browse destinations and tap ❤️ to save them here</p>
-        <br><a href="/#destinations" class="btn btn-primary" style="margin-top:1rem">Explore Destinations</a>
+        <div class="empty-icon"><i class="fa-regular fa-heart"></i></div>
+        <h3 class="empty-title" data-i18n="profile.favorites.empty.title">No favorites yet</h3>
+        <p class="empty-desc" data-i18n="profile.favorites.empty.desc">Browse destinations and tap <i class="fa-solid fa-heart"></i> to save them here</p>
+        <br><a href="/#destinations" class="btn btn-primary" style="margin-top:1rem" data-i18n="profile.favorites.empty.explore">Explore Destinations</a>
       </div>`;
+      if (window.NihonI18n) {
+        window.NihonI18n.cacheElements();
+        window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
+      }
       return;
     }
 
@@ -288,12 +308,16 @@ async function loadFavorites() {
         <div class="item-body">
           <p class="item-category">${dest.category || 'destination'}</p>
           <h4 class="item-name">${dest.name}</h4>
-          <p class="item-location">📍 ${dest.location || 'Japan'}</p>
-          <p class="item-time">Saved ${new Date(dest.created_at).toLocaleDateString()}</p>
-          <button class="remove-fav-btn" onclick="removeFavorite(${dest.id})">Remove ✕</button>
+          <p class="item-location"><i class="fa-solid fa-location-dot"></i> ${dest.location || 'Japan'}</p>
+          <p class="item-time"><span data-i18n="profile.favorites.item.savedLabel">Saved</span> ${new Date(dest.created_at).toLocaleDateString()}</p>
+          <button class="remove-fav-btn" onclick="removeFavorite(${dest.id})"><i class="fa-solid fa-xmark"></i> <span data-i18n="profile.favorites.remove">Remove</span></button>
         </div>
       </div>
     `).join('')}</div>`;
+    if (window.NihonI18n) {
+      window.NihonI18n.cacheElements();
+      window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
+    }
   } catch (err) {
     container.innerHTML = `<div class="empty-state"><p>Error loading favorites: ${err.message}</p></div>`;
   }
@@ -319,10 +343,14 @@ async function loadHistory() {
     
     if (!data.history.length) {
       container.innerHTML = `<div class="empty-state">
-        <div class="empty-icon">🕐</div>
-        <h3 class="empty-title">No history yet</h3>
-        <p class="empty-desc">Start exploring destinations and your history will appear here</p>
+        <div class="empty-icon"><i class="fa-regular fa-clock"></i></div>
+        <h3 class="empty-title" data-i18n="profile.history.empty.title">No history yet</h3>
+        <p class="empty-desc" data-i18n="profile.history.empty.desc">Start exploring destinations and your history will appear here</p>
       </div>`;
+      if (window.NihonI18n) {
+        window.NihonI18n.cacheElements();
+        window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
+      }
       return;
     }
 
@@ -332,11 +360,15 @@ async function loadHistory() {
         <div class="item-body">
           <p class="item-category">${item.category || 'destination'}</p>
           <h4 class="item-name">${item.name}</h4>
-          <p class="item-location">📍 ${item.location || 'Japan'}</p>
-          <p class="item-time">Viewed ${new Date(item.viewed_at).toLocaleDateString()}</p>
+          <p class="item-location"><i class="fa-solid fa-location-dot"></i> ${item.location || 'Japan'}</p>
+          <p class="item-time"><span data-i18n="profile.history.item.viewedLabel">Viewed</span> ${new Date(item.viewed_at).toLocaleDateString()}</p>
         </div>
       </div>
     `).join('')}</div>`;
+    if (window.NihonI18n) {
+      window.NihonI18n.cacheElements();
+      window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
+    }
   } catch (err) {
     container.innerHTML = `<div class="empty-state"><p>Error loading history: ${err.message}</p></div>`;
   }
@@ -363,11 +395,15 @@ async function loadMessages() {
     
     if (!data.messages.length) {
       container.innerHTML = `<div class="empty-state">
-        <div class="empty-icon">📩</div>
-        <h3 class="empty-title">No messages yet</h3>
-        <p class="empty-desc">Messages you send via the contact form will appear here</p>
-        <br><a href="/#contact" class="btn btn-primary" style="margin-top:1rem">Contact Us</a>
+        <div class="empty-icon"><i class="fa-solid fa-envelope"></i></div>
+        <h3 class="empty-title" data-i18n="profile.messages.empty.title">No messages yet</h3>
+        <p class="empty-desc" data-i18n="profile.messages.empty.desc">Messages you send via the contact form will appear here</p>
+        <br><a href="/#contact" class="btn btn-primary" style="margin-top:1rem" data-i18n="profile.messages.empty.contact">Contact Us</a>
       </div>`;
+      if (window.NihonI18n) {
+        window.NihonI18n.cacheElements();
+        window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
+      }
       return;
     }
 
@@ -405,7 +441,7 @@ async function updateProfile(event) {
     currentUser = { ...currentUser, ...data.user };
     localStorage.setItem('jt_user', JSON.stringify(currentUser));
     renderSidebar();
-    showToast('Profile updated! ✨', 'success');
+    showToast('Profile updated!', 'success');
   } catch (err) {
     showToast(err.message, 'error');
   } finally {
@@ -455,10 +491,14 @@ function logout() {
 // ── TOAST ──
 function showToast(message, type = 'info') {
   const container = document.getElementById('toast-container');
-  const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+  const icons = {
+    success: '<i class="fa-solid fa-circle-check"></i>',
+    error: '<i class="fa-solid fa-circle-xmark"></i>',
+    info: '<i class="fa-solid fa-circle-info"></i>'
+  };
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
-  toast.innerHTML = `<span>${icons[type] || 'ℹ️'}</span><span>${message}</span>`;
+  toast.innerHTML = `<span>${icons[type] || icons.info}</span><span>${message}</span>`;
   container.appendChild(toast);
   requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('show')));
   setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 3500);
