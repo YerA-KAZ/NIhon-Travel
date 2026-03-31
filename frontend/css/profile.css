@@ -38,7 +38,12 @@
 html {
   font-size: 16px;
   scroll-behavior: smooth;
+  /* === AUTO-HIDE SCROLLBAR: Firefox === */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.4s;
 }
+html:hover { scrollbar-color: rgba(192, 57, 43, 0.6) transparent; }
 
 body {
   font-family: var(--font-body);
@@ -75,10 +80,18 @@ img {
   display: block;
 }
 
-/* ── Scrollbar ── */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--paper-dark); }
-::-webkit-scrollbar-thumb { background: var(--vermilion); border-radius: 3px; }
+/* === AUTO-HIDE SCROLLBAR: Webkit (Chrome, Safari, Edge) ===
+   Transparent by default; appears on hover or when .is-scrolling is active   */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 999px;
+  transition: background 0.4s ease;
+}
+html:hover::-webkit-scrollbar-thumb          { background: rgba(192, 57, 43, 0.55); }
+html.is-scrolling::-webkit-scrollbar-thumb   { background: rgba(192, 57, 43, 0.7);  }
+::-webkit-scrollbar-thumb:hover              { background: rgba(192, 57, 43, 0.9) !important; }
 
 /* =====================================================
    LAYOUT — Sidebar + Main
@@ -1072,26 +1085,76 @@ img {
 
 /* ── Lang Switcher (profile / admin) ── */
 .lang-switcher {
-  display: flex;
-  align-items: center;
-  gap: 2px;
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 72px;
+  gap: 0;
   background: var(--paper);
   border: 1px solid var(--paper-dark);
-  border-radius: 100px;
-  padding: 3px;
+  border-radius: 18px;
+  padding: 4px;
+  overflow: hidden;
+  z-index: 20;
+}
+.lang-switcher::after {
+  content: '▾';
+  position: absolute;
+  top: 0.72rem;
+  right: 0.65rem;
+  font-size: 0.68rem;
+  color: var(--stone);
+  pointer-events: none;
+  transition: transform var(--transition), color var(--transition);
+}
+.lang-switcher:hover,
+.lang-switcher:focus-within,
+.lang-switcher.open {
+  gap: 0.22rem;
+  box-shadow: 0 12px 28px rgba(10, 10, 25, 0.08);
+}
+.lang-switcher:hover::after,
+.lang-switcher:focus-within::after,
+.lang-switcher.open::after {
+  transform: rotate(180deg);
 }
 .lang-btn {
   font-family: var(--font-body);
   font-size: 0.67rem;
   font-weight: 700;
   letter-spacing: 0.08em;
-  padding: 0.28rem 0.65rem;
-  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0 1.5rem 0 0.78rem;
+  border-radius: 12px;
   color: var(--stone);
   background: transparent;
   border: none;
   cursor: pointer;
   transition: var(--transition);
+  pointer-events: none;
+  text-align: left;
+  visibility: hidden;
+}
+.lang-btn.active {
+  max-height: 2rem;
+  opacity: 1;
+  padding: 0.42rem 1.5rem 0.42rem 0.78rem;
+  visibility: visible;
+}
+.lang-switcher:hover .lang-btn,
+.lang-switcher:focus-within .lang-btn,
+.lang-switcher.open .lang-btn {
+  max-height: 2rem;
+  opacity: 1;
+  padding: 0.42rem 1.5rem 0.42rem 0.78rem;
+  pointer-events: auto;
+  visibility: visible;
 }
 .lang-btn:hover { color: var(--ink); background: var(--paper-dark); }
-.lang-btn.active { background: var(--vermilion); color: var(--white); }
+.lang-btn.active { background: var(--vermilion); color: var(--white); pointer-events: auto; }

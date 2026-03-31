@@ -33,7 +33,9 @@
 }
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { font-size:16px; scroll-behavior:smooth; }
+/* === AUTO-HIDE SCROLLBAR: Firefox === */
+html { font-size:16px; scroll-behavior:smooth; scrollbar-width:thin; scrollbar-color:transparent transparent; transition:scrollbar-color 0.4s; }
+html:hover { scrollbar-color: rgba(192, 57, 43, 0.6) transparent; }
 body { font-family:var(--font-body); background:var(--paper); color:var(--ink); line-height:1.7; overflow-x:hidden; }
 a { text-decoration:none; color:inherit; }
 img { max-width:100%; display:block; }
@@ -51,9 +53,18 @@ ul { list-style:none; }
 }
 .g-table .i18n-ref { font-size: 0.82em; }
 
-::-webkit-scrollbar { width:6px; }
-::-webkit-scrollbar-track { background:var(--paper-dark); }
-::-webkit-scrollbar-thumb { background:var(--vermilion); border-radius:3px; }
+/* === AUTO-HIDE SCROLLBAR: Webkit (Chrome, Safari, Edge) ===
+   Transparent by default; appears on hover or when .is-scrolling is active   */
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius:999px;
+  transition: background 0.4s ease;
+}
+html:hover::-webkit-scrollbar-thumb          { background: rgba(192, 57, 43, 0.55); }
+html.is-scrolling::-webkit-scrollbar-thumb   { background: rgba(192, 57, 43, 0.7);  }
+::-webkit-scrollbar-thumb:hover              { background: rgba(192, 57, 43, 0.9) !important; }
 
 /* ── NAV ── */
 .g-nav {
@@ -68,16 +79,18 @@ ul { list-style:none; }
 }
 .g-nav-inner {
   max-width:1200px; margin:0 auto; padding:0 5%;
-  display:flex; align-items:center; justify-content:space-between;
+  display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  align-items:center; gap:1.5rem;
 }
 .g-nav-logo {
   font-family:var(--font-serif); font-size:1.4rem; color:var(--white);
   display:flex; align-items:center; gap:0.4rem; transition:var(--transition);
+  justify-self:start;
 }
 .g-nav-logo .kanji { color:var(--vermilion); font-size:1.7rem; }
 .g-nav.scrolled .g-nav-logo { color:var(--ink); }
 
-.g-nav-links { display:flex; align-items:center; gap:2rem; }
+.g-nav-links { display:flex; align-items:center; gap:2rem; justify-self:center; }
 .g-nav-links a {
   font-size:0.82rem; font-weight:500; letter-spacing:0.06em;
   color:rgba(255,255,255,0.8); text-transform:uppercase; transition:var(--transition);
@@ -368,34 +381,68 @@ ul { list-style:none; }
   .g-info-grid { grid-template-columns:1fr; }
   .g-season-grid { grid-template-columns:1fr 1fr; }
   .g-card { padding:1.5rem; }
+  .g-nav-inner { grid-template-columns:minmax(0,1fr) auto; }
   .g-nav-links { display:none; }
 }
 /* ─────────────────────────────────────────────────────────
    LANGUAGE SWITCHER
    ───────────────────────────────────────────────────────── */
 .lang-switcher {
-  display: flex;
-  align-items: center;
-  gap: 2px;
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 72px;
+  gap: 0;
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 100px;
-  padding: 3px;
+  border-radius: 18px;
+  padding: 4px;
   backdrop-filter: blur(8px);
   transition: var(--transition);
   margin-right: 0.75rem;
+  overflow: hidden;
+  z-index: 30;
+}
+.lang-switcher::after {
+  content: '▾';
+  position: absolute;
+  top: 0.72rem;
+  right: 0.65rem;
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.72);
+  pointer-events: none;
+  transition: transform var(--transition), color var(--transition);
 }
 .g-nav.scrolled .lang-switcher {
   background: var(--paper);
   border-color: var(--paper-dark);
+}
+.g-nav.scrolled .lang-switcher::after { color: var(--stone); }
+.lang-switcher:hover,
+.lang-switcher:focus-within,
+.lang-switcher.open {
+  gap: 0.22rem;
+  box-shadow: 0 12px 28px rgba(10, 10, 25, 0.16);
+}
+.lang-switcher:hover::after,
+.lang-switcher:focus-within::after,
+.lang-switcher.open::after {
+  transform: rotate(180deg);
 }
 .lang-btn {
   font-family: var(--font-body);
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.08em;
-  padding: 0.3rem 0.7rem;
-  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0 1.5rem 0 0.78rem;
+  border-radius: 12px;
   color: rgba(255, 255, 255, 0.65);
   background: transparent;
   border: none;
@@ -403,15 +450,32 @@ ul { list-style:none; }
   transition: var(--transition);
   line-height: 1;
   white-space: nowrap;
+  pointer-events: none;
+  text-align: left;
+  visibility: hidden;
 }
 .lang-btn:hover {
   color: var(--white);
   background: rgba(255, 255, 255, 0.15);
 }
 .lang-btn.active {
+  max-height: 2rem;
+  opacity: 1;
+  padding: 0.42rem 1.5rem 0.42rem 0.78rem;
   background: var(--vermilion);
   color: var(--white);
   box-shadow: 0 2px 8px rgba(192, 57, 43, 0.4);
+  pointer-events: auto;
+  visibility: visible;
+}
+.lang-switcher:hover .lang-btn,
+.lang-switcher:focus-within .lang-btn,
+.lang-switcher.open .lang-btn {
+  max-height: 2rem;
+  opacity: 1;
+  padding: 0.42rem 1.5rem 0.42rem 0.78rem;
+  pointer-events: auto;
+  visibility: visible;
 }
 .g-nav.scrolled .lang-btn {
   color: var(--stone);
@@ -467,4 +531,5 @@ ul { list-style:none; }
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  justify-self: end;
 }

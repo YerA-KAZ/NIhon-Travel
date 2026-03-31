@@ -34,6 +34,15 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  /* === AUTO-HIDE SCROLLBAR: Firefox === */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.4s;
+}
+
+/* Show Firefox scrollbar on page hover */
+html:hover {
+  scrollbar-color: rgba(192, 57, 43, 0.6) transparent;
 }
 
 body {
@@ -50,10 +59,31 @@ ul { list-style: none; }
 button { cursor: pointer; border: none; background: none; font-family: inherit; }
 input, textarea, select { font-family: inherit; }
 
-/* ── Scrollbar ── */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--paper-dark); }
-::-webkit-scrollbar-thumb { background: var(--vermilion); border-radius: 3px; }
+/* === AUTO-HIDE SCROLLBAR: Webkit (Chrome, Safari, Edge) ===
+   Transparent by default; appears during active scroll (.is-scrolling added via JS)
+   or when hovering anywhere on the page. Fades out after 1s of inactivity.        */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 999px;
+  transition: background 0.4s ease;
+}
+
+/* Show on page hover (CSS-only fallback for pages without scroll-detection JS) */
+html:hover::-webkit-scrollbar-thumb {
+  background: rgba(192, 57, 43, 0.55);
+}
+
+/* Show when JS adds .is-scrolling to <html> during active scroll */
+html.is-scrolling::-webkit-scrollbar-thumb {
+  background: rgba(192, 57, 43, 0.7);
+}
+
+/* Highlight on direct scrollbar thumb hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(192, 57, 43, 0.9) !important;
+}
 
 /* ── Typography ── */
 h1, h2, h3, h4 {
@@ -1538,27 +1568,60 @@ footer {
    LANGUAGE SWITCHER — index.html (main nav)
    ═══════════════════════════════════════════════════════════ */
 .lang-switcher {
-  display: flex;
-  align-items: center;
-  gap: 2px;
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 72px;
+  gap: 0;
   background: rgba(255, 255, 255, 0.10);
   border: 1px solid rgba(255, 255, 255, 0.20);
-  border-radius: 100px;
-  padding: 3px;
+  border-radius: 18px;
+  padding: 4px;
   backdrop-filter: blur(8px);
   transition: var(--transition);
+  overflow: hidden;
+  z-index: 30;
+}
+.lang-switcher::after {
+  content: '▾';
+  position: absolute;
+  top: 0.72rem;
+  right: 0.65rem;
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.72);
+  pointer-events: none;
+  transition: transform var(--transition), color var(--transition);
 }
 #navbar.scrolled .lang-switcher {
   background: var(--paper);
   border-color: var(--paper-dark);
+}
+#navbar.scrolled .lang-switcher::after { color: var(--stone); }
+.lang-switcher:hover,
+.lang-switcher:focus-within,
+.lang-switcher.open {
+  gap: 0.22rem;
+  box-shadow: 0 12px 28px rgba(10, 10, 25, 0.16);
+}
+.lang-switcher:hover::after,
+.lang-switcher:focus-within::after,
+.lang-switcher.open::after {
+  transform: rotate(180deg);
 }
 .lang-btn {
   font-family: var(--font-body);
   font-size: 0.67rem;
   font-weight: 700;
   letter-spacing: 0.08em;
-  padding: 0.28rem 0.65rem;
-  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0 1.5rem 0 0.78rem;
+  border-radius: 12px;
   color: rgba(255, 255, 255, 0.65);
   background: transparent;
   border: none;
@@ -1566,15 +1629,32 @@ footer {
   transition: var(--transition);
   line-height: 1;
   white-space: nowrap;
+  pointer-events: none;
+  text-align: left;
+  visibility: hidden;
 }
 .lang-btn:hover {
   color: var(--white);
   background: rgba(255, 255, 255, 0.14);
 }
 .lang-btn.active {
+  max-height: 2rem;
+  opacity: 1;
+  padding: 0.42rem 1.5rem 0.42rem 0.78rem;
   background: var(--vermilion);
   color: var(--white);
   box-shadow: 0 2px 8px rgba(192, 57, 43, 0.4);
+  pointer-events: auto;
+  visibility: visible;
+}
+.lang-switcher:hover .lang-btn,
+.lang-switcher:focus-within .lang-btn,
+.lang-switcher.open .lang-btn {
+  max-height: 2rem;
+  opacity: 1;
+  padding: 0.42rem 1.5rem 0.42rem 0.78rem;
+  pointer-events: auto;
+  visibility: visible;
 }
 #navbar.scrolled .lang-btn        { color: var(--stone); }
 #navbar.scrolled .lang-btn:hover  { color: var(--ink); background: var(--paper-dark); }
@@ -1591,8 +1671,11 @@ footer {
 .gallery-overlay-icon i { font-size: 1.2rem; }
 
 @media (max-width: 480px) {
-  .lang-switcher { gap: 1px; }
-  .lang-btn { padding: 0.25rem 0.5rem; font-size: 0.62rem; }
+  .lang-switcher { min-width: 66px; }
+  .lang-btn.active,
+  .lang-switcher:hover .lang-btn,
+  .lang-switcher:focus-within .lang-btn,
+  .lang-switcher.open .lang-btn { padding: 0.38rem 1.35rem 0.38rem 0.68rem; font-size: 0.62rem; }
 }
 
 /* ═══════════════════════════════════════════════════════════

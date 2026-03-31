@@ -428,6 +428,15 @@
         <label data-i18n="modal.login.pass">Password</label>
         <input type="password" name="password" placeholder="••••••••" required>
       </div>
+      <!-- === FORGOT PASSWORD LINK === -->
+      <div style="text-align:right;margin-top:-0.6rem;margin-bottom:1rem">
+        <a href="/pages/forgot-password.html"
+           onclick="closeModal('login-modal')"
+           style="font-size:0.78rem;color:var(--vermilion);text-decoration:none;transition:opacity 0.2s"
+           onmouseover="this.style.opacity='0.7'"
+           onmouseout="this.style.opacity='1'"
+           data-i18n="modal.login.forgot">Forgot password?</a>
+      </div>
       <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center" data-i18n="modal.login.submit">
         Sign In
       </button>

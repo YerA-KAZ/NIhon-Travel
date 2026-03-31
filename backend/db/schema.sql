@@ -54,6 +54,16 @@
         viewed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
+    -- Password reset tokens
+    CREATE TABLE IF NOT EXISTS password_reset_tokens (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+        token_hash VARCHAR(255) NOT NULL UNIQUE,
+        expires_at TIMESTAMP NOT NULL,
+        used BOOLEAN DEFAULT FALSE,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
     -- Seed destinations
     INSERT INTO destinations (name, description, image_url, category, location, rating) VALUES
     ('Mount Fuji', 'Japan''s iconic sacred mountain, standing at 3,776m. A UNESCO World Heritage site offering breathtaking views and spiritual significance throughout the seasons.', 'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800', 'nature', 'Shizuoka Prefecture', 4.9),

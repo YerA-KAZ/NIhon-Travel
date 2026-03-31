@@ -79,7 +79,7 @@
       </div>
     </nav>
     <div class="sidebar-footer">
-      <button onclick="logout()" class="btn btn-danger" style="width:100%;justify-content:center;padding:0.65rem 1rem">Sign Out</button>
+      <button onclick="logout()" class="btn btn-danger" style="width:100%;justify-content:center;padding:0.65rem 1rem" data-i18n="admin.signout">Sign Out</button>
     </div>
   </aside>
 
@@ -93,7 +93,7 @@
           <button class="lang-btn" data-lang="ru">RU</button>
           <button class="lang-btn" data-lang="kz">KZ</button>
         </div>
-        <a href="/" class="btn btn-outline" style="background:rgba(255,255,255,0.2);color:#fff;border-color:rgba(255,255,255,0.4)">← Back to Site</a>
+        <a href="/" class="btn btn-outline" style="background:rgba(255,255,255,0.2);color:#fff;border-color:rgba(255,255,255,0.4)" data-i18n="profile.back">← Back to Site</a>
       </div>
     </div>
 
@@ -196,19 +196,64 @@ let token = localStorage.getItem('jt_token');
 let currentUser = JSON.parse(localStorage.getItem('jt_user') || 'null');
 let editingDestId = null;
 
-document.addEventListener('DOMContentLoaded', () => {
-  if (!token || !currentUser) { window.location.href = '/'; return; }
-  if (currentUser.role !== 'admin') { showToast('Access denied. Admins only.', 'error'); setTimeout(() => window.location.href = '/', 2000); return; }
-  
+function t(key, fallback) {
+  return window.NihonI18n?.t ? window.NihonI18n.t(key, fallback) : fallback;
+}
+
+function locale() {
+  return window.NihonI18n?.getLocale ? window.NihonI18n.getLocale() : 'en-US';
+}
+
+function formatDate(value, options = { year: 'numeric', month: 'short', day: 'numeric' }) {
+  return new Date(value).toLocaleDateString(locale(), options);
+}
+
+function refreshI18n() {
+  if (!window.NihonI18n) return;
+  window.NihonI18n.cacheElements();
+  window.NihonI18n.refreshLang();
+}
+
+function translateCategory(category) {
+  if (!category) return t('admin.dest.cat.general', 'General');
+  return t(`admin.dest.cat.${category}`, category);
+}
+
+function translateRole(role) {
+  return role === 'admin'
+    ? t('admin.role.admin', 'Admin')
+    : t('admin.role.user', 'User');
+}
+
+function renderAdminSidebarUser() {
   const avatar = currentUser.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.name)}&background=c0392b&color=fff`;
   document.getElementById('admin-sidebar-user').innerHTML = `
     <img src="${avatar}" alt="" class="sidebar-avatar">
     <p class="sidebar-name">${currentUser.name}</p>
     <p class="sidebar-email">${currentUser.email}</p>
-    <span class="sidebar-badge" data-i18n="admin.role.admin">Admin</span>
+    <span class="sidebar-badge">${t('admin.role.admin', 'Admin')}</span>
   `;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (!token || !currentUser) { window.location.href = '/'; return; }
+  if (currentUser.role !== 'admin') { showToast(t('admin.error.accessDenied', 'Access denied. Admins only.'), 'error'); setTimeout(() => window.location.href = '/', 2000); return; }
+  
+  renderAdminSidebarUser();
+
+  refreshI18n();
 
   loadStats();
+});
+
+document.addEventListener('nihon:langchange', () => {
+  if (!currentUser || currentUser.role !== 'admin') return;
+  renderAdminSidebarUser();
+  loadStats();
+
+  if (document.getElementById('admin-tab-destinations').style.display === 'block') loadAdminDestinations();
+  if (document.getElementById('admin-tab-messages').style.display === 'block') loadAdminMessages();
+  if (document.getElementById('admin-tab-users').style.display === 'block') loadAdminUsers();
 });
 
 async function apiCall(endpoint, options = {}) {
@@ -241,10 +286,7 @@ function showAdminTab(name, el) {
   const titleText = document.getElementById('admin-page-title-text');
   titleText.textContent = titleTextByTab[name] || titleTextByTab.dashboard;
   titleText.setAttribute('data-i18n', titleKeyByTab[name] || 'admin.page.title.dashboard');
-  if (window.NihonI18n) {
-    window.NihonI18n.cacheElements();
-    window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
-  }
+  refreshI18n();
 
   if (name === 'destinations') loadAdminDestinations();
   if (name === 'messages') loadAdminMessages();
@@ -261,12 +303,9 @@ async function loadStats() {
       <div class="stat-card"><div class="stat-card-num">${messages}</div><div class="stat-card-label" data-i18n="admin.stat.messages">Messages</div></div>
       <div class="stat-card"><div class="stat-card-num">${favorites}</div><div class="stat-card-label" data-i18n="admin.stat.favorites">Favorites</div></div>
     `;
-    if (window.NihonI18n) {
-      window.NihonI18n.cacheElements();
-      window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
-    }
+    refreshI18n();
   } catch (err) {
-    document.getElementById('stat-cards').innerHTML = `<p>Connect your backend to see stats</p>`;
+    document.getElementById('stat-cards').innerHTML = `<p>${t('admin.error.connectStats', 'Connect your backend to see stats')}</p>`;
   }
 }
 
@@ -291,7 +330,7 @@ async function loadAdminDestinations() {
             <td><img src="${d.image_url || 'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=200'}" alt="${d.name}"></td>
             <td><strong>${d.name}</strong></td>
             <td>${d.location || '—'}</td>
-            <td><span class="badge badge-${d.category || 'default'}">${d.category || 'general'}</span></td>
+            <td><span class="badge badge-${d.category || 'default'}">${translateCategory(d.category)}</span></td>
             <td><i class="fa-solid fa-star" style="color:var(--gold)"></i> ${d.rating || '—'}</td>
             <td><div class="action-btns">
               <button class="action-btn action-btn-edit" onclick="editDest(${JSON.stringify(d).replace(/"/g, '&quot;')})" data-i18n="admin.action.edit">Edit</button>
@@ -300,12 +339,9 @@ async function loadAdminDestinations() {
           </tr>
         `).join('')}</tbody>
       </table></div>`;
-    if (window.NihonI18n) {
-      window.NihonI18n.cacheElements();
-      window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
-    }
+    refreshI18n();
   } catch (err) {
-    container.innerHTML = `<div class="empty-state"><p>Error: ${err.message}</p></div>`;
+    container.innerHTML = `<div class="empty-state"><p>${t('admin.error.prefix', 'Error')}: ${err.message}</p></div>`;
   }
 }
 
@@ -315,10 +351,7 @@ function openDestModal() {
   document.getElementById('dest-submit-btn').textContent = 'Add Destination';
   document.getElementById('dest-form-title').setAttribute('data-i18n', 'admin.dest.modal.add.title');
   document.getElementById('dest-submit-btn').setAttribute('data-i18n', 'admin.dest.modal.add.submit');
-  if (window.NihonI18n) {
-    window.NihonI18n.cacheElements();
-    window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
-  }
+  refreshI18n();
   document.getElementById('dest-form').reset();
   document.getElementById('dest-form-modal').classList.add('open');
 }
@@ -329,10 +362,7 @@ function editDest(dest) {
   document.getElementById('dest-submit-btn').textContent = 'Save Changes';
   document.getElementById('dest-form-title').setAttribute('data-i18n', 'admin.dest.modal.edit.title');
   document.getElementById('dest-submit-btn').setAttribute('data-i18n', 'admin.dest.modal.edit.submit');
-  if (window.NihonI18n) {
-    window.NihonI18n.cacheElements();
-    window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
-  }
+  refreshI18n();
   const form = document.getElementById('dest-form');
   form.querySelector('[name="name"]').value = dest.name || '';
   form.querySelector('[name="location"]').value = dest.location || '';
@@ -365,10 +395,10 @@ async function submitDestForm(event) {
   try {
     if (editingDestId) {
       await apiCall(`/admin/destinations/${editingDestId}`, { method: 'PUT', body });
-      showToast('Destination updated!', 'success');
+      showToast(t('admin.toast.destinationUpdated', 'Destination updated!'), 'success');
     } else {
       await apiCall('/admin/destinations', { method: 'POST', body });
-      showToast('Destination added!', 'success');
+      showToast(t('admin.toast.destinationAdded', 'Destination added!'), 'success');
     }
     closeDestModal();
     loadAdminDestinations();
@@ -381,10 +411,10 @@ async function submitDestForm(event) {
 }
 
 async function deleteDest(id) {
-  if (!confirm('Delete this destination? This cannot be undone.')) return;
+  if (!confirm(t('admin.confirm.deleteDestination', 'Delete this destination? This cannot be undone.'))) return;
   try {
     await apiCall(`/admin/destinations/${id}`, { method: 'DELETE' });
-    showToast('Destination deleted', 'info');
+    showToast(t('admin.toast.destinationDeleted', 'Destination deleted'), 'info');
     loadAdminDestinations();
     loadStats();
   } catch (err) {
@@ -399,10 +429,7 @@ async function loadAdminMessages() {
     const data = await apiCall('/admin/messages');
     if (!data.messages.length) {
       container.innerHTML = `<div class="empty-state"><div class="empty-icon"><i class="fa-solid fa-envelope"></i></div><h3 class="empty-title" data-i18n="admin.messages.empty.title">No messages yet</h3></div>`;
-      if (window.NihonI18n) {
-        window.NihonI18n.cacheElements();
-        window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
-      }
+      refreshI18n();
       return;
     }
     container.innerHTML = `<div style="overflow-x:auto"><table class="data-table">
@@ -419,16 +446,13 @@ async function loadAdminMessages() {
           <td>${m.email}</td>
           <td>${m.subject || '—'}</td>
           <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${m.message}</td>
-          <td>${new Date(m.created_at).toLocaleDateString()}</td>
+          <td>${formatDate(m.created_at)}</td>
         </tr>
       `).join('')}</tbody>
     </table></div>`;
-    if (window.NihonI18n) {
-      window.NihonI18n.cacheElements();
-      window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
-    }
+    refreshI18n();
   } catch (err) {
-    container.innerHTML = `<div class="empty-state"><p>Error: ${err.message}</p></div>`;
+    container.innerHTML = `<div class="empty-state"><p>${t('admin.error.prefix', 'Error')}: ${err.message}</p></div>`;
   }
 }
 
@@ -448,17 +472,14 @@ async function loadAdminUsers() {
         <tr>
           <td><strong>${u.name}</strong></td>
           <td>${u.email}</td>
-          <td><span class="badge ${u.role === 'admin' ? 'badge-temple' : 'badge-default'}">${u.role}</span></td>
-          <td>${new Date(u.created_at).toLocaleDateString()}</td>
+          <td><span class="badge ${u.role === 'admin' ? 'badge-temple' : 'badge-default'}">${translateRole(u.role)}</span></td>
+          <td>${formatDate(u.created_at)}</td>
         </tr>
       `).join('')}</tbody>
     </table></div>`;
-    if (window.NihonI18n) {
-      window.NihonI18n.cacheElements();
-      window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
-    }
+    refreshI18n();
   } catch (err) {
-    container.innerHTML = `<div class="empty-state"><p>Error: ${err.message}</p></div>`;
+    container.innerHTML = `<div class="empty-state"><p>${t('admin.error.prefix', 'Error')}: ${err.message}</p></div>`;
   }
 }
 

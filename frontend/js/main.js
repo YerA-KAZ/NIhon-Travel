@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   initGallery();
   updateNavForAuth();
+  initAutoHideScrollbar(); // === AUTO-HIDE SCROLLBAR ===
 });
 
 // ═══════════════════════════════════════════════════
@@ -159,6 +160,27 @@ function initParallax() {
     const scrollY = window.scrollY;
     const speed = 0.4;
     heroBg.style.transform = `scale(1.1) translateY(${scrollY * speed}px)`;
+  }, { passive: true });
+}
+
+// ═══════════════════════════════════════════════════
+//  AUTO-HIDE SCROLLBAR
+//  Adds .is-scrolling to <html> during active scroll,
+//  removes it 1 s after scrolling stops.
+//  CSS in style.css reads this class to reveal the
+//  red thumb only while the user is scrolling.
+// ═══════════════════════════════════════════════════
+
+function initAutoHideScrollbar() {
+  let scrollTimer = null;
+  const root = document.documentElement;
+
+  window.addEventListener('scroll', () => {
+    root.classList.add('is-scrolling');
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      root.classList.remove('is-scrolling');
+    }, 1000); // hide 1 s after scroll stops
   }, { passive: true });
 }
 

@@ -4,8 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>ANIME ATLAS — Pilgrimage & Cosplay Guide 2025-2026</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;700&family=Noto+Serif+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<script src="/js/i18n.js" defer></script>
 <style>
 * {
   margin: 0;
@@ -32,6 +34,76 @@
   --fs: 'Noto Serif JP', serif;
   --fb: 'Crimson Pro', serif;
   --fm: 'JetBrains Mono', monospace;
+}
+
+/* lang switcher for anime page */
+.lang-switcher {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 60px;
+  gap: 0;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--bd);
+  border-radius: 16px;
+  padding: 3px;
+  overflow: hidden;
+  z-index: 30;
+}
+.lang-switcher::after {
+  content: '▾';
+  position: absolute; top: 0.6rem; right: 0.55rem;
+  font-size: 0.6rem; color: var(--mute2);
+  pointer-events: none;
+  transition: transform var(--t), color var(--t);
+}
+.lang-switcher:hover::after,
+.lang-switcher:focus-within::after { transform: rotate(180deg); }
+.lang-switcher:hover,
+.lang-switcher:focus-within {
+  gap: 0.18rem;
+  box-shadow: 0 10px 24px rgba(0,0,0,.4);
+}
+.lang-btn {
+  font-family: var(--fm);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0 1.2rem 0 0.6rem;
+  border-radius: 10px;
+  color: var(--mute2);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: var(--t);
+  pointer-events: none;
+  text-align: left;
+  visibility: hidden;
+}
+.lang-btn:hover { color: var(--w); background: rgba(255,255,255,.1); }
+.lang-btn.active {
+  max-height: 2rem;
+  opacity: 1;
+  padding: 0.36rem 1.2rem 0.36rem 0.6rem;
+  background: var(--red);
+  color: var(--w);
+  pointer-events: auto;
+  visibility: visible;
+}
+.lang-switcher:hover .lang-btn,
+.lang-switcher:focus-within .lang-btn {
+  max-height: 2rem;
+  opacity: 1;
+  padding: 0.36rem 1.2rem 0.36rem 0.6rem;
+  pointer-events: auto;
+  visibility: visible;
 }
 
 html {
@@ -956,40 +1028,57 @@ footer {
   .ftab { padding: .7rem .5rem; font-size: .5rem; }
   .fcard-img { height: 200px; }
 }
+
+.tip-icon i {
+  font-size: 1.8rem;
+  color: var(--red);
+}
+.tip-icon {
+  line-height: 1;
+}
+.irl-from i, .photo-label i, .fcard-loc i, .ftab i, .conv-country i {
+  margin-right: 0.3em;
+}
+
 </style>
 </head>
 <body>
 
 <nav id="nav">
-        <a href="/" class="nav-logo" style="color: var(--red);">
-        <span class="logo-kanji">日</span>
-        Nihon Travel
-      </a>
+  <a href="/" class="nav-logo" style="color: var(--red);">
+    <span class="logo-kanji">日</span>
+    Nihon Travel
+  </a>
   <div class="nc">
-    <a href="#irl">LOCATIONS</a>
-    <a href="#fans">BY ANIME</a>
-    <a href="#cosplay">COSPLAY</a>
+    <a href="#irl" data-i18n="anime.nav.locations">LOCATIONS</a>
+    <a href="#fans" data-i18n="anime.nav.byanime">BY ANIME</a>
+    <a href="#cosplay" data-i18n="anime.nav.cosplay">COSPLAY</a>
+    <div class="lang-switcher" role="group" aria-label="Language">
+      <button class="lang-btn active" data-lang="en" title="English">EN</button>
+      <button class="lang-btn" data-lang="ru" title="Русский">RU</button>
+      <button class="lang-btn" data-lang="kz" title="Қазақша">KZ</button>
+    </div>
   </div>
 </nav>
 
 <section class="hero">
   <div class="scan"></div>
   <div class="hero-left">
-    <div class="h-tag">Real Japan · Anime Pilgrimage · 2025 Guide</div>
+    <div class="h-tag" data-i18n="anime.hero.tag">Real Japan · Anime Pilgrimage · 2025 Guide</div>
     <h1 class="h-title">
       ANIME<br>
       <span class="line2">ATLAS</span>
       <span class="line3">聖地巡礼</span>
     </h1>
-    <p class="h-desc">Every frame was shot somewhere real. We found the places — from misty Ghibli forests to the neon streets of JJK. Plus: where to cosplay in 2025–2026.</p>
+    <p class="h-desc" data-i18n="anime.hero.desc">Every frame was shot somewhere real. We found the places — from misty Ghibli forests to the neon streets of JJK. Plus: where to cosplay in 2025–2026.</p>
     <div class="h-btns">
-      <a href="#irl" class="btn-main">→ EXPLORE LOCATIONS</a>
-      <a href="#cosplay" class="btn-ghost">🎭 CONVENTIONS</a>
+      <a href="#irl" class="btn-main" data-i18n="anime.hero.btn1">→ EXPLORE LOCATIONS</a>
+      <a href="#cosplay" class="btn-ghost" data-i18n="anime.hero.btn2"><i class="fa-solid fa-masks-theater"></i> CONVENTIONS</a>
     </div>
     <div class="h-stats">
-      <div><span class="h-stat-n">5</span><div class="h-stat-l">ANIME</div></div>
-      <div><span class="h-stat-n">20+</span><div class="h-stat-l">LOCATIONS</div></div>
-      <div><span class="h-stat-n">12</span><div class="h-stat-l">EVENTS</div></div>
+      <div><span class="h-stat-n">5</span><div class="h-stat-l" data-i18n="anime.hero.stat1">ANIME</div></div>
+      <div><span class="h-stat-n">20+</span><div class="h-stat-l" data-i18n="anime.hero.stat2">LOCATIONS</div></div>
+      <div><span class="h-stat-n">12</span><div class="h-stat-l" data-i18n="anime.hero.stat3">EVENTS</div></div>
     </div>
   </div>
   <div class="hero-right">
@@ -1002,51 +1091,51 @@ footer {
 <section class="sec irl-sec" id="irl">
   <div class="w">
     <div class="sec-hd">
-      <div class="sec-kicker">Real Pilgrimage Spots</div>
-      <h2 class="sec-title">ANIME FRAMES<br>MEET REALITY</h2>
-      <p class="sec-sub">Iconic locations where your favorite scenes were born — side by side comparison.</p>
+      <div class="sec-kicker" data-i18n="anime.irl.kicker">Real Pilgrimage Spots</div>
+      <h2 class="sec-title" data-i18n="anime.irl.title">ANIME FRAMES<br>MEET REALITY</h2>
+      <p class="sec-sub" data-i18n="anime.irl.sub">Iconic locations where your favorite scenes were born — side by side comparison.</p>
     </div>
     <div class="irl-stack">
       <div class="irl-card">
         <div class="irl-info">
-          <div class="irl-from">🎬 Studio Ghibli · Princess Mononoke</div>
-          <h3 class="irl-name">Yakushima — Forest of Spirits</h3>
+          <div class="irl-from" data-i18n="anime.irl1.from"><i class="fa-solid fa-clapperboard"></i> Studio Ghibli · Princess Mononoke</div>
+          <h3 class="irl-name" data-i18n="anime.irl1.name">Yakushima — Forest of Spirits</h3>
           <div class="irl-jp">屋久島 · Kagoshima</div>
-          <div class="irl-loc">Yakushima Island, UNESCO Heritage</div>
-          <p class="irl-text">Ancient cedar & moss-covered trails that inspired the Spirit Forest. Miyazaki spent weeks here sketching.</p>
-          <div class="irl-tags"><span class="irl-tag">UNESCO site</span><span class="irl-tag">Shiratani Unsuikyo</span><span class="irl-tag">3hr hike</span></div>
+          <div class="irl-loc" data-i18n="anime.irl1.loc">Yakushima Island, UNESCO Heritage</div>
+          <p class="irl-text" data-i18n="anime.irl1.text">Ancient cedar & moss-covered trails that inspired the Spirit Forest. Miyazaki spent weeks here sketching.</p>
+          <div class="irl-tags"><span class="irl-tag" data-i18n="anime.irl1.tag1">UNESCO site</span><span class="irl-tag">Shiratani Unsuikyo</span><span class="irl-tag" data-i18n="anime.irl1.tag3">3hr hike</span></div>
         </div>
         <div class="irl-media-duo">
-          <div class="photo-panel"><span class="photo-label anime-label">🎬 ANIME FRAME</span><img src="https://thefilmstage.com/wp-content/uploads/2020/04/princess-mononoke-symphonic-suite-vinyl-1.jpg" alt="Anime forest"></div>
-          <div class="photo-panel"><span class="photo-label real-label">📍 REAL LIFE</span><img src="https://travel.rakuten.com/contents/sites/contents/files/styles/max_1300x1300/public/2024-09/yakushima-guide_9.jpg?itok=dO8cO6jc" alt="Yakushima real"></div>
+          <div class="photo-panel"><span class="photo-label anime-label" data-i18n="anime.label.animeframe"><i class="fa-solid fa-clapperboard"></i> ANIME FRAME</span><img src="https://thefilmstage.com/wp-content/uploads/2020/04/princess-mononoke-symphonic-suite-vinyl-1.jpg" alt="Anime forest"></div>
+          <div class="photo-panel"><span class="photo-label real-label" data-i18n="anime.label.reallife"><i class="fa-solid fa-location-dot"></i> REAL LIFE</span><img src="https://travel.rakuten.com/contents/sites/contents/files/styles/max_1300x1300/public/2024-09/yakushima-guide_9.jpg?itok=dO8cO6jc" alt="Yakushima real"></div>
         </div>
       </div>
       <div class="irl-card">
         <div class="irl-info">
-          <div class="irl-from">💫 Makoto Shinkai · Your Name</div>
-          <h3 class="irl-name">Suga Shrine Stairs</h3>
+          <div class="irl-from" data-i18n="anime.irl2.from"><i class="fa-solid fa-star-and-crescent"></i> Makoto Shinkai · Your Name</div>
+          <h3 class="irl-name" data-i18n="anime.irl2.name">Suga Shrine Stairs</h3>
           <div class="irl-jp">須賀神社 · Shinjuku</div>
-          <div class="irl-loc">Suga Shrine, Tokyo</div>
-          <p class="irl-text">The legendary staircase where Taki and Mitsuha finally meet. The most photographed anime pilgrimage spot.</p>
-          <div class="irl-tags"><span class="irl-tag">Suga Shrine</span><span class="irl-tag">Shinjuku</span><span class="irl-tag">Iconic Scene</span></div>
+          <div class="irl-loc" data-i18n="anime.irl2.loc">Suga Shrine, Tokyo</div>
+          <p class="irl-text" data-i18n="anime.irl2.text">The legendary staircase where Taki and Mitsuha finally meet. The most photographed anime pilgrimage spot.</p>
+          <div class="irl-tags"><span class="irl-tag">Suga Shrine</span><span class="irl-tag">Shinjuku</span><span class="irl-tag" data-i18n="anime.irl2.tag3">Iconic Scene</span></div>
         </div>
         <div class="irl-media-duo">
-          <div class="photo-panel"><span class="photo-label anime-label">🎬 ANIME FRAME</span><img src="https://www.film.ru/sites/default/files/images/your-name3.jpg" alt="Your name anime stairs"></div>
-          <div class="photo-panel"><span class="photo-label real-label">📍 REAL LIFE</span><img src="https://offloadmedia.feverup.com/secrettokyo.com/wp-content/uploads/2023/02/07225107/Suga-Shrine-Otokozaka.jpg" alt="Suga real stairs"></div>
+          <div class="photo-panel"><span class="photo-label anime-label"><i class="fa-solid fa-clapperboard"></i> ANIME FRAME</span><img src="https://www.film.ru/sites/default/files/images/your-name3.jpg" alt="Your name anime stairs"></div>
+          <div class="photo-panel"><span class="photo-label real-label"><i class="fa-solid fa-location-dot"></i> REAL LIFE</span><img src="https://offloadmedia.feverup.com/secrettokyo.com/wp-content/uploads/2023/02/07225107/Suga-Shrine-Otokozaka.jpg" alt="Suga real stairs"></div>
         </div>
       </div>
       <div class="irl-card">
         <div class="irl-info">
-          <div class="irl-from">⛩️ Makoto Shinkai · Weathering With You</div>
-          <h3 class="irl-name">Tokyo Teleport Station</h3>
+          <div class="irl-from" data-i18n="anime.irl3.from"><i class="fa-solid fa-torii-gate"></i> Makoto Shinkai · Weathering With You</div>
+          <h3 class="irl-name" data-i18n="anime.irl3.name">Tokyo Teleport Station</h3>
           <div class="irl-jp">天気の子 · Tokyo</div>
-          <div class="irl-loc">Tokyo, Japan</div>
-          <p class="irl-text">The iconic teleport station featured in Weathering With You.</p>
+          <div class="irl-loc" data-i18n="anime.irl3.loc">Tokyo, Japan</div>
+          <p class="irl-text" data-i18n="anime.irl3.text">The iconic teleport station featured in Weathering With You.</p>
           <div class="irl-tags"><span class="irl-tag">Tokyo Teleport Station</span><span class="irl-tag">Weathering With You</span></div>
         </div>
         <div class="irl-media-duo">
-          <div class="photo-panel"><span class="photo-label anime-label">🎬 ANIME FRAME</span><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEixvJrcOsGTJh2DhyNUEL_vzDQXU_bFJB-q6e0_8nTZP3YDaJve_z9JQz4YqGS5gRI9OPHhPTmWxhTISdS6evnQ7I0AIB3meWkpv6mRo5nGmEt2G5opy3z27ukS4Wg2zMGoRz5VgO9L68M/s1600/baitoru-00m08s.png?w=700&q=85" alt="Weathering With You frame"></div>
-          <div class="photo-panel"><span class="photo-label real-label">📍 REAL LIFE</span><img src="https://tabimaniajapan.com/wp-content/uploads/2025/03/Weathering_with_You_locations_Tokyo_teleport_sta-1024x644.jpg"></div>
+          <div class="photo-panel"><span class="photo-label anime-label"><i class="fa-solid fa-clapperboard"></i> ANIME FRAME</span><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEixvJrcOsGTJh2DhyNUEL_vzDQXU_bFJB-q6e0_8nTZP3YDaJve_z9JQz4YqGS5gRI9OPHhPTmWxhTISdS6evnQ7I0AIB3meWkpv6mRo5nGmEt2G5opy3z27ukS4Wg2zMGoRz5VgO9L68M/s1600/baitoru-00m08s.png?w=700&q=85" alt="Weathering With You frame"></div>
+          <div class="photo-panel"><span class="photo-label real-label"><i class="fa-solid fa-location-dot"></i> REAL LIFE</span><img src="https://tabimaniajapan.com/wp-content/uploads/2025/03/Weathering_with_You_locations_Tokyo_teleport_sta-1024x644.jpg"></div>
         </div>
       </div>
     </div>
@@ -1055,47 +1144,47 @@ footer {
 
 <!-- FANS SECTION with updated titles: Weathering With You & The Garden of Words, enlarged images -->
 <section class="sec fans-sec" id="fans">
-  <div class="w"><div class="sec-hd c"><div class="sec-kicker">Pilgrimage by Anime</div><h2 class="sec-title">CHOOSE YOUR ANIME</h2><p class="sec-sub">Select your favorite series and get the ultimate real-world map.</p></div>
-  <div class="fans-tabs"><button class="ftab on" data-f="ghibli">🎬 GHIBLI</button><button class="ftab" data-f="yourname">💫 YOUR NAME</button><button class="ftab" data-f="weathering">☀️ WEATHERING WITH YOU</button><button class="ftab" data-f="garden">🍃 THE GARDEN OF WORDS</button><button class="ftab" data-f="jjk">⚡ JUJUTSU KAISEN</button></div>
+  <div class="w"><div class="sec-hd c"><div class="sec-kicker" data-i18n="anime.fans.kicker">Pilgrimage by Anime</div><h2 class="sec-title" data-i18n="anime.fans.title">CHOOSE YOUR ANIME</h2><p class="sec-sub" data-i18n="anime.fans.sub">Select your favorite series and get the ultimate real-world map.</p></div>
+  <div class="fans-tabs"><button class="ftab on" data-f="ghibli" data-i18n="anime.tab.ghibli"><i class="fa-solid fa-clapperboard"></i> GHIBLI</button><button class="ftab" data-f="yourname" data-i18n="anime.tab.yourname"><i class="fa-solid fa-star"></i> YOUR NAME</button><button class="ftab" data-f="weathering" data-i18n="anime.tab.weathering"><i class="fa-solid fa-sun"></i> WEATHERING WITH YOU</button><button class="ftab" data-f="garden" data-i18n="anime.tab.garden"><i class="fa-solid fa-leaf"></i> THE GARDEN OF WORDS</button><button class="ftab" data-f="jjk" data-i18n="anime.tab.jjk"><i class="fa-solid fa-bolt"></i> JUJUTSU KAISEN</button></div>
   
-  <!-- Ghibli Panel -->  <div class="fpanel on" id="fp-ghibli"><div class="fpanel-hd"><div class="fpanel-cover"><img src="https://api.cagmo.ru/uploads/small_ghibli_studio_abdac729f4.webp?w=300&q=85" alt="Ghibli"></div><div class="fpanel-meta"><div class="fpanel-studio">Studio Ghibli</div><h3 class="fpanel-name">Ghibli Pilgrimage</h3><div class="fpanel-jp">自然と魔法の世界</div><p class="fpanel-desc">Miyazaki’s world is drawn from real Japanese landscapes.</p></div></div><div class="fgrid"><div class="fcard"><div class="fcard-img"><img src="https://www.japan-guide.com/g23/3041_01.jpg?w=800&q=85" alt="Ghibli museum"></div><div class="fcard-body"><div class="fcard-loc">📍 Mitaka, Tokyo</div><h4 class="fcard-name">Ghibli Museum</h4><p class="fcard-text">Enter Miyazaki’s imagination. A must-see for every fan.</p></div></div><div class="fcard"><div class="fcard-img"><img src="https://cdn.gaijinpot.com/app/uploads/sites/6/2016/06/Yakushima-lead.jpg?w=800&q=85" alt="Yakushima"></div><div class="fcard-body"><div class="fcard-loc">📍 Yakushima</div><h4 class="fcard-name">Mononoke Forest</h4><p class="fcard-text">Ancient cedar & mossy trails — the spirit forest.</p></div></div><div class="fcard"><div class="fcard-img"><img src="https://d1vqr0cheeo2qs.cloudfront.net/articles/title_images/000/039/136/medium/shutterstock_542335609_dogo_onsen-01.jpeg?2020?w=800&q=85" alt="Hakone"></div><div class="fcard-body"><div class="fcard-loc">📍 Hakone</div><h4 class="fcard-name">Spirited Away Onsen</h4><p class="fcard-text">Traditional ryokan & steam bath atmosphere.</p></div></div></div></div>
-  <!-- Your Name Panel -->  <div class="fpanel" id="fp-yourname"><div class="fpanel-hd"><div class="fpanel-cover"><img src="https://rachelsreviews.net/wp-content/uploads/2016/11/your-name3.png?w=300&q=85" alt="Your Name"></div><div class="fpanel-meta"><div class="fpanel-studio">CoMix Wave Films</div><h3 class="fpanel-name">Your Name</h3><div class="fpanel-jp">君の名は</div><p class="fpanel-desc">Every scene is a real photograph. Follow Taki & Mitsuha.</p></div></div><div class="fgrid"><div class="fcard"><div class="fcard-img"><img src="https://offloadmedia.feverup.com/secrettokyo.com/wp-content/uploads/2023/02/07225107/Suga-Shrine-Otokozaka.jpg?w=800&q=85" alt="Suga shrine"></div><div class="fcard-body"><div class="fcard-loc">📍 Suga Shrine</div><h4 class="fcard-name">Final Scene Stairs</h4><p class="fcard-text">Iconic staircase in Shinjuku.</p></div></div><div class="fcard"><div class="fcard-img"><img src="https://www.snowmonkeyresorts.com/wp-content/uploads/2024/12/3849306_m.jpg?w=800&q=85" alt="Hida"></div><div class="fcard-body"><div class="fcard-loc">📍 Hida-Furukawa</div><h4 class="fcard-name">Mitsuha’s Hometown</h4><p class="fcard-text">Сultural significance in the Hida region.</p></div></div><div class="fcard"><div class="fcard-img"><img src="https://www.akibagamers.it/wp-content/uploads/2020/09/labi-shinjuku-yunika-vision-01.jpg?w=800&q=85" alt="Shinjuku"></div><div class="fcard-body"><div class="fcard-loc">📍 Shinjuku</div><h4 class="fcard-name">Taki’s Tokyo Walk</h4><p class="fcard-text">Real city corners from the film.</p></div></div></div></div>
-  <!-- Weathering With You Panel (Tenki no Ko) -->  <div class="fpanel" id="fp-weathering"><div class="fpanel-hd"><div class="fpanel-cover"><img src="https://m.media-amazon.com/images/M/MV5BMmJiYWI4ZjktMzgyZS00MjBiLThmOTYtZWJmOTUzOTFkMTFiXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg?w=300&q=85" alt="Weathering With You"></div><div class="fpanel-meta"><div class="fpanel-studio">CoMix Wave Films</div><h3 class="fpanel-name">Weathering With You</h3><div class="fpanel-jp">天気の子</div><p class="fpanel-desc">Rain-soaked Tokyo & sacred shrines — Shinkai's most atmospheric work.</p></div></div><div class="fgrid"><div class="fcard"><div class="fcard-img"><img src="https://cdn.cheapoguides.com/wp-content/uploads/sites/2/2019/08/W2A4541-1024x600.jpg?w=800&q=85" alt="Shinjuku night"></div><div class="fcard-body"><div class="fcard-loc">📍 Shinjuku, Tokyo</div><h4 class="fcard-name">Shinjuku Streets</h4><p class="fcard-text">Neon-lit alleys where Hodaka arrives.</p></div></div><div class="fcard"><div class="fcard-img"><img src="https://jw-webmagazine.com/wp-content/uploads/2019/08/IMG_2966-2-min.jpg?w=800&q=85" alt="Mt. Takao"></div><div class="fcard-body"><div class="fcard-loc">📍 Mt. Takao</div><h4 class="fcard-name">Takao Shrine</h4><p class="fcard-text">The abandoned shrine above the clouds.</p></div></div><div class="fcard"><div class="fcard-img"><img src="https://img.mipon.org/wp-content/uploads/2019/09/10135848/tenki-no-ko_building-1024x768.jpg?w=800&q=85" alt="Yoyogi"></div><div class="fcard-body"><div class="fcard-loc">📍 Yoyogi & Shibuya</div><h4 class="fcard-name">Rooftop & Rain Scenes</h4><p class="fcard-text">Iconic locations from the trailer.</p></div></div></div></div>
-  <!-- The Garden of Words Panel (Kotonoha no Niwa) -->  <div class="fpanel" id="fp-garden"><div class="fpanel-hd"><div class="fpanel-cover"><img src="https://play-lh.googleusercontent.com/I2BD6dScP_Lg44iVGh3UTABPPTrikrYFA5hV6K-x3IKxTFmfZKywAVgnXxxlJU_nX7LLJw?w=300&q=85" alt="Garden of Words"></div><div class="fpanel-meta"><div class="fpanel-studio">CoMix Wave Films</div><h3 class="fpanel-name">The Garden of Words</h3><div class="fpanel-jp">言の葉の庭</div><p class="fpanel-desc">The most beautiful rain-soaked garden in anime — Shinjuku Gyoen.</p></div></div><div class="fgrid"><div class="fcard"><div class="fcard-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Bench_in_Shinjuku_Gyoen.JPG/1280px-Bench_in_Shinjuku_Gyoen.JPG?w=800&q=85" alt="Shinjuku Gyoen"></div><div class="fcard-body"><div class="fcard-loc">📍 Shinjuku Gyoen</div><h4 class="fcard-name">Japanese Garden Pavilion</h4><p class="fcard-text">The exact gazebo where Yukari and Takao meet.</p></div></div><div class="fcard"><div class="fcard-img"><img src="https://www.advantour.com/img/japan/tokyo/yoyogi-park/yoyogi-park-sky-view.jpg?w=800&q=85" alt="Tokyo rain"></div><div class="fcard-body"><div class="fcard-loc">📍 Shinjuku & Yoyogi</div><h4 class="fcard-name">Rainy City Walks</h4><p class="fcard-text">Footbridges and alleys from the film.</p></div></div><div class="fcard"><div class="fcard-img"><img src="https://www.japan-guide.com/g18/3009_01.jpg?w=800&q=85" alt="Tokyo Skytree"></div><div class="fcard-body"><div class="fcard-loc">📍 Sumida & Asakusa</div><h4 class="fcard-name">Skyline Views</h4><p class="fcard-text">Panoramic scenes of Tokyo.</p></div></div></div></div>
-  <!-- Jujutsu Kaisen Panel -->  <div class="fpanel" id="fp-jjk"><div class="fpanel-hd"><div class="fpanel-cover"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/46/Jujutsu_kaisen.jpg/250px-Jujutsu_kaisen.jpg" alt="JJK"></div><div class="fpanel-meta"><div class="fpanel-studio">MAPPA</div><h3 class="fpanel-name">Jujutsu Kaisen</h3><div class="fpanel-jp">呪術廻戦</div><p class="fpanel-desc">Hyper-accurate Tokyo & Sendai — Shibuya incident comes alive.</p></div></div><div class="fgrid"><div class="fcard"><div class="fcard-img"><img src="https://japantour.xyz/wp-content/uploads/2025/02/IMG_8942-1024x825.jpg?w=800&q=85" alt="Shibuya"></div><div class="fcard-body"><div class="fcard-loc">📍 Shibuya Crossing</div><h4 class="fcard-name">Shibuya Station</h4><p class="fcard-text">The iconic arc location.</p></div></div><div class="fcard"><div class="fcard-img"><img src="https://japantour.xyz/wp-content/uploads/2022/06/Screen-Shot-2022-06-16-at-12.11.24.png?w=800&q=85" alt="Sugamo"></div><div class="fcard-body"><div class="fcard-loc">📍 Sugamo, Tokyo</div><h4 class="fcard-name">Jujutsu High Streets</h4><p class="fcard-text">Alleys & stairs from the anime.</p></div></div><div class="fcard"><div class="fcard-img"><img src="https://thumbs.dreamstime.com/b/miyagi-japan-april-many-people-walking-ichibancho-shopping-arcade-sendai-downtown-308276447.jpg?w=800&q=85" alt="Sendai"></div><div class="fcard-body"><div class="fcard-loc">📍 Sendai, Miyagi</div><h4 class="fcard-name">Nanami’s City</h4><p class="fcard-text">Ichibancho arcade & offices.</p></div></div></div></div>
+  <!-- Ghibli Panel -->  <div class="fpanel on" id="fp-ghibli"><div class="fpanel-hd"><div class="fpanel-cover"><img src="https://api.cagmo.ru/uploads/small_ghibli_studio_abdac729f4.webp?w=300&q=85" alt="Ghibli"></div><div class="fpanel-meta"><div class="fpanel-studio">Studio Ghibli</div><h3 class="fpanel-name">Ghibli Pilgrimage</h3><div class="fpanel-jp">自然と魔法の世界</div><p class="fpanel-desc">Miyazaki’s world is drawn from real Japanese landscapes.</p></div></div><div class="fgrid"><div class="fcard"><div class="fcard-img"><img src="https://www.japan-guide.com/g23/3041_01.jpg?w=800&q=85" alt="Ghibli museum"></div><div class="fcard-body"><div class="fcard-loc"><i class="fa-solid fa-location-dot"></i> Mitaka, Tokyo</div><h4 class="fcard-name">Ghibli Museum</h4><p class="fcard-text">Enter Miyazaki’s imagination. A must-see for every fan.</p></div></div><div class="fcard"><div class="fcard-img"><img src="https://cdn.gaijinpot.com/app/uploads/sites/6/2016/06/Yakushima-lead.jpg?w=800&q=85" alt="Yakushima"></div><div class="fcard-body"><div class="fcard-loc"><i class="fa-solid fa-location-dot"></i> Yakushima</div><h4 class="fcard-name">Mononoke Forest</h4><p class="fcard-text">Ancient cedar & mossy trails — the spirit forest.</p></div></div><div class="fcard"><div class="fcard-img"><img src="https://d1vqr0cheeo2qs.cloudfront.net/articles/title_images/000/039/136/medium/shutterstock_542335609_dogo_onsen-01.jpeg?2020?w=800&q=85" alt="Hakone"></div><div class="fcard-body"><div class="fcard-loc"><i class="fa-solid fa-location-dot"></i> Hakone</div><h4 class="fcard-name">Spirited Away Onsen</h4><p class="fcard-text">Traditional ryokan & steam bath atmosphere.</p></div></div></div></div>
+  <!-- Your Name Panel -->  <div class="fpanel" id="fp-yourname"><div class="fpanel-hd"><div class="fpanel-cover"><img src="https://rachelsreviews.net/wp-content/uploads/2016/11/your-name3.png?w=300&q=85" alt="Your Name"></div><div class="fpanel-meta"><div class="fpanel-studio">CoMix Wave Films</div><h3 class="fpanel-name">Your Name</h3><div class="fpanel-jp">君の名は</div><p class="fpanel-desc">Every scene is a real photograph. Follow Taki & Mitsuha.</p></div></div><div class="fgrid"><div class="fcard"><div class="fcard-img"><img src="https://offloadmedia.feverup.com/secrettokyo.com/wp-content/uploads/2023/02/07225107/Suga-Shrine-Otokozaka.jpg?w=800&q=85" alt="Suga shrine"></div><div class="fcard-body"><div class="fcard-loc"><i class="fa-solid fa-location-dot"></i> Suga Shrine</div><h4 class="fcard-name">Final Scene Stairs</h4><p class="fcard-text">Iconic staircase in Shinjuku.</p></div></div><div class="fcard"><div class="fcard-img"><img src="https://www.snowmonkeyresorts.com/wp-content/uploads/2024/12/3849306_m.jpg?w=800&q=85" alt="Hida"></div><div class="fcard-body"><div class="fcard-loc"><i class="fa-solid fa-location-dot"></i> Hida-Furukawa</div><h4 class="fcard-name">Mitsuha’s Hometown</h4><p class="fcard-text">Сultural significance in the Hida region.</p></div></div><div class="fcard"><div class="fcard-img"><img src="https://www.akibagamers.it/wp-content/uploads/2020/09/labi-shinjuku-yunika-vision-01.jpg?w=800&q=85" alt="Shinjuku"></div><div class="fcard-body"><div class="fcard-loc"><i class="fa-solid fa-location-dot"></i> Shinjuku</div><h4 class="fcard-name">Taki’s Tokyo Walk</h4><p class="fcard-text">Real city corners from the film.</p></div></div></div></div>
+  <!-- Weathering With You Panel (Tenki no Ko) -->  <div class="fpanel" id="fp-weathering"><div class="fpanel-hd"><div class="fpanel-cover"><img src="https://m.media-amazon.com/images/M/MV5BMmJiYWI4ZjktMzgyZS00MjBiLThmOTYtZWJmOTUzOTFkMTFiXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg?w=300&q=85" alt="Weathering With You"></div><div class="fpanel-meta"><div class="fpanel-studio">CoMix Wave Films</div><h3 class="fpanel-name">Weathering With You</h3><div class="fpanel-jp">天気の子</div><p class="fpanel-desc">Rain-soaked Tokyo & sacred shrines — Shinkai's most atmospheric work.</p></div></div><div class="fgrid"><div class="fcard"><div class="fcard-img"><img src="https://cdn.cheapoguides.com/wp-content/uploads/sites/2/2019/08/W2A4541-1024x600.jpg?w=800&q=85" alt="Shinjuku night"></div><div class="fcard-body"><div class="fcard-loc"><i class="fa-solid fa-location-dot"></i> Shinjuku, Tokyo</div><h4 class="fcard-name">Shinjuku Streets</h4><p class="fcard-text">Neon-lit alleys where Hodaka arrives.</p></div></div><div class="fcard"><div class="fcard-img"><img src="https://jw-webmagazine.com/wp-content/uploads/2019/08/IMG_2966-2-min.jpg?w=800&q=85" alt="Mt. Takao"></div><div class="fcard-body"><div class="fcard-loc"><i class="fa-solid fa-location-dot"></i> Mt. Takao</div><h4 class="fcard-name">Takao Shrine</h4><p class="fcard-text">The abandoned shrine above the clouds.</p></div></div><div class="fcard"><div class="fcard-img"><img src="https://img.mipon.org/wp-content/uploads/2019/09/10135848/tenki-no-ko_building-1024x768.jpg?w=800&q=85" alt="Yoyogi"></div><div class="fcard-body"><div class="fcard-loc"><i class="fa-solid fa-location-dot"></i> Yoyogi & Shibuya</div><h4 class="fcard-name">Rooftop & Rain Scenes</h4><p class="fcard-text">Iconic locations from the trailer.</p></div></div></div></div>
+  <!-- The Garden of Words Panel (Kotonoha no Niwa) -->  <div class="fpanel" id="fp-garden"><div class="fpanel-hd"><div class="fpanel-cover"><img src="https://play-lh.googleusercontent.com/I2BD6dScP_Lg44iVGh3UTABPPTrikrYFA5hV6K-x3IKxTFmfZKywAVgnXxxlJU_nX7LLJw?w=300&q=85" alt="Garden of Words"></div><div class="fpanel-meta"><div class="fpanel-studio">CoMix Wave Films</div><h3 class="fpanel-name">The Garden of Words</h3><div class="fpanel-jp">言の葉の庭</div><p class="fpanel-desc">The most beautiful rain-soaked garden in anime — Shinjuku Gyoen.</p></div></div><div class="fgrid"><div class="fcard"><div class="fcard-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Bench_in_Shinjuku_Gyoen.JPG/1280px-Bench_in_Shinjuku_Gyoen.JPG?w=800&q=85" alt="Shinjuku Gyoen"></div><div class="fcard-body"><div class="fcard-loc"><i class="fa-solid fa-location-dot"></i> Shinjuku Gyoen</div><h4 class="fcard-name">Japanese Garden Pavilion</h4><p class="fcard-text">The exact gazebo where Yukari and Takao meet.</p></div></div><div class="fcard"><div class="fcard-img"><img src="https://www.advantour.com/img/japan/tokyo/yoyogi-park/yoyogi-park-sky-view.jpg?w=800&q=85" alt="Tokyo rain"></div><div class="fcard-body"><div class="fcard-loc"><i class="fa-solid fa-location-dot"></i> Shinjuku & Yoyogi</div><h4 class="fcard-name">Rainy City Walks</h4><p class="fcard-text">Footbridges and alleys from the film.</p></div></div><div class="fcard"><div class="fcard-img"><img src="https://www.japan-guide.com/g18/3009_01.jpg?w=800&q=85" alt="Tokyo Skytree"></div><div class="fcard-body"><div class="fcard-loc"><i class="fa-solid fa-location-dot"></i> Sumida & Asakusa</div><h4 class="fcard-name">Skyline Views</h4><p class="fcard-text">Panoramic scenes of Tokyo.</p></div></div></div></div>
+  <!-- Jujutsu Kaisen Panel -->  <div class="fpanel" id="fp-jjk"><div class="fpanel-hd"><div class="fpanel-cover"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/46/Jujutsu_kaisen.jpg/250px-Jujutsu_kaisen.jpg" alt="JJK"></div><div class="fpanel-meta"><div class="fpanel-studio">MAPPA</div><h3 class="fpanel-name">Jujutsu Kaisen</h3><div class="fpanel-jp">呪術廻戦</div><p class="fpanel-desc">Hyper-accurate Tokyo & Sendai — Shibuya incident comes alive.</p></div></div><div class="fgrid"><div class="fcard"><div class="fcard-img"><img src="https://japantour.xyz/wp-content/uploads/2025/02/IMG_8942-1024x825.jpg?w=800&q=85" alt="Shibuya"></div><div class="fcard-body"><div class="fcard-loc"><i class="fa-solid fa-location-dot"></i> Shibuya Crossing</div><h4 class="fcard-name">Shibuya Station</h4><p class="fcard-text">The iconic arc location.</p></div></div><div class="fcard"><div class="fcard-img"><img src="https://japantour.xyz/wp-content/uploads/2022/06/Screen-Shot-2022-06-16-at-12.11.24.png?w=800&q=85" alt="Sugamo"></div><div class="fcard-body"><div class="fcard-loc"><i class="fa-solid fa-location-dot"></i> Sugamo, Tokyo</div><h4 class="fcard-name">Jujutsu High Streets</h4><p class="fcard-text">Alleys & stairs from the anime.</p></div></div><div class="fcard"><div class="fcard-img"><img src="https://thumbs.dreamstime.com/b/miyagi-japan-april-many-people-walking-ichibancho-shopping-arcade-sendai-downtown-308276447.jpg?w=800&q=85" alt="Sendai"></div><div class="fcard-body"><div class="fcard-loc"><i class="fa-solid fa-location-dot"></i> Sendai, Miyagi</div><h4 class="fcard-name">Nanami’s City</h4><p class="fcard-text">Ichibancho arcade & offices.</p></div></div></div></div>
   </div>
 </section>
 
 <!-- COSPLAY SECTION -->
 <section class="sec cos-sec" id="cosplay">
   <div class="w">
-    <div class="sec-hd"><div class="sec-kicker">Cosplay · Conventions · 2025–2026</div><h2 class="sec-title">WHERE & WHEN<br>TO COSPLAY</h2></div>
+    <div class="sec-hd"><div class="sec-kicker" data-i18n="anime.cos.kicker">Cosplay · Conventions · 2025–2026</div><h2 class="sec-title" data-i18n="anime.cos.title">WHERE & WHEN<br>TO COSPLAY</h2></div>
     <div class="cos-intro"><div>
-      <p style="color:var(--mute); margin-bottom:1rem">
+      <p style="color:var(--mute); margin-bottom:1rem" data-i18n="anime.cos.intro">
 Cosplay culture in Japan comes alive at massive conventions like Comic Market (Comiket) and dedicated cosplay festivals held across Tokyo and beyond. The most iconic venue is Tokyo Big Sight in Odaiba, where hundreds of thousands of fans gather to celebrate anime, manga, and creativity.
 From indoor exhibition halls to outdoor cosplay areas, these events transform entire districts into living anime worlds. You’ll see everything from screen-perfect recreations to original character designs, all brought together by a passionate community.
 Whether it’s Comiket’s legendary scale or smaller cosplay-focused festivals in places like Ikebukuro and Akihabara, Japan offers an unmatched experience for anyone who wants to not just watch anime — but become a part of it.      </p>
-      <div style="font-family:var(--fm); font-size:.7rem; border:1px solid rgba(255,45,85,.3); display:inline-block; padding:.6rem 1.5rem; border-radius:40px;">📅 Dates for 2025–2026 season</div></div><div class="cos-intro-img">
+      <div style="font-family:var(--fm); font-size:.7rem; border:1px solid rgba(255,45,85,.3); display:inline-block; padding:.6rem 1.5rem; border-radius:40px;" data-i18n="anime.cos.dates"><i class="fa-solid fa-calendar-days"></i> Dates for 2025–2026 season</div></div><div class="cos-intro-img">
       <img src="https://a.storyblok.com/f/178900/3940x2346/b67b19aed8/2d3b293bf9bbbf8f92c90148d5d88f9b1660746713_main.jpg/m/filters:quality(95)format(webp)" alt="Cosplay gathering"></div></div>
     <div class="cos-grid">
       
-      <div class="conv-card"><div class="conv-date"><div class="conv-month">DEC</div><div class="conv-day">28-30</div></div><div class="conv-body"><div class="conv-country">🇯🇵 Tokyo Big Sight</div><h4 class="conv-name">Comiket C107</h4><div class="conv-city">Ariake, Tokyo</div><p class="conv-desc">World’s biggest doujinshi & cosplay festival. 700k+ visitors.</p><img class="conv-img-large" src="https://flitjet.wordpress.com/wp-content/uploads/2025/11/c107.jpg?w=676?w=900&q=85" alt="Comiket crowd"><div class="conv-tags"><span class="conv-tag">Doujinshi</span><span class="conv-tag">Cosplay</span><span class="conv-tag">700k+</span></div></div></div>
-      <div class="conv-card"><div class="conv-date gold"><div class="conv-month">JULY</div><div class="conv-day">24-27</div></div><div class="conv-body"><div class="conv-country">🇺🇸 San Diego</div><h4 class="conv-name">Comic-Con International</h4><div class="conv-city">San Diego Convention Center</div><p class="conv-desc">Legendary masquerade, huge anime panels.</p><img class="conv-img-large" src="https://upload.wikimedia.org/wikipedia/en/9/97/San_Diego_Comic-Con_International_logo.svg?w=900&q=85" alt="Comic-con cosplay"><div class="conv-tags"><span class="conv-tag">Masquerade</span><span class="conv-tag">Hollywood</span></div></div></div>
-      <div class="conv-card"><div class="conv-date ice"><div class="conv-month">AUG</div><div class="conv-day">29-31</div></div><div class="conv-body"><div class="conv-country">🇯🇵 Makuhari Messe</div><h4 class="conv-name">Anime Japan 2026</h4><div class="conv-city">Chiba, Tokyo area</div><p class="conv-desc">Official industry expo with premieres and exclusive merch.</p><img class="conv-img-large" src="https://amnibus-event.s3.amazonaws.com/wp-content/uploads/34cd99f7fb77e712df9337e064c88904.jpg?w=900&q=85" alt="Anime Japan stage"><div class="conv-tags"><span class="conv-tag">Industry</span><span class="conv-tag">Premieres</span></div></div></div>
-      <div class="conv-card"><div class="conv-date lime"><div class="conv-month">JUNE</div><div class="conv-day">27-29</div></div><div class="conv-body"><div class="conv-country">🇺🇸 Los Angeles</div><h4 class="conv-name">Anime Expo 2026</h4><div class="conv-city">LA Convention Center</div><p class="conv-desc">North America’s largest anime con, 120k+ attendees, massive cosplay parade.</p><img class="conv-img-large" src="https://www.laconventioncenter.com/assets/img/anime-expo-2026-main-c91ad3dea7.jpg?w=900&q=85" alt="Anime Expo"><div class="conv-tags"><span class="conv-tag">Cosplay Parade</span><span class="conv-tag">120k+</span></div></div></div>
-      <div class="conv-card"><div class="conv-date"><div class="conv-month">MAR</div><div class="conv-day">14-16</div></div><div class="conv-body"><div class="conv-country">🇬🇧 London</div><h4 class="conv-name">MCM London Comic Con</h4><div class="conv-city">ExCeL London</div><p class="conv-desc">Europe’s leading anime & pop culture expo.</p><img class="conv-img-large" src="https://www.nintendo.com/eu/media/images/08_content_images/country_support_2/uk_6/MCM_H2x1.png?w=900&q=85" alt="MCM London"><div class="conv-tags"><span class="conv-tag">Europe Hub</span><span class="conv-tag">75k</span></div></div></div>
-      <div class="conv-card"><div class="conv-date ice"><div class="conv-month">APR</div><div class="conv-day">18-20</div></div><div class="conv-body"><div class="conv-country">🇫🇷 Paris</div><h4 class="conv-name">Japan Expo Paris</h4><div class="conv-city">Paris-Nord Villepinte</div><p class="conv-desc">250k visitors, giant J-culture & cosplay arena.</p><img class="conv-img-large" src="https://www.ecostylia.com/wp-content/uploads/2025/07/japan-expo-2025-featured-image-1200x900-fullscreen.jpg?w=900&q=85" alt="Japan Expo"><div class="conv-tags"><span class="conv-tag">250k</span><span class="conv-tag">Music</span></div></div></div>
+      <div class="conv-card"><div class="conv-date"><div class="conv-month">DEC</div><div class="conv-day">28-30</div></div><div class="conv-body"><div class="conv-country"><i class="fa-solid fa-flag" style="color:#bc002d"></i> Tokyo Big Sight</div><h4 class="conv-name">Comiket C107</h4><div class="conv-city">Ariake, Tokyo</div><p class="conv-desc">World’s biggest doujinshi & cosplay festival. 700k+ visitors.</p><img class="conv-img-large" src="https://flitjet.wordpress.com/wp-content/uploads/2025/11/c107.jpg?w=676?w=900&q=85" alt="Comiket crowd"><div class="conv-tags"><span class="conv-tag">Doujinshi</span><span class="conv-tag">Cosplay</span><span class="conv-tag">700k+</span></div></div></div>
+      <div class="conv-card"><div class="conv-date gold"><div class="conv-month">JULY</div><div class="conv-day">24-27</div></div><div class="conv-body"><div class="conv-country"><i class="fa-solid fa-flag" style="color:#3c3b6e"></i> San Diego</div><h4 class="conv-name">Comic-Con International</h4><div class="conv-city">San Diego Convention Center</div><p class="conv-desc">Legendary masquerade, huge anime panels.</p><img class="conv-img-large" src="https://upload.wikimedia.org/wikipedia/en/9/97/San_Diego_Comic-Con_International_logo.svg?w=900&q=85" alt="Comic-con cosplay"><div class="conv-tags"><span class="conv-tag">Masquerade</span><span class="conv-tag">Hollywood</span></div></div></div>
+      <div class="conv-card"><div class="conv-date ice"><div class="conv-month">AUG</div><div class="conv-day">29-31</div></div><div class="conv-body"><div class="conv-country"><i class="fa-solid fa-flag" style="color:#bc002d"></i> Makuhari Messe</div><h4 class="conv-name">Anime Japan 2026</h4><div class="conv-city">Chiba, Tokyo area</div><p class="conv-desc">Official industry expo with premieres and exclusive merch.</p><img class="conv-img-large" src="https://amnibus-event.s3.amazonaws.com/wp-content/uploads/34cd99f7fb77e712df9337e064c88904.jpg?w=900&q=85" alt="Anime Japan stage"><div class="conv-tags"><span class="conv-tag">Industry</span><span class="conv-tag">Premieres</span></div></div></div>
+      <div class="conv-card"><div class="conv-date lime"><div class="conv-month">JUNE</div><div class="conv-day">27-29</div></div><div class="conv-body"><div class="conv-country"><i class="fa-solid fa-flag" style="color:#3c3b6e"></i> Los Angeles</div><h4 class="conv-name">Anime Expo 2026</h4><div class="conv-city">LA Convention Center</div><p class="conv-desc">North America’s largest anime con, 120k+ attendees, massive cosplay parade.</p><img class="conv-img-large" src="https://www.laconventioncenter.com/assets/img/anime-expo-2026-main-c91ad3dea7.jpg?w=900&q=85" alt="Anime Expo"><div class="conv-tags"><span class="conv-tag">Cosplay Parade</span><span class="conv-tag">120k+</span></div></div></div>
+      <div class="conv-card"><div class="conv-date"><div class="conv-month">MAR</div><div class="conv-day">14-16</div></div><div class="conv-body"><div class="conv-country"><i class="fa-solid fa-flag" style="color:#012169"></i> London</div><h4 class="conv-name">MCM London Comic Con</h4><div class="conv-city">ExCeL London</div><p class="conv-desc">Europe’s leading anime & pop culture expo.</p><img class="conv-img-large" src="https://www.nintendo.com/eu/media/images/08_content_images/country_support_2/uk_6/MCM_H2x1.png?w=900&q=85" alt="MCM London"><div class="conv-tags"><span class="conv-tag">Europe Hub</span><span class="conv-tag">75k</span></div></div></div>
+      <div class="conv-card"><div class="conv-date ice"><div class="conv-month">APR</div><div class="conv-day">18-20</div></div><div class="conv-body"><div class="conv-country"><i class="fa-solid fa-flag" style="color:#002395"></i> Paris</div><h4 class="conv-name">Japan Expo Paris</h4><div class="conv-city">Paris-Nord Villepinte</div><p class="conv-desc">250k visitors, giant J-culture & cosplay arena.</p><img class="conv-img-large" src="https://www.ecostylia.com/wp-content/uploads/2025/07/japan-expo-2025-featured-image-1200x900-fullscreen.jpg?w=900&q=85" alt="Japan Expo"><div class="conv-tags"><span class="conv-tag">250k</span><span class="conv-tag">Music</span></div></div></div>
     </div>
     <div class="cos-tips">
-      <div class="tip-card"><div class="tip-icon">🎯</div><h4 class="tip-title">Pick your character wisely</h4><p class="tip-text">Start with iconic but comfortable cosplays — Tanjiro or Naruto are always recognized.</p></div>
-      <div class="tip-card"><div class="tip-icon">🧵</div><h4 class="tip-title">Order 3 months ahead</h4><p class="tip-text">Quality costumes take 4–8 weeks; budget $100–250 for good craftsmanship.</p></div>
-      <div class="tip-card"><div class="tip-icon">📸</div><h4 class="tip-title">Golden hour photography</h4><p class="tip-text">Shoot early morning or in dedicated photo zones. Pre-book with con photographers.</p></div>
-      <div class="tip-card"><div class="tip-icon">🗺️</div><h4 class="tip-title">Combine with pilgrimage</h4><p class="tip-text">AnimeJapan + Asakusa, Comiket + Odaiba. Plan both con & real locations.</p></div>
+      <div class="tip-card"><div class="tip-icon"><i class="fa-solid fa-bullseye"></i></div><h4 class="tip-title" data-i18n="anime.tip1.title">Pick your character wisely</h4><p class="tip-text" data-i18n="anime.tip1.text">Start with iconic but comfortable cosplays — Tanjiro or Naruto are always recognized.</p></div>
+      <div class="tip-card"><div class="tip-icon"><i class="fa-solid fa-scissors"></i></div><h4 class="tip-title" data-i18n="anime.tip2.title">Order 3 months ahead</h4><p class="tip-text" data-i18n="anime.tip2.text">Quality costumes take 4–8 weeks; budget $100–250 for good craftsmanship.</p></div>
+      <div class="tip-card"><div class="tip-icon"><i class="fa-solid fa-camera"></i></div><h4 class="tip-title" data-i18n="anime.tip3.title">Golden hour photography</h4><p class="tip-text" data-i18n="anime.tip3.text">Shoot early morning or in dedicated photo zones. Pre-book with con photographers.</p></div>
+      <div class="tip-card"><div class="tip-icon"><i class="fa-solid fa-map"></i></div><h4 class="tip-title" data-i18n="anime.tip4.title">Combine with pilgrimage</h4><p class="tip-text" data-i18n="anime.tip4.text">AnimeJapan + Asakusa, Comiket + Odaiba. Plan both con & real locations.</p></div>
     </div>
   </div>
 </section>
 
-<footer><div><div class="fo-logo">ANIME ATLAS</div><div class="fo-sub">The ultimate pilgrimage guide · 2025–2026</div></div><div class="fo-right">聖地巡礼<br><span style="color:var(--red)">made for fans worldwide</span></div></footer>
+<footer><div><div class="fo-logo" data-i18n="anime.footer.logo">ANIME ATLAS</div><div class="fo-sub" data-i18n="anime.footer.sub">The ultimate pilgrimage guide · 2025–2026</div></div><div class="fo-right">聖地巡礼<br><span style="color:var(--red)" data-i18n="anime.footer.fans">made for fans worldwide</span></div></footer>
 
 <script>
   const navEl = document.getElementById('nav');
@@ -1113,6 +1202,150 @@ Whether it’s Comiket’s legendary scale or smaller cosplay-focused festivals 
     entries.forEach(e => { if(e.isIntersecting){ e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; observer.unobserve(e.target); } });
   }, { threshold: 0.1, rootMargin: "0px 0px -20px 0px" });
   document.querySelectorAll('.irl-card, .fcard, .conv-card, .tip-card').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(28px)'; el.style.transition = 'opacity 0.5s ease, transform 0.5s ease'; observer.observe(el); });
+</script>
+
+<!-- ═══════════ i18n TRANSLATION KEYS ═══════════ -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  if (!window.NihonI18n) return;
+
+  const ruKeys = {
+    // Nav
+    'anime.nav.locations': 'ЛОКАЦИИ',
+    'anime.nav.byanime': 'ПО АНИМЕ',
+    'anime.nav.cosplay': 'КОСПЛЕЙ',
+    // Hero
+    'anime.hero.tag': 'Реальная Япония · Паломничество по аниме · Гид 2025',
+    'anime.hero.desc': 'Каждый кадр снят в реальном месте. Мы нашли эти места — от туманных лесов Ghibli до неоновых улиц JJK. А ещё: где косплеить в 2025–2026.',
+    'anime.hero.btn1': '→ ЛОКАЦИИ',
+    'anime.hero.btn2': '<i class="fa-solid fa-masks-theater"></i> КОНВЕНТЫ',
+    'anime.hero.stat1': 'АНИМЕ',
+    'anime.hero.stat2': 'ЛОКАЦИЙ',
+    'anime.hero.stat3': 'СОБЫТИЙ',
+    // IRL section
+    'anime.irl.kicker': 'Реальные места паломничества',
+    'anime.irl.title': 'КАДРЫ АНИМЕ<br>ВСТРЕЧАЮТ РЕАЛЬНОСТЬ',
+    'anime.irl.sub': 'Культовые локации, где родились ваши любимые сцены — сравнение бок о бок.',
+    // IRL cards
+    'anime.irl1.from': '<i class="fa-solid fa-clapperboard"></i> Studio Ghibli · Принцесса Мононоке',
+    'anime.irl1.name': 'Якусима — Лес духов',
+    'anime.irl1.loc': 'Остров Якусима, ЮНЕСКО',
+    'anime.irl1.text': 'Древние кедры и мшистые тропы, вдохновившие Лес духов. Миядзаки провёл здесь недели за набросками.',
+    'anime.irl1.tag1': 'ЮНЕСКО',
+    'anime.irl1.tag3': '3ч поход',
+    'anime.irl2.from': '<i class="fa-solid fa-star"></i> Макото Синкай · Твоё имя',
+    'anime.irl2.name': 'Лестница храма Суга',
+    'anime.irl2.loc': 'Храм Суга, Токио',
+    'anime.irl2.text': 'Легендарная лестница, где Таки и Мицуха наконец встретились. Самое фотографируемое место паломничества.',
+    'anime.irl2.tag3': 'Культовая сцена',
+    'anime.irl3.from': '<i class="fa-solid fa-torii-gate"></i> Макото Синкай · Дитя погоды',
+    'anime.irl3.name': 'Станция Tokyo Teleport',
+    'anime.irl3.loc': 'Токио, Япония',
+    'anime.irl3.text': 'Культовая станция из аниме «Дитя погоды».',
+    // Labels
+    'anime.label.animeframe': '<i class="fa-solid fa-clapperboard"></i> КАДР АНИМЕ',
+    'anime.label.reallife': '<i class="fa-solid fa-location-dot"></i> РЕАЛЬНОСТЬ',
+    // Fans section
+    'anime.fans.kicker': 'Паломничество по аниме',
+    'anime.fans.title': 'ВЫБЕРИ АНИМЕ',
+    'anime.fans.sub': 'Выбери любимый сериал и получи карту реальных локаций.',
+    'anime.tab.ghibli': '<i class="fa-solid fa-clapperboard"></i> GHIBLI',
+    'anime.tab.yourname': '<i class="fa-solid fa-star"></i> ТВОЁ ИМЯ',
+    'anime.tab.weathering': '<i class="fa-solid fa-sun"></i> ДИТЯ ПОГОДЫ',
+    'anime.tab.garden': '<i class="fa-solid fa-leaf"></i> САД СЛОВ',
+    'anime.tab.jjk': '<i class="fa-solid fa-bolt"></i> МАГИЧЕСКАЯ БИТВА',
+    // Cosplay section
+    'anime.cos.kicker': 'Косплей · Конвенты · 2025–2026',
+    'anime.cos.title': 'ГДЕ И КОГДА<br>КОСПЛЕИТЬ',
+    'anime.cos.intro': 'Косплей-культура в Японии оживает на масштабных конвентах вроде Comic Market (Comiket) и фестивалях косплея по всему Токио. Самое культовое место — Tokyo Big Sight в Одайбе, где сотни тысяч фанатов собираются, чтобы отпраздновать аниме, мангу и творчество. От выставочных залов до открытых косплей-площадок — эти события превращают районы города в живые аниме-миры.',
+    'anime.cos.dates': '<i class="fa-solid fa-calendar-days"></i> Даты сезона 2025–2026',
+    // Tips
+    'anime.tip1.title': 'Выбери персонажа с умом',
+    'anime.tip1.text': 'Начни с узнаваемых и удобных косплеев — Тандзиро или Наруто всегда узнают.',
+    'anime.tip2.title': 'Закажи за 3 месяца',
+    'anime.tip2.text': 'Качественные костюмы делают 4–8 недель; бюджет $100–250 за хорошее качество.',
+    'anime.tip3.title': 'Фото в золотой час',
+    'anime.tip3.text': 'Снимайте рано утром или в специальных фотозонах. Бронируйте фотографа заранее.',
+    'anime.tip4.title': 'Совмести с паломничеством',
+    'anime.tip4.text': 'AnimeJapan + Асакуса, Comiket + Одайба. Планируй конвент и реальные локации.',
+    // Footer
+    'anime.footer.logo': 'ANIME ATLAS',
+    'anime.footer.sub': 'Главный гид по паломничеству · 2025–2026',
+    'anime.footer.fans': 'создано для фанатов по всему миру',
+  };
+
+  const kzKeys = {
+    // Nav
+    'anime.nav.locations': 'ЛОКАЦИЯЛАР',
+    'anime.nav.byanime': 'АНИМЕ БОЙЫНША',
+    'anime.nav.cosplay': 'КОСПЛЕЙ',
+    // Hero
+    'anime.hero.tag': 'Нақты Жапония · Аниме қажылықтары · 2025 нұсқаулық',
+    'anime.hero.desc': 'Әр кадр нақты орында түсірілген. Біз бұл орындарды таптық — Ghibli ормандарынан JJK неон көшелеріне дейін.',
+    'anime.hero.btn1': '→ ЛОКАЦИЯЛАР',
+    'anime.hero.btn2': '<i class="fa-solid fa-masks-theater"></i> КОНВЕНТТЕР',
+    'anime.hero.stat1': 'АНИМЕ',
+    'anime.hero.stat2': 'ЛОКАЦИЯ',
+    'anime.hero.stat3': 'ОҚИҒА',
+    // IRL section
+    'anime.irl.kicker': 'Нақты қажылық орындары',
+    'anime.irl.title': 'АНИМЕ КАДРЛАРЫ<br>ШЫНДЫҚПЕН КЕЗДЕСЕДІ',
+    'anime.irl.sub': 'Сүйікті сахналарыңыздың туылған орындары — қатар салыстыру.',
+    // IRL cards
+    'anime.irl1.from': '<i class="fa-solid fa-clapperboard"></i> Studio Ghibli · Мононоке ханшайымы',
+    'anime.irl1.name': 'Якусима — Рухтар орманы',
+    'anime.irl1.loc': 'Якусима аралы, ЮНЕСКО',
+    'anime.irl1.text': 'Рухтар орманын шабыттандырған ежелгі кедрлар мен мүкті соқпақтар.',
+    'anime.irl1.tag1': 'ЮНЕСКО',
+    'anime.irl1.tag3': '3с жүріс',
+    'anime.irl2.from': '<i class="fa-solid fa-star"></i> Макото Синкай · Сенің атың',
+    'anime.irl2.name': 'Суга ғибадатханасының баспалдақтары',
+    'anime.irl2.loc': 'Суга ғибадатханасы, Токио',
+    'anime.irl2.text': 'Таки мен Мицуха ақырында кездескен аңыздық баспалдақ.',
+    'anime.irl2.tag3': 'Культтік сахна',
+    'anime.irl3.from': '<i class="fa-solid fa-torii-gate"></i> Макото Синкай · Ауа райы баласы',
+    'anime.irl3.name': 'Tokyo Teleport станциясы',
+    'anime.irl3.loc': 'Токио, Жапония',
+    'anime.irl3.text': '«Ауа райы баласы» анимесіндегі аңыздық станция.',
+    // Labels
+    'anime.label.animeframe': '<i class="fa-solid fa-clapperboard"></i> АНИМЕ КАДР',
+    'anime.label.reallife': '<i class="fa-solid fa-location-dot"></i> ШЫНДЫҚПЕН',
+    // Fans section
+    'anime.fans.kicker': 'Аниме бойынша қажылық',
+    'anime.fans.title': 'АНИМЕНІ ТАҢДА',
+    'anime.fans.sub': 'Сүйікті сериалыңды таңдап, нақты локациялар картасын ал.',
+    'anime.tab.ghibli': '<i class="fa-solid fa-clapperboard"></i> GHIBLI',
+    'anime.tab.yourname': '<i class="fa-solid fa-star"></i> СЕНІҢ АТЫҢ',
+    'anime.tab.weathering': '<i class="fa-solid fa-sun"></i> АУА РАЙЫ БАЛАСЫ',
+    'anime.tab.garden': '<i class="fa-solid fa-leaf"></i> СӨЗДЕР БАҒЫ',
+    'anime.tab.jjk': '<i class="fa-solid fa-bolt"></i> СИҚЫРЛЫ САЙЫС',
+    // Cosplay section
+    'anime.cos.kicker': 'Косплей · Конвенттер · 2025–2026',
+    'anime.cos.title': 'ҚАЙДА ЖӘНЕ ҚАШАН<br>КОСПЛЕЙ ЖАСАУ',
+    'anime.cos.intro': 'Жапониядағы косплей мәдениеті Comic Market (Comiket) сияқты ірі конвенттерде және Токионың барлығындағы косплей фестивальдарында жанданады. Ең аңыздық орын — Tokyo Big Sight, мұнда жүз мыңдаған фанаттар жиналады.',
+    'anime.cos.dates': '<i class="fa-solid fa-calendar-days"></i> 2025–2026 маусымының күндері',
+    // Tips
+    'anime.tip1.title': 'Кейіпкерді ақылмен таңда',
+    'anime.tip1.text': 'Танымал және ыңғайлы косплейден бастаңыз — Тандзиро немесе Наруто.',
+    'anime.tip2.title': '3 ай бұрын тапсырыс беріңіз',
+    'anime.tip2.text': 'Сапалы костюм ұзақтығы 4–8 апта; көлемі $100–250.',
+    'anime.tip3.title': 'Алтын сағат фотосы',
+    'anime.tip3.text': 'Ерте таң немесе фотозоналарда суретке түсіңіз. Фотографты алдын ала брондаңыз.',
+    'anime.tip4.title': 'Қажылықпен үйлестір',
+    'anime.tip4.text': 'AnimeJapan + Асакуса, Comiket + Одайба. Конвент және нақты орындарды жоспарла.',
+    // Footer
+    'anime.footer.logo': 'ANIME ATLAS',
+    'anime.footer.sub': 'Қажылық нұсқаулығы · 2025–2026',
+    'anime.footer.fans': 'бүкіл әлемдегі фанаттар үшін жасалған',
+  };
+
+  Object.assign(window.NihonI18n.translations.ru, ruKeys);
+  Object.assign(window.NihonI18n.translations.kz, kzKeys);
+
+  window.NihonI18n.cacheElements();
+  const lang = localStorage.getItem('nihon-lang') || 'en';
+  window.NihonI18n.applyLang(lang);
+});
 </script>
 </body>
 </html>

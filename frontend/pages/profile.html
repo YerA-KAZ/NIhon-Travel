@@ -175,6 +175,35 @@ const API_BASE = '/api';
 let currentUser = null;
 let token = null;
 
+function t(key, fallback) {
+  return window.NihonI18n?.t ? window.NihonI18n.t(key, fallback) : fallback;
+}
+
+function locale() {
+  return window.NihonI18n?.getLocale ? window.NihonI18n.getLocale() : 'en-US';
+}
+
+function formatDate(value, options = { year: 'numeric', month: 'long', day: 'numeric' }) {
+  return new Date(value).toLocaleDateString(locale(), options);
+}
+
+function refreshI18n() {
+  if (!window.NihonI18n) return;
+  window.NihonI18n.cacheElements();
+  window.NihonI18n.refreshLang();
+}
+
+function translateCategory(category) {
+  if (!category) return t('dest.dynamic.destination', 'Destination');
+  return t(`dest.cat.${category}`, category);
+}
+
+function translateRole(role) {
+  return role === 'admin'
+    ? t('profile.role.admin', 'Admin')
+    : t('profile.role.user', 'User');
+}
+
 // ── Init ──
 document.addEventListener('DOMContentLoaded', () => {
   token = localStorage.getItem('jt_token');
@@ -190,6 +219,16 @@ document.addEventListener('DOMContentLoaded', () => {
   loadOverviewData();
 });
 
+document.addEventListener('nihon:langchange', () => {
+  if (!currentUser) return;
+  renderSidebar();
+  renderAccountDetails();
+
+  if (document.getElementById('tab-favorites').classList.contains('active')) loadFavorites();
+  if (document.getElementById('tab-history').classList.contains('active')) loadHistory();
+  if (document.getElementById('tab-messages').classList.contains('active')) loadMessages();
+});
+
 function renderSidebar() {
   const avatar = currentUser.avatar || 
     `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.name)}&background=c0392b&color=fff&size=160`;
@@ -198,12 +237,35 @@ function renderSidebar() {
     <img src="${avatar}" alt="${currentUser.name}" class="sidebar-avatar">
     <p class="sidebar-name">${currentUser.name}</p>
     <p class="sidebar-email">${currentUser.email}</p>
-    ${currentUser.role === 'admin' ? '<span class="sidebar-badge" data-i18n="profile.role.admin">Admin</span>' : ''}
+    ${currentUser.role === 'admin' ? `<span class="sidebar-badge">${t('profile.role.admin', 'Admin')}</span>` : ''}
   `;
 
   // Pre-fill settings
   document.getElementById('profile-name-input').value = currentUser.name;
   if (currentUser.avatar) document.getElementById('profile-avatar-input').value = currentUser.avatar;
+}
+
+function renderAccountDetails() {
+  if (!currentUser) return;
+
+  document.getElementById('account-details').innerHTML = `
+    <div style="display:flex;justify-content:space-between;padding:0.75rem 0;border-bottom:1px solid var(--paper-dark)">
+      <span style="font-size:0.8rem;color:var(--stone);text-transform:uppercase;letter-spacing:0.1em">${t('profile.account.name', 'Name')}</span>
+      <span style="font-size:0.9rem;font-weight:500">${currentUser.name}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:0.75rem 0;border-bottom:1px solid var(--paper-dark)">
+      <span style="font-size:0.8rem;color:var(--stone);text-transform:uppercase;letter-spacing:0.1em">${t('profile.account.email', 'Email')}</span>
+      <span style="font-size:0.9rem">${currentUser.email}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:0.75rem 0;border-bottom:1px solid var(--paper-dark)">
+      <span style="font-size:0.8rem;color:var(--stone);text-transform:uppercase;letter-spacing:0.1em">${t('profile.account.role', 'Role')}</span>
+      <span style="font-size:0.9rem;text-transform:capitalize">${translateRole(currentUser.role || 'user')}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:0.75rem 0">
+      <span style="font-size:0.8rem;color:var(--stone);text-transform:uppercase;letter-spacing:0.1em">${t('profile.account.memberSince', 'Member Since')}</span>
+      <span style="font-size:0.9rem">${formatDate(currentUser.created_at)}</span>
+    </div>
+  `;
 }
 
 async function apiCall(endpoint, options = {}) {
@@ -232,24 +294,7 @@ async function loadOverviewData() {
     document.getElementById('hist-count').textContent = histData.history.length;
     document.getElementById('msg-count').textContent = msgData.messages.length;
 
-    document.getElementById('account-details').innerHTML = `
-      <div style="display:flex;justify-content:space-between;padding:0.75rem 0;border-bottom:1px solid var(--paper-dark)">
-        <span style="font-size:0.8rem;color:var(--stone);text-transform:uppercase;letter-spacing:0.1em">Name</span>
-        <span style="font-size:0.9rem;font-weight:500">${currentUser.name}</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;padding:0.75rem 0;border-bottom:1px solid var(--paper-dark)">
-        <span style="font-size:0.8rem;color:var(--stone);text-transform:uppercase;letter-spacing:0.1em">Email</span>
-        <span style="font-size:0.9rem">${currentUser.email}</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;padding:0.75rem 0;border-bottom:1px solid var(--paper-dark)">
-        <span style="font-size:0.8rem;color:var(--stone);text-transform:uppercase;letter-spacing:0.1em">Role</span>
-        <span style="font-size:0.9rem;text-transform:capitalize">${currentUser.role || 'user'}</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;padding:0.75rem 0">
-        <span style="font-size:0.8rem;color:var(--stone);text-transform:uppercase;letter-spacing:0.1em">Member Since</span>
-        <span style="font-size:0.9rem">${new Date(currentUser.created_at).toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'})}</span>
-      </div>
-    `;
+    renderAccountDetails();
   } catch (err) {
     console.error('Overview error:', err);
   }
@@ -263,6 +308,7 @@ function showTab(name) {
 
   document.getElementById(`tab-${name}`).classList.add('active');
   const el = document.querySelector(`.sidebar-nav-item[onclick*="'${name}'"]`);
+  if (el) el.classList.add('active');
 
   const titleKeyByTab = {
     overview: 'profile.nav.overview',
@@ -273,8 +319,9 @@ function showTab(name) {
   };
   const pageTitle = document.getElementById('page-title');
   pageTitle.setAttribute('data-i18n', titleKeyByTab[name] || 'profile.nav.overview');
-  if (window.NihonI18n) window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
+  refreshI18n();
 
+  if (name === 'overview') renderAccountDetails();
   if (name === 'favorites') loadFavorites();
   if (name === 'history') loadHistory();
   if (name === 'messages') loadMessages();
@@ -295,10 +342,7 @@ async function loadFavorites() {
         <p class="empty-desc" data-i18n="profile.favorites.empty.desc">Browse destinations and tap <i class="fa-solid fa-heart"></i> to save them here</p>
         <br><a href="/#destinations" class="btn btn-primary" style="margin-top:1rem" data-i18n="profile.favorites.empty.explore">Explore Destinations</a>
       </div>`;
-      if (window.NihonI18n) {
-        window.NihonI18n.cacheElements();
-        window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
-      }
+      refreshI18n();
       return;
     }
 
@@ -306,27 +350,24 @@ async function loadFavorites() {
       <div class="item-card">
         <img class="item-img" src="${dest.image_url || 'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=600'}" alt="${dest.name}">
         <div class="item-body">
-          <p class="item-category">${dest.category || 'destination'}</p>
+          <p class="item-category">${translateCategory(dest.category)}</p>
           <h4 class="item-name">${dest.name}</h4>
-          <p class="item-location"><i class="fa-solid fa-location-dot"></i> ${dest.location || 'Japan'}</p>
-          <p class="item-time"><span data-i18n="profile.favorites.item.savedLabel">Saved</span> ${new Date(dest.created_at).toLocaleDateString()}</p>
+          <p class="item-location"><i class="fa-solid fa-location-dot"></i> ${dest.location || t('dest.dynamic.japan', 'Japan')}</p>
+          <p class="item-time"><span data-i18n="profile.favorites.item.savedLabel">Saved</span> ${formatDate(dest.created_at)}</p>
           <button class="remove-fav-btn" onclick="removeFavorite(${dest.id})"><i class="fa-solid fa-xmark"></i> <span data-i18n="profile.favorites.remove">Remove</span></button>
         </div>
       </div>
     `).join('')}</div>`;
-    if (window.NihonI18n) {
-      window.NihonI18n.cacheElements();
-      window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
-    }
+    refreshI18n();
   } catch (err) {
-    container.innerHTML = `<div class="empty-state"><p>Error loading favorites: ${err.message}</p></div>`;
+    container.innerHTML = `<div class="empty-state"><p>${t('profile.error.loadFavorites', 'Error loading favorites')}: ${err.message}</p></div>`;
   }
 }
 
 async function removeFavorite(destId) {
   try {
     await apiCall(`/favorites/${destId}`, { method: 'DELETE' });
-    showToast('Removed from favorites', 'info');
+    showToast(t('profile.toast.removedFavorite', 'Removed from favorites'), 'info');
     loadFavorites();
   } catch (err) {
     showToast(err.message, 'error');
@@ -347,10 +388,7 @@ async function loadHistory() {
         <h3 class="empty-title" data-i18n="profile.history.empty.title">No history yet</h3>
         <p class="empty-desc" data-i18n="profile.history.empty.desc">Start exploring destinations and your history will appear here</p>
       </div>`;
-      if (window.NihonI18n) {
-        window.NihonI18n.cacheElements();
-        window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
-      }
+      refreshI18n();
       return;
     }
 
@@ -358,27 +396,24 @@ async function loadHistory() {
       <div class="item-card">
         <img class="item-img" src="${item.image_url || 'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=600'}" alt="${item.name}">
         <div class="item-body">
-          <p class="item-category">${item.category || 'destination'}</p>
+          <p class="item-category">${translateCategory(item.category)}</p>
           <h4 class="item-name">${item.name}</h4>
-          <p class="item-location"><i class="fa-solid fa-location-dot"></i> ${item.location || 'Japan'}</p>
-          <p class="item-time"><span data-i18n="profile.history.item.viewedLabel">Viewed</span> ${new Date(item.viewed_at).toLocaleDateString()}</p>
+          <p class="item-location"><i class="fa-solid fa-location-dot"></i> ${item.location || t('dest.dynamic.japan', 'Japan')}</p>
+          <p class="item-time"><span data-i18n="profile.history.item.viewedLabel">Viewed</span> ${formatDate(item.viewed_at)}</p>
         </div>
       </div>
     `).join('')}</div>`;
-    if (window.NihonI18n) {
-      window.NihonI18n.cacheElements();
-      window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
-    }
+    refreshI18n();
   } catch (err) {
-    container.innerHTML = `<div class="empty-state"><p>Error loading history: ${err.message}</p></div>`;
+    container.innerHTML = `<div class="empty-state"><p>${t('profile.error.loadHistory', 'Error loading history')}: ${err.message}</p></div>`;
   }
 }
 
 async function clearHistory() {
-  if (!confirm('Clear all viewed history?')) return;
+  if (!confirm(t('profile.confirm.clearHistory', 'Clear all viewed history?'))) return;
   try {
     await apiCall('/history', { method: 'DELETE' });
-    showToast('History cleared', 'info');
+    showToast(t('profile.toast.historyCleared', 'History cleared'), 'info');
     loadHistory();
   } catch (err) {
     showToast(err.message, 'error');
@@ -400,24 +435,22 @@ async function loadMessages() {
         <p class="empty-desc" data-i18n="profile.messages.empty.desc">Messages you send via the contact form will appear here</p>
         <br><a href="/#contact" class="btn btn-primary" style="margin-top:1rem" data-i18n="profile.messages.empty.contact">Contact Us</a>
       </div>`;
-      if (window.NihonI18n) {
-        window.NihonI18n.cacheElements();
-        window.NihonI18n.applyLang(localStorage.getItem('nihon-lang') || 'en');
-      }
+      refreshI18n();
       return;
     }
 
     container.innerHTML = `<div class="messages-list">${data.messages.map(msg => `
       <div class="message-card ${!msg.is_read ? 'unread' : ''}">
         <div class="message-meta">
-          <span class="message-subject">${msg.subject || 'General Inquiry'}</span>
-          <span class="message-date">${new Date(msg.created_at).toLocaleDateString('en-US', {year:'numeric',month:'short',day:'numeric'})}</span>
+          <span class="message-subject">${msg.subject || t('profile.messages.subject.general', 'General Inquiry')}</span>
+          <span class="message-date">${formatDate(msg.created_at, { year: 'numeric', month: 'short', day: 'numeric' })}</span>
         </div>
         <p class="message-text">${msg.message}</p>
       </div>
     `).join('')}</div>`;
+    refreshI18n();
   } catch (err) {
-    container.innerHTML = `<div class="empty-state"><p>Error loading messages: ${err.message}</p></div>`;
+    container.innerHTML = `<div class="empty-state"><p>${t('profile.error.loadMessages', 'Error loading messages')}: ${err.message}</p></div>`;
   }
 }
 
@@ -427,7 +460,7 @@ async function updateProfile(event) {
   const form = document.getElementById('profile-form');
   const btn = form.querySelector('button[type="submit"]');
   btn.disabled = true;
-  btn.textContent = 'Saving...';
+  btn.textContent = t('profile.toast.saving', 'Saving...');
 
   const name = form.querySelector('[name="name"]').value;
   const avatar = form.querySelector('[name="avatar"]').value;
@@ -441,12 +474,13 @@ async function updateProfile(event) {
     currentUser = { ...currentUser, ...data.user };
     localStorage.setItem('jt_user', JSON.stringify(currentUser));
     renderSidebar();
-    showToast('Profile updated!', 'success');
+    renderAccountDetails();
+    showToast(t('profile.toast.profileUpdated', 'Profile updated!'), 'success');
   } catch (err) {
     showToast(err.message, 'error');
   } finally {
     btn.disabled = false;
-    btn.textContent = 'Save Changes';
+    btn.textContent = t('profile.settings.btn.save', 'Save Changes');
   }
 }
 
@@ -460,25 +494,25 @@ async function changePassword(event) {
   const confirm = form.querySelector('[name="confirm_password"]').value;
 
   if (new_password !== confirm) {
-    showToast('Passwords do not match', 'error');
+    showToast(t('profile.toast.passwordMismatch', 'Passwords do not match'), 'error');
     return;
   }
 
   btn.disabled = true;
-  btn.textContent = 'Updating...';
+  btn.textContent = t('profile.toast.updating', 'Updating...');
 
   try {
     await apiCall('/users/password', {
       method: 'PUT',
       body: { current_password, new_password }
     });
-    showToast('Password changed successfully!', 'success');
+    showToast(t('profile.toast.passwordUpdated', 'Password changed successfully!'), 'success');
     form.reset();
   } catch (err) {
     showToast(err.message, 'error');
   } finally {
     btn.disabled = false;
-    btn.textContent = 'Update Password';
+    btn.textContent = t('profile.settings.btn.updatePassword', 'Update Password');
   }
 }
 

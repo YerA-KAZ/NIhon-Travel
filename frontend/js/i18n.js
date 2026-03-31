@@ -772,7 +772,29 @@
       'dest.page.rating-label'  : 'Оценка посетителей',
       'dest.page.related-title' : 'Вам также может понравиться',
       'dest.page.view-all'      : 'Смотреть всё →',
-      'dest.page.fav-add'       : '',
+      'dest.page.fav-add'       : '<i class="fa-regular fa-heart"></i> Добавить в избранное',
+      'dest.page.fav-btn.saved' : '<i class="fa-solid fa-heart"></i> Сохранено',
+      'dest.page.fav-add.saved' : '<i class="fa-solid fa-heart"></i> В избранном',
+      'dest.page.loading'       : 'Загрузка места',
+      'dest.page.loadingShort'  : 'Загрузка…',
+      'dest.page.defaultDesc'   : 'Невероятное место в Японии, которое стоит открыть для себя.',
+      'dest.page.bestBadge'     : 'Лучшее время',
+      'dest.page.galleryAlt'    : 'Фото',
+      'dest.page.rated'         : 'Оценка',
+      'dest.toast.signin'       : 'Войдите, чтобы сохранять избранное',
+      'dest.toast.added'        : 'Добавлено в избранное',
+      'dest.toast.removed'      : 'Удалено из избранного',
+      'dest.toast.error'        : 'Не удалось обновить избранное',
+      'dest.dynamic.japan'      : 'Япония',
+      'dest.dynamic.destination': 'Направление',
+      'dest.dynamic.season.spring'        : 'Весна',
+      'dest.dynamic.season.summer'        : 'Лето',
+      'dest.dynamic.season.autumn'        : 'Осень',
+      'dest.dynamic.season.winter'        : 'Зима',
+      'dest.dynamic.season.spring.months' : 'Март — май',
+      'dest.dynamic.season.summer.months' : 'Июнь — август',
+      'dest.dynamic.season.autumn.months' : 'Сентябрь — ноябрь',
+      'dest.dynamic.season.winter.months' : 'Декабрь — февраль',
           
       /* ── PROFILE PAGE ── */
       'profile.nav.overview'    : 'Обзор',
@@ -788,109 +810,136 @@
       'profile.overview.account': 'Данные аккаунта',
 
       /* ── PROFILE PAGE (extra) ── */
-      'profile.history.title'  : '',
-      'profile.history.clearAll': '',
-      'profile.settings.editTitle': '',
-      'profile.settings.lbl.displayName': '',
-      'profile.settings.ph.displayName': '',
-      'profile.settings.lbl.avatarUrl': '',
-      'profile.settings.ph.avatarUrl': '',
-      'profile.settings.btn.save': '',
-      'profile.settings.changePasswordTitle': '',
-      'profile.settings.lbl.currentPassword': '',
-      'profile.settings.lbl.newPassword': '',
-      'profile.settings.ph.newPassword': '',
-      'profile.settings.lbl.confirmNewPassword': '',
-      'profile.settings.ph.confirmNewPassword': '',
-      'profile.settings.btn.updatePassword': '',
-      'profile.role.admin': '',
+      'profile.history.title'  : 'Просмотренные направления',
+      'profile.history.clearAll': 'Очистить всё',
+      'profile.settings.editTitle': 'Редактировать профиль',
+      'profile.settings.lbl.displayName': 'Отображаемое имя',
+      'profile.settings.ph.displayName': 'Ваше имя',
+      'profile.settings.lbl.avatarUrl': 'URL аватара',
+      'profile.settings.ph.avatarUrl': 'https://...',
+      'profile.settings.btn.save': 'Сохранить изменения',
+      'profile.settings.changePasswordTitle': 'Изменить пароль',
+      'profile.settings.lbl.currentPassword': 'Текущий пароль',
+      'profile.settings.lbl.newPassword': 'Новый пароль',
+      'profile.settings.ph.newPassword': 'Минимум 6 символов',
+      'profile.settings.lbl.confirmNewPassword': 'Подтвердите новый пароль',
+      'profile.settings.ph.confirmNewPassword': 'Повторите новый пароль',
+      'profile.settings.btn.updatePassword': 'Обновить пароль',
+      'profile.role.admin': 'Администратор',
+      'profile.role.user': 'Пользователь',
+      'profile.account.name': 'Имя',
+      'profile.account.email': 'Email',
+      'profile.account.role': 'Роль',
+      'profile.account.memberSince': 'С нами с',
+      'profile.messages.subject.general': 'Общий вопрос',
+      'profile.toast.removedFavorite': 'Удалено из избранного',
+      'profile.confirm.clearHistory': 'Очистить всю историю просмотров?',
+      'profile.toast.historyCleared': 'История очищена',
+      'profile.toast.profileUpdated': 'Профиль обновлён!',
+      'profile.toast.passwordMismatch': 'Пароли не совпадают',
+      'profile.toast.passwordUpdated': 'Пароль успешно изменён!',
+      'profile.toast.saving': 'Сохранение...',
+      'profile.toast.updating': 'Обновление...',
+      'profile.error.loadFavorites': 'Ошибка загрузки избранного',
+      'profile.error.loadHistory': 'Ошибка загрузки истории',
+      'profile.error.loadMessages': 'Ошибка загрузки сообщений',
 
-      'profile.favorites.empty.title': '',
-      'profile.favorites.empty.desc': '',
-      'profile.favorites.empty.explore': '',
-      'profile.favorites.item.savedLabel': '',
-      'profile.favorites.remove': '',
+      'profile.favorites.empty.title': 'Пока нет избранного',
+      'profile.favorites.empty.desc': 'Просматривайте направления и нажимайте <i class="fa-solid fa-heart"></i>, чтобы сохранить их здесь',
+      'profile.favorites.empty.explore': 'Смотреть направления',
+      'profile.favorites.item.savedLabel': 'Сохранено',
+      'profile.favorites.remove': 'Удалить',
 
-      'profile.history.empty.title': '',
-      'profile.history.empty.desc': '',
-      'profile.history.item.viewedLabel': '',
+      'profile.history.empty.title': 'История пока пуста',
+      'profile.history.empty.desc': 'Начните изучать направления, и история появится здесь',
+      'profile.history.item.viewedLabel': 'Просмотрено',
 
-      'profile.messages.empty.title': '',
-      'profile.messages.empty.desc': '',
-      'profile.messages.empty.contact': '',
+      'profile.messages.empty.title': 'Пока нет сообщений',
+      'profile.messages.empty.desc': 'Сообщения, отправленные через форму контактов, появятся здесь',
+      'profile.messages.empty.contact': 'Связаться с нами',
 
       /* ── ADMIN PAGE ── */
-      'admin.nav.dashboard': '',
-      'admin.nav.destinations': '',
-      'admin.nav.messages': '',
-      'admin.nav.users': '',
-      'admin.nav.profile': '',
+      'admin.nav.dashboard': 'Панель',
+      'admin.nav.destinations': 'Направления',
+      'admin.nav.messages': 'Сообщения',
+      'admin.nav.users': 'Пользователи',
+      'admin.nav.profile': 'Мой профиль',
+      'admin.signout': 'Выйти',
 
-      'admin.page.title.dashboard': '',
-      'admin.page.title.destinations': '',
-      'admin.page.title.messages': '',
-      'admin.page.title.users': '',
+      'admin.page.title.dashboard': 'Панель администратора',
+      'admin.page.title.destinations': 'Управление направлениями',
+      'admin.page.title.messages': 'Сообщения',
+      'admin.page.title.users': 'Пользователи',
 
-      'admin.tab.destinations.heading': '',
-      'admin.tab.messages.heading': '',
-      'admin.tab.users.heading': '',
-      'admin.dest.addBtn': '',
+      'admin.tab.destinations.heading': 'Управление направлениями',
+      'admin.tab.messages.heading': 'Все сообщения',
+      'admin.tab.users.heading': 'Зарегистрированные пользователи',
+      'admin.dest.addBtn': '+ Добавить направление',
 
-      'admin.dest.modal.add.title': '',
-      'admin.dest.modal.add.submit': '',
-      'admin.dest.modal.edit.title': '',
-      'admin.dest.modal.edit.submit': '',
-      'admin.dest.modal.cancel': '',
-      'admin.dest.modal.subtitle': '',
+      'admin.dest.modal.add.title': 'Добавить направление',
+      'admin.dest.modal.add.submit': 'Добавить направление',
+      'admin.dest.modal.edit.title': 'Редактировать направление',
+      'admin.dest.modal.edit.submit': 'Сохранить изменения',
+      'admin.dest.modal.cancel': 'Отмена',
+      'admin.dest.modal.subtitle': 'Заполните данные ниже',
 
-      'admin.dest.form.lbl.name': '',
-      'admin.dest.form.ph.name': '',
-      'admin.dest.form.lbl.location': '',
-      'admin.dest.form.ph.location': '',
-      'admin.dest.form.lbl.category': '',
-      'admin.dest.form.lbl.imageUrl': '',
-      'admin.dest.form.ph.imageUrl': '',
-      'admin.dest.form.lbl.rating': '',
-      'admin.dest.form.ph.rating': '',
-      'admin.dest.form.lbl.description': '',
-      'admin.dest.form.ph.description': '',
+      'admin.dest.form.lbl.name': 'Название *',
+      'admin.dest.form.ph.name': 'например, гора Фудзи',
+      'admin.dest.form.lbl.location': 'Местоположение',
+      'admin.dest.form.ph.location': 'например, префектура Сидзуока',
+      'admin.dest.form.lbl.category': 'Категория',
+      'admin.dest.form.lbl.imageUrl': 'URL изображения',
+      'admin.dest.form.ph.imageUrl': 'https://images.unsplash.com/...',
+      'admin.dest.form.lbl.rating': 'Рейтинг (0-5)',
+      'admin.dest.form.ph.rating': '4.8',
+      'admin.dest.form.lbl.description': 'Описание',
+      'admin.dest.form.ph.description': 'Опишите это направление...',
 
-      'admin.dest.cat.nature': '',
-      'admin.dest.cat.temple': '',
-      'admin.dest.cat.city': '',
-      'admin.dest.cat.history': '',
-      'admin.dest.cat.beach': '',
-      'admin.dest.cat.wellness': '',
-      'admin.dest.cat.festival': '',
-      'admin.dest.cat.culture': '',
-      'admin.dest.cat.general': '',
+      'admin.dest.cat.nature': 'Природа',
+      'admin.dest.cat.temple': 'Храм',
+      'admin.dest.cat.city': 'Город',
+      'admin.dest.cat.history': 'История',
+      'admin.dest.cat.beach': 'Пляж',
+      'admin.dest.cat.wellness': 'Оздоровление',
+      'admin.dest.cat.festival': 'Фестиваль',
+      'admin.dest.cat.culture': 'Культура',
+      'admin.dest.cat.general': 'Общее',
 
-      'admin.role.admin': '',
+      'admin.role.admin': 'Администратор',
+      'admin.role.user': 'Пользователь',
+      'admin.messages.empty.title': 'Сообщений пока нет',
+      'admin.error.accessDenied': 'Доступ запрещён. Только для администраторов.',
+      'admin.error.connectStats': 'Подключите backend, чтобы увидеть статистику',
+      'admin.error.prefix': 'Ошибка',
+      'admin.toast.destinationUpdated': 'Направление обновлено!',
+      'admin.toast.destinationAdded': 'Направление добавлено!',
+      'admin.toast.destinationDeleted': 'Направление удалено',
+      'admin.confirm.deleteDestination': 'Удалить это направление? Действие нельзя отменить.',
 
-      'admin.stat.users': '',
-      'admin.stat.destinations': '',
-      'admin.stat.messages': '',
-      'admin.stat.favorites': '',
+      'admin.stat.users': 'Пользователи',
+      'admin.stat.destinations': 'Направления',
+      'admin.stat.messages': 'Сообщения',
+      'admin.stat.favorites': 'Избранное',
 
-      'admin.table.header.image': '',
-      'admin.table.header.name': '',
-      'admin.table.header.location': '',
-      'admin.table.header.category': '',
-      'admin.table.header.rating': '',
-      'admin.table.header.actions': '',
+      'admin.table.header.image': 'Изображение',
+      'admin.table.header.name': 'Название',
+      'admin.table.header.location': 'Местоположение',
+      'admin.table.header.category': 'Категория',
+      'admin.table.header.rating': 'Рейтинг',
+      'admin.table.header.actions': 'Действия',
 
-      'admin.table.header.from': '',
-      'admin.table.header.email': '',
-      'admin.table.header.subject': '',
-      'admin.table.header.message': '',
-      'admin.table.header.date': '',
+      'admin.table.header.from': 'От',
+      'admin.table.header.email': 'Email',
+      'admin.table.header.subject': 'Тема',
+      'admin.table.header.message': 'Сообщение',
+      'admin.table.header.date': 'Дата',
 
-      'admin.table.header.userName': '',
-      'admin.table.header.role': '',
-      'admin.table.header.joined': '',
+      'admin.table.header.userName': 'Имя',
+      'admin.table.header.role': 'Роль',
+      'admin.table.header.joined': 'Дата регистрации',
 
-      'admin.action.edit': '',
-      'admin.action.delete': ''
+      'admin.action.edit': 'Редактировать',
+      'admin.action.delete': 'Удалить'
 
     },
 
@@ -1293,7 +1342,7 @@
       'jr.sb.pr.14d'        : '14 күн (қарапайым класс)',
       'jr.sb.pr.21d'        : '21 күн (қарапайым класс)',
       'jr.sb.pr.kids'       : 'Балалар (6–11 жас)',
-      'jr.sb.pr.kids.val'   : 'Бағасының жартысы',
+      'jr.sb.pr.kids.val'   : 'Жарты баға',
       'jr.sb.spd.kmh'       : 'км/сағ максималды жылдамдық',
       'jr.sb.spd.route'     : 'Токио → Киото',
       'jr.sb.spd.accidents' : '1964 жылдан бергі авариялар',
@@ -1611,147 +1660,196 @@
       'when.sb.plan.btn'    : 'Байланысу',
 
       /* ── DESTINATION PAGE ── */
-      'nav.back-dest'           : '',
-      'dest.page.map-btn'       : '',
-      'dest.page.fav-btn'       : '',
-      'dest.page.fav-add'       : '',
-      'dest.page.about-label'   : '',
-      'dest.page.gallery-label' : '',
-      'dest.page.gallery-title' : '',
-      'dest.page.location-label': '',
-      'dest.page.map-title'     : '',
-      'dest.page.tips-title'    : '',
-      'dest.page.seasons-label' : '',
-      'dest.page.seasons-title' : '',
-      'dest.page.info-title'    : '',
-      'dest.page.info-location' : '',
-      'dest.page.info-cat'      : '',
-      'dest.page.info-season'   : '',
-      'dest.page.info-dur'      : '',
-      'dest.page.info-entry'    : '',
-      'dest.page.info-transport': '',
-      'dest.page.phrases-title' : '',
-      'dest.page.rating-label'  : '',
-      'dest.page.related-title' : '',
-      'dest.page.view-all'      : '',
+      'nav.back-dest'           : '← Бағыттарға оралу',
+      'dest.page.map-btn'       : '<i class="fa-solid fa-map-location-dot"></i> Картадан көру',
+      'dest.page.fav-btn'       : '<i class="fa-regular fa-heart"></i> Сақтау',
+      'dest.page.fav-add'       : '<i class="fa-regular fa-heart"></i> Таңдаулыларға қосу',
+      'dest.page.fav-btn.saved' : '<i class="fa-solid fa-heart"></i> Сақталды',
+      'dest.page.fav-add.saved' : '<i class="fa-solid fa-heart"></i> Таңдаулыларда',
+      'dest.page.about-label'   : 'Бұл орын туралы',
+      'dest.page.gallery-label' : 'Галерея',
+      'dest.page.gallery-title' : 'Фотосуреттер топтамасы',
+      'dest.page.location-label': 'Орналасуы',
+      'dest.page.map-title'     : '<i class="fa-solid fa-map"></i> Картадан табу',
+      'dest.page.tips-title'    : '<i class="fa-solid fa-lightbulb"></i> Саяхат кеңестері',
+      'dest.page.seasons-label' : 'Қашан бару керек',
+      'dest.page.seasons-title' : 'Ең қолайлы маусымдар',
+      'dest.page.info-title'    : 'Бағыт туралы ақпарат',
+      'dest.page.info-location' : 'Орналасуы',
+      'dest.page.info-cat'      : 'Санаты',
+      'dest.page.info-season'   : 'Ең қолайлы маусым',
+      'dest.page.info-dur'      : 'Ұсынылатын уақыт',
+      'dest.page.info-entry'    : 'Кіру',
+      'dest.page.info-transport': 'Қалай жетуге болады',
+      'dest.page.phrases-title' : 'Пайдалы жапон сөздері',
+      'dest.page.rating-label'  : 'Келушілер бағасы',
+      'dest.page.related-title' : 'Сізге де ұнауы мүмкін',
+      'dest.page.view-all'      : 'Барлығын көру →',
+      'dest.page.loading'       : 'Орын жүктелуде',
+      'dest.page.loadingShort'  : 'Жүктелуде…',
+      'dest.page.defaultDesc'   : 'Жапониядағы ашуға тұрарлық керемет мекен.',
+      'dest.page.bestBadge'     : 'Ұсынылады',
+      'dest.page.galleryAlt'    : 'Фото',
+      'dest.page.rated'         : 'Бағасы',
+      'dest.toast.signin'       : 'Таңдаулыларды сақтау үшін кіріңіз',
+      'dest.toast.added'        : 'Таңдаулыларға қосылды',
+      'dest.toast.removed'      : 'Таңдаулылардан алынды',
+      'dest.toast.error'        : 'Таңдаулыларды жаңарту мүмкін болмады',
+      'dest.dynamic.japan'      : 'Жапония',
+      'dest.dynamic.destination': 'Бағыт',
+      'dest.dynamic.season.spring'        : 'Көктем',
+      'dest.dynamic.season.summer'        : 'Жаз',
+      'dest.dynamic.season.autumn'        : 'Күз',
+      'dest.dynamic.season.winter'        : 'Қыс',
+      'dest.dynamic.season.spring.months' : 'Наурыз — мамыр',
+      'dest.dynamic.season.summer.months' : 'Маусым — тамыз',
+      'dest.dynamic.season.autumn.months' : 'Қыркүйек — қараша',
+      'dest.dynamic.season.winter.months' : 'Желтоқсан — ақпан',
 
       /* ── PROFILE PAGE ── */
-      'profile.nav.overview'    : '',
-      'profile.nav.favorites'   : '',
-      'profile.nav.history'     : '',
-      'profile.nav.messages'    : '',
-      'profile.nav.settings'    : '',
-      'profile.back'            : '',
-      'profile.signout'         : '',
-      'profile.overview.favs'   : '',
-      'profile.overview.hist'   : '',
-      'profile.overview.msgs'   : '',
-      'profile.overview.account': '',
+      'profile.nav.overview'    : 'Шолу',
+      'profile.nav.favorites'   : 'Таңдаулылар',
+      'profile.nav.history'     : 'Қаралғандар тарихы',
+      'profile.nav.messages'    : 'Менің хабарламаларым',
+      'profile.nav.settings'    : 'Баптаулар',
+      'profile.back'            : '← Сайтқа оралу',
+      'profile.signout'         : 'Шығу',
+      'profile.overview.favs'   : 'Сақталған таңдаулылар',
+      'profile.overview.hist'   : 'Қаралған бағыттар',
+      'profile.overview.msgs'   : 'Жіберілген хабарламалар',
+      'profile.overview.account': 'Аккаунт деректері',
 
       /* ── PROFILE PAGE (extra) ── */
-      'profile.history.title'  : '',
-      'profile.history.clearAll': '',
-      'profile.settings.editTitle': '',
-      'profile.settings.lbl.displayName': '',
-      'profile.settings.ph.displayName': '',
-      'profile.settings.lbl.avatarUrl': '',
-      'profile.settings.ph.avatarUrl': '',
-      'profile.settings.btn.save': '',
-      'profile.settings.changePasswordTitle': '',
-      'profile.settings.lbl.currentPassword': '',
-      'profile.settings.lbl.newPassword': '',
-      'profile.settings.ph.newPassword': '',
-      'profile.settings.lbl.confirmNewPassword': '',
-      'profile.settings.ph.confirmNewPassword': '',
-      'profile.settings.btn.updatePassword': '',
-      'profile.role.admin': '',
+      'profile.history.title'  : 'Қаралған бағыттар',
+      'profile.history.clearAll': 'Барлығын тазалау',
+      'profile.settings.editTitle': 'Профильді өңдеу',
+      'profile.settings.lbl.displayName': 'Көрсетілетін ат',
+      'profile.settings.ph.displayName': 'Атыңыз',
+      'profile.settings.lbl.avatarUrl': 'Аватар URL',
+      'profile.settings.ph.avatarUrl': 'https://...',
+      'profile.settings.btn.save': 'Өзгерістерді сақтау',
+      'profile.settings.changePasswordTitle': 'Құпиясөзді өзгерту',
+      'profile.settings.lbl.currentPassword': 'Ағымдағы құпиясөз',
+      'profile.settings.lbl.newPassword': 'Жаңа құпиясөз',
+      'profile.settings.ph.newPassword': 'Кемі 6 таңба',
+      'profile.settings.lbl.confirmNewPassword': 'Жаңа құпиясөзді растаңыз',
+      'profile.settings.ph.confirmNewPassword': 'Жаңа құпиясөзді қайталаңыз',
+      'profile.settings.btn.updatePassword': 'Құпиясөзді жаңарту',
+      'profile.role.admin': 'Әкімші',
+      'profile.role.user': 'Пайдаланушы',
+      'profile.account.name': 'Аты',
+      'profile.account.email': 'Email',
+      'profile.account.role': 'Рөлі',
+      'profile.account.memberSince': 'Тіркелген күні',
+      'profile.messages.subject.general': 'Жалпы сұрақ',
+      'profile.toast.removedFavorite': 'Таңдаулылардан өшірілді',
+      'profile.confirm.clearHistory': 'Қаралғандар тарихын толық тазалайсыз ба?',
+      'profile.toast.historyCleared': 'Тарих тазартылды',
+      'profile.toast.profileUpdated': 'Профиль жаңартылды!',
+      'profile.toast.passwordMismatch': 'Құпиясөздер сәйкес емес',
+      'profile.toast.passwordUpdated': 'Құпиясөз сәтті өзгертілді!',
+      'profile.toast.saving': 'Сақталуда...',
+      'profile.toast.updating': 'Жаңартылуда...',
+      'profile.error.loadFavorites': 'Таңдаулыларды жүктеу қатесі',
+      'profile.error.loadHistory': 'Тарихты жүктеу қатесі',
+      'profile.error.loadMessages': 'Хабарламаларды жүктеу қатесі',
 
-      'profile.favorites.empty.title': '',
-      'profile.favorites.empty.desc': '',
-      'profile.favorites.empty.explore': '',
-      'profile.favorites.item.savedLabel': '',
-      'profile.favorites.remove': '',
+      'profile.favorites.empty.title': 'Таңдаулылар әлі жоқ',
+      'profile.favorites.empty.desc': 'Бағыттарды қарап, <i class="fa-solid fa-heart"></i> белгісін басып, осында сақтаңыз',
+      'profile.favorites.empty.explore': 'Бағыттарды қарау',
+      'profile.favorites.item.savedLabel': 'Сақталған күні',
+      'profile.favorites.remove': 'Өшіру',
 
-      'profile.history.empty.title': '',
-      'profile.history.empty.desc': '',
-      'profile.history.item.viewedLabel': '',
+      'profile.history.empty.title': 'Тарих әзірге бос',
+      'profile.history.empty.desc': 'Бағыттарды қарай бастаңыз, тарих осында көрінеді',
+      'profile.history.item.viewedLabel': 'Қаралған күні',
 
-      'profile.messages.empty.title': '',
-      'profile.messages.empty.desc': '',
-      'profile.messages.empty.contact': '',
+      'profile.messages.empty.title': 'Хабарламалар әлі жоқ',
+      'profile.messages.empty.desc': 'Байланыс формасы арқылы жіберген хабарламаларыңыз осында көрінеді',
+      'profile.messages.empty.contact': 'Бізге жазу',
 
       /* ── ADMIN PAGE ── */
-      'admin.nav.dashboard': '',
-      'admin.nav.destinations': '',
-      'admin.nav.messages': '',
-      'admin.nav.users': '',
-      'admin.nav.profile': '',
+      'admin.nav.dashboard': 'Басқару панелі',
+      'admin.nav.destinations': 'Бағыттар',
+      'admin.nav.messages': 'Хабарламалар',
+      'admin.nav.users': 'Пайдаланушылар',
+      'admin.nav.profile': 'Менің профилім',
+      'admin.signout': 'Шығу',
 
-      'admin.page.title.dashboard': '',
-      'admin.page.title.destinations': '',
-      'admin.page.title.messages': '',
-      'admin.page.title.users': '',
+      'admin.page.title.dashboard': 'Әкімші панелі',
+      'admin.page.title.destinations': 'Бағыттарды басқару',
+      'admin.page.title.messages': 'Хабарламалар',
+      'admin.page.title.users': 'Пайдаланушылар',
 
-      'admin.tab.destinations.heading': '',
-      'admin.tab.messages.heading': '',
-      'admin.tab.users.heading': '',
-      'admin.dest.addBtn': '',
+      'admin.tab.destinations.heading': 'Бағыттарды басқару',
+      'admin.tab.messages.heading': 'Барлық хабарламалар',
+      'admin.tab.users.heading': 'Тіркелген пайдаланушылар',
+      'admin.dest.addBtn': '+ Бағыт қосу',
 
-      'admin.dest.modal.add.title': '',
-      'admin.dest.modal.add.submit': '',
-      'admin.dest.modal.edit.title': '',
-      'admin.dest.modal.edit.submit': '',
-      'admin.dest.modal.cancel': '',
-      'admin.dest.modal.subtitle': '',
+      'admin.dest.modal.add.title': 'Бағыт қосу',
+      'admin.dest.modal.add.submit': 'Бағыт қосу',
+      'admin.dest.modal.edit.title': 'Бағытты өңдеу',
+      'admin.dest.modal.edit.submit': 'Өзгерістерді сақтау',
+      'admin.dest.modal.cancel': 'Бас тарту',
+      'admin.dest.modal.subtitle': 'Төмендегі мәліметтерді толтырыңыз',
 
-      'admin.dest.form.lbl.name': '',
-      'admin.dest.form.ph.name': '',
-      'admin.dest.form.lbl.location': '',
-      'admin.dest.form.ph.location': '',
-      'admin.dest.form.lbl.category': '',
-      'admin.dest.form.lbl.imageUrl': '',
-      'admin.dest.form.ph.imageUrl': '',
-      'admin.dest.form.lbl.rating': '',
-      'admin.dest.form.ph.rating': '',
-      'admin.dest.form.lbl.description': '',
-      'admin.dest.form.ph.description': '',
+      'admin.dest.form.lbl.name': 'Атауы *',
+      'admin.dest.form.ph.name': 'мысалы, Фудзи тауы',
+      'admin.dest.form.lbl.location': 'Орналасуы',
+      'admin.dest.form.ph.location': 'мысалы, Сидзуока префектурасы',
+      'admin.dest.form.lbl.category': 'Санаты',
+      'admin.dest.form.lbl.imageUrl': 'Сурет URL',
+      'admin.dest.form.ph.imageUrl': 'https://images.unsplash.com/...',
+      'admin.dest.form.lbl.rating': 'Рейтинг (0-5)',
+      'admin.dest.form.ph.rating': '4.8',
+      'admin.dest.form.lbl.description': 'Сипаттама',
+      'admin.dest.form.ph.description': 'Бұл бағытты сипаттаңыз...',
 
-      'admin.dest.cat.nature': '',
-      'admin.dest.cat.temple': '',
-      'admin.dest.cat.city': '',
-      'admin.dest.cat.history': '',
-      'admin.dest.cat.beach': '',
-      'admin.dest.cat.wellness': '',
-      'admin.dest.cat.festival': '',
-      'admin.dest.cat.culture': '',
-      'admin.dest.cat.general': '',
+      'admin.dest.cat.nature': 'Табиғат',
+      'admin.dest.cat.temple': 'Ғибадатхана',
+      'admin.dest.cat.city': 'Қала',
+      'admin.dest.cat.history': 'Тарих',
+      'admin.dest.cat.beach': 'Жағажай',
+      'admin.dest.cat.wellness': 'Демалыс',
+      'admin.dest.cat.festival': 'Фестиваль',
+      'admin.dest.cat.culture': 'Мәдениет',
+      'admin.dest.cat.general': 'Жалпы',
 
-      'admin.role.admin': '',
+      'admin.role.admin': 'Әкімші',
+      'admin.role.user': 'Пайдаланушы',
+      'admin.messages.empty.title': 'Хабарламалар әлі жоқ',
+      'admin.error.accessDenied': 'Қолжетімсіз. Тек әкімшілерге арналған.',
+      'admin.error.connectStats': 'Статистиканы көру үшін backend қосыңыз',
+      'admin.error.prefix': 'Қате',
+      'admin.toast.destinationUpdated': 'Бағыт жаңартылды!',
+      'admin.toast.destinationAdded': 'Бағыт қосылды!',
+      'admin.toast.destinationDeleted': 'Бағыт өшірілді',
+      'admin.confirm.deleteDestination': 'Бұл бағытты өшіру керек пе? Бұл әрекетті қайтару мүмкін емес.',
 
-      'admin.stat.users': '',
-      'admin.stat.destinations': '',
-      'admin.stat.messages': '',
-      'admin.stat.favorites': '',
+      'admin.stat.users': 'Пайдаланушылар',
+      'admin.stat.destinations': 'Бағыттар',
+      'admin.stat.messages': 'Хабарламалар',
+      'admin.stat.favorites': 'Таңдаулылар',
 
-      'admin.table.header.image': '',
-      'admin.table.header.name': '',
-      'admin.table.header.location': '',
-      'admin.table.header.category': '',
-      'admin.table.header.rating': '',
-      'admin.table.header.actions': '',
+      'admin.table.header.image': 'Сурет',
+      'admin.table.header.name': 'Атауы',
+      'admin.table.header.location': 'Орналасуы',
+      'admin.table.header.category': 'Санаты',
+      'admin.table.header.rating': 'Рейтинг',
+      'admin.table.header.actions': 'Әрекеттер',
 
-      'admin.table.header.from': '',
-      'admin.table.header.email': '',
-      'admin.table.header.subject': '',
-      'admin.table.header.message': '',
-      'admin.table.header.date': '',
+      'admin.table.header.from': 'Кімнен',
+      'admin.table.header.email': 'Email',
+      'admin.table.header.subject': 'Тақырып',
+      'admin.table.header.message': 'Хабарлама',
+      'admin.table.header.date': 'Күні',
 
-      'admin.table.header.userName': '',
-      'admin.table.header.role': '',
-      'admin.table.header.joined': '',
+      'admin.table.header.userName': 'Аты',
+      'admin.table.header.role': 'Рөлі',
+      'admin.table.header.joined': 'Тіркелген күні',
 
-      'admin.action.edit': '',
-      'admin.action.delete': ''
+      'admin.action.edit': 'Өңдеу',
+      'admin.action.delete': 'Өшіру'
 
     }
 
@@ -1765,8 +1863,39 @@
   let _enCache = {};
   let _lang    = localStorage.getItem(STORAGE_KEY) || 'en';
 
+  function closeLangMenus() {
+    document.querySelectorAll('.lang-switcher.open').forEach(function (menu) {
+      menu.classList.remove('open');
+    });
+  }
+
+  function syncLangMenus() {
+    document.querySelectorAll('.lang-switcher').forEach(function (menu) {
+      var activeBtn = menu.querySelector('.lang-btn.active');
+      if (activeBtn) {
+        menu.prepend(activeBtn);
+      }
+    });
+  }
+
+  function translate(key, fallback) {
+    var translated = _lang === 'en' ? null : (T[_lang] && T[_lang][key]);
+    if (translated) return translated;
+    if (fallback !== undefined) return fallback;
+    if (_enCache[key] !== undefined) return _enCache[key];
+    return key;
+  }
+
+  function getLocale() {
+    if (_lang === 'ru') return 'ru-RU';
+    if (_lang === 'kz') return 'kk-KZ';
+    return 'en-US';
+  }
+
   /** Apply a language to the current page */
-  function applyLang(lang) {
+  function applyLang(lang, options) {
+    options = options || {};
+    var shouldDispatch = options.dispatch !== false;
     if (!T[lang]) lang = 'en';
     _lang = lang;
     localStorage.setItem(STORAGE_KEY, lang);
@@ -1797,9 +1926,13 @@
     document.querySelectorAll('.lang-btn').forEach(function (btn) {
       btn.classList.toggle('active', btn.dataset.lang === lang);
     });
+    syncLangMenus();
+    closeLangMenus();
 
     // Dispatch event so other scripts can react
-    document.dispatchEvent(new CustomEvent('nihon:langchange', { detail: { lang: lang } }));
+    if (shouldDispatch) {
+      document.dispatchEvent(new CustomEvent('nihon:langchange', { detail: { lang: lang } }));
+    }
   }
 
   /** Initialise: cache EN content, bind buttons, restore saved language */
@@ -1812,7 +1945,27 @@
     });
 
     document.querySelectorAll('.lang-btn').forEach(function (btn) {
-      btn.addEventListener('click', function () { applyLang(btn.dataset.lang); });
+      btn.addEventListener('click', function (event) {
+        var switcher = btn.closest('.lang-switcher');
+        if (btn.classList.contains('active')) {
+          event.preventDefault();
+          if (switcher) switcher.classList.toggle('open');
+          return;
+        }
+        applyLang(btn.dataset.lang);
+      });
+    });
+
+    document.addEventListener('click', function (event) {
+      if (!event.target.closest('.lang-switcher')) {
+        closeLangMenus();
+      }
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        closeLangMenus();
+      }
     });
 
     applyLang(_lang);
@@ -1844,6 +1997,20 @@
     });
   }
 
+  function refreshLang() {
+    applyLang(_lang, { dispatch: false });
+  }
+
   // Public API
-  window.NihonI18n = { applyLang: applyLang, cacheElements: cacheElements, translations: T };
+  window.NihonI18n = {
+    applyLang: applyLang,
+    cacheElements: cacheElements,
+    refreshLang: refreshLang,
+    translations: T,
+    t: translate,
+    getLang: function () { return _lang; },
+    getLocale: getLocale,
+    syncLangMenus: syncLangMenus,
+    closeLangMenus: closeLangMenus
+  };
 })();

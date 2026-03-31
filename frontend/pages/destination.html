@@ -21,7 +21,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 
   <!-- i18n -->
-  <script src="/js/i18n.js"></script>
+  <script src="/js/i18n.js" defer></script>
 
   <style>
     /* ── Variables ── */
@@ -42,20 +42,26 @@
       --radius-lg: 16px;
       --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       --font-serif: 'Shippori Mincho', serif;
-      --font-body: 'Inter', sans-serif;
+      --font-body: 'Inter', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
     }
 
     /* ── Reset ── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: rgba(192,57,43,0.38) transparent; }
     body { font-family: var(--font-body); background: var(--paper); color: var(--ink); line-height: 1.7; overflow-x: hidden; }
     a { text-decoration: none; color: inherit; }
     img { max-width: 100%; display: block; }
     button { cursor: pointer; border: none; background: none; font-family: inherit; }
 
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--paper-dark); }
-    ::-webkit-scrollbar-thumb { background: var(--vermilion); border-radius: 3px; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(192,57,43,0.38);
+      border-radius: 999px;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(192,57,43,0.58); border: 2px solid transparent; background-clip: padding-box; }
 
     /* ── LOADING SCREEN ── */
     #page-loader {
@@ -158,33 +164,86 @@
 
     /* ── LANG SWITCHER ── */
     .lang-switcher {
-      display: flex;
-      align-items: center;
-      gap: 2px;
+      position: relative;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: stretch;
+      min-width: 72px;
+      gap: 0;
       background: rgba(255,255,255,0.12);
       border: 1px solid rgba(255,255,255,0.22);
-      border-radius: 100px;
-      padding: 3px;
+      border-radius: 18px;
+      padding: 4px;
+      overflow: hidden;
+      z-index: 30;
+    }
+    .lang-switcher::after {
+      content: '▾';
+      position: absolute;
+      top: 0.72rem;
+      right: 0.65rem;
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.72);
+      pointer-events: none;
+      transition: transform var(--transition), color var(--transition);
     }
     nav.scrolled .lang-switcher {
       background: var(--paper);
       border-color: var(--paper-dark);
+    }
+    nav.scrolled .lang-switcher::after { color: var(--stone); }
+    .lang-switcher:hover,
+    .lang-switcher:focus-within,
+    .lang-switcher.open {
+      gap: 0.22rem;
+      box-shadow: 0 12px 28px rgba(10,10,25,0.16);
+    }
+    .lang-switcher:hover::after,
+    .lang-switcher:focus-within::after,
+    .lang-switcher.open::after {
+      transform: rotate(180deg);
     }
     .lang-btn {
       font-family: var(--font-body);
       font-size: 0.67rem;
       font-weight: 700;
       letter-spacing: 0.08em;
-      padding: 0.28rem 0.65rem;
-      border-radius: 100px;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      padding: 0 1.5rem 0 0.78rem;
+      border-radius: 12px;
       color: rgba(255,255,255,0.7);
       background: transparent;
       border: none;
       cursor: pointer;
       transition: var(--transition);
+      pointer-events: none;
+      text-align: left;
+      visibility: hidden;
     }
     .lang-btn:hover { color: var(--white); background: rgba(255,255,255,0.14); }
-    .lang-btn.active { background: var(--vermilion); color: var(--white); }
+    .lang-btn.active {
+      max-height: 2rem;
+      opacity: 1;
+      padding: 0.42rem 1.5rem 0.42rem 0.78rem;
+      background: var(--vermilion);
+      color: var(--white);
+      pointer-events: auto;
+      visibility: visible;
+    }
+    .lang-switcher:hover .lang-btn,
+    .lang-switcher:focus-within .lang-btn,
+    .lang-switcher.open .lang-btn {
+      max-height: 2rem;
+      opacity: 1;
+      padding: 0.42rem 1.5rem 0.42rem 0.78rem;
+      pointer-events: auto;
+      visibility: visible;
+    }
     nav.scrolled .lang-btn { color: var(--stone); }
     nav.scrolled .lang-btn:hover { color: var(--ink); background: var(--paper-dark); }
     nav.scrolled .lang-btn.active { background: var(--vermilion); color: var(--white); }
@@ -830,7 +889,7 @@
 <div id="page-loader">
   <div class="loader-kanji">日</div>
   <div class="loader-bar"><div class="loader-bar-fill"></div></div>
-  <p class="loader-text">Loading destination</p>
+  <p class="loader-text" data-i18n="dest.page.loading">Loading destination</p>
 </div>
 
 <!-- ── NAV ── -->
@@ -1242,12 +1301,285 @@ const DEFAULT_DATA = {
   ]
 };
 
+const DEST_DATA_I18N = {
+  ru: {
+    1: {
+      bestSeason: 'Июль — август',
+      duration: '1–2 дня',
+      entry: 'Бесплатно (сбор за тропу ¥1,000)',
+      transport: 'Автобус от станции Shinjuku',
+      tips: [
+        { title: 'Начинайте рано', text: 'Начните восхождение около полуночи, чтобы встретить рассвет на вершине. После 6 утра поток людей резко увеличивается.' },
+        { title: 'Одевайтесь слоями', text: 'Даже летом на вершине около 5°C. Возьмите ветронепроницаемую куртку и перчатки.' },
+        { title: 'Пейте больше воды', text: 'Купите воду на 5-й станции — выше цены заметно выше, до ¥500 за бутылку.' },
+        { title: 'Нужна удобная обувь', text: 'Вулканическая порода скользкая. Надевайте треккинговые ботинки или прочные кроссовки, но не сандалии.' },
+        { title: 'Сезон восхождения', text: 'Официальный сезон длится только с июля по август. Вне этого периода тропы и горные домики закрыты.' },
+        { title: 'Следите за погодой', text: 'Проверяйте прогноз каждый день: на вершине грозы и сильный ветер могут начаться внезапно.' }
+      ],
+      phrases: ['Гора Фудзи', 'Вершина', 'Сбор за восхождение']
+    },
+    2: {
+      bestSeason: 'Март — май, октябрь — ноябрь',
+      duration: '2–3 часа',
+      entry: 'Бесплатно',
+      transport: 'Станция JR Inari (2 минуты пешком)',
+      tips: [
+        { title: 'Приходите на рассвете', text: 'Святилище открыто круглосуточно. До 7 утра аллеи тории почти пустые и идеально подходят для прогулки и фото.' },
+        { title: 'Наденьте удобную обувь', text: 'Полный маршрут около 4 км и идёт вверх по каменным ступеням. Кроссовки здесь обязательны.' },
+        { title: 'Ищите лисиц', text: 'Статуи кицунэ считаются посланниками Инари. Обратите внимание, сколько лис вы заметите по дороге.' },
+        { title: 'Лучшая точка для фото', text: 'Тоннель Senbon Torii на первых 400 метрах особенно красив ранним утром, когда свет мягче.' },
+        { title: 'Попробуйте инари-суши', text: 'У входа продают инари-дзуси — рис в кармашках из тофу. Это местная классика.' },
+        { title: 'Не спешите вниз', text: 'Большинство туристов сворачивают рано. Если подняться выше, откроются панорамы Киото и станет гораздо тише.' }
+      ],
+      phrases: ['Святилище Фусими Инари', 'Ворота тории', 'Дорожка к святилищу']
+    },
+    3: {
+      bestSeason: 'Круглый год',
+      duration: '1–2 часа',
+      entry: 'Бесплатно',
+      transport: 'Станция Shibuya (все линии)',
+      tips: [
+        { title: 'Лучший вид сверху', text: 'Для культового кадра поднимитесь в Starbucks на 2-м этаже или на крышу Mag’s Park.' },
+        { title: 'Лучшее время', text: 'Будничный вечер с 17:00 до 20:00 выглядит особенно эффектно. По выходным оживлённо весь день.' },
+        { title: 'Идите вместе с потоком', text: 'Когда загорится зелёный, просто двигайтесь вместе с толпой — переход удивительно организован.' },
+        { title: 'Загляните в Shibuya 109', text: 'Легендарный торговый центр Shibuya 109 рядом с перекрёстком отлично показывает уличную моду Токио.' },
+        { title: 'Статуя Хатико', text: 'Обязательно посмотрите на Хатико у станции — это одно из самых известных мест встречи в Токио.' },
+        { title: 'Изучите район', text: 'Поблизости много кафе, музыкальных площадок и винтажных магазинов. Отличный повод задержаться подольше.' }
+      ],
+      phrases: ['Сибуя', 'Перекрёсток', 'Извините']
+    },
+    4: {
+      bestSeason: 'Март — апрель, ноябрь',
+      duration: 'Полдня',
+      entry: 'Бесплатно (роща)',
+      transport: 'Станция Randen Arashiyama',
+      tips: [
+        { title: 'Только раннее утро', text: 'После 9 утра в бамбуковой роще уже очень людно. Лучшее время для пустых дорожек — до 7 утра.' },
+        { title: 'Лодка на реке', text: 'Прокатитесь на лодке по реке Ои — это спокойный и очень живописный способ увидеть окрестности.' },
+        { title: 'Парк обезьян', text: 'Iwatayama Monkey Park — это короткий подъём в гору и отличные виды на Киото вместе с японскими макаками.' },
+        { title: 'Осенние краски', text: 'В ноябре холмы окрашиваются в красные и золотые тона, создавая особенно красивый контраст с бамбуком.' },
+        { title: 'Возьмите велосипед', text: 'На велосипеде район удобно исследовать без спешки: аренда на день — один из лучших вариантов.' },
+        { title: 'Чайный домик Сагано', text: 'Загляните на матча и вагаси в один из традиционных чайных домиков вдоль Saga Toriimoto.' }
+      ],
+      phrases: ['Арасияма', 'Бамбуковая роща', 'Лунный мост']
+    },
+    5: {
+      bestSeason: 'Март — апрель, ноябрь',
+      duration: '2–3 часа',
+      entry: '¥600 (музей)',
+      transport: 'Станция Tanimachi 4-chome',
+      tips: [
+        { title: 'Сезон сакуры', text: 'В конце марта на территории замка цветут сотни сакур. Жильё рядом лучше бронировать сильно заранее.' },
+        { title: 'Музей внутри', text: 'Восьмиэтажный музей рассказывает историю Осаки, а с верхнего уровня открываются панорамные виды на город.' },
+        { title: 'Вечерняя подсветка', text: 'В отдельные даты замок красиво подсвечивается. Перед поездкой проверьте календарь сезонных событий.' },
+        { title: 'Еда по-осакски рядом', text: 'За яркой гастрономией идите в сторону Shinsaibashi — там такояки, окономияки и многое другое.' },
+        { title: 'Сад Nishinomaru', text: 'Западный сад даёт один из лучших открытых видов на башню замка и особенно хорош в ясную погоду.' },
+        { title: 'Территория бесплатная', text: 'Платный только вход в музей внутри башни. Прогулка по парку, рву и стенам ничего не стоит.' }
+      ],
+      phrases: ['Замок Осака', 'Такояки', 'Район Намба']
+    },
+    6: {
+      bestSeason: 'Весна и осень',
+      duration: 'Полдня',
+      entry: 'Бесплатно (парк)',
+      transport: 'Станция JR Nara (15 минут пешком)',
+      tips: [
+        { title: 'Купите печенье для оленей', text: 'Shika-senbei продаются почти везде. Если поклониться оленю, он часто поклонится в ответ.' },
+        { title: 'Берегите вещи', text: 'Олени любят хватать пакеты и еду. Лучше спрятать перекусы и застегнуть рюкзак.' },
+        { title: 'Храм Тодай-дзи', text: 'Не пропустите зал с Великим Буддой — одно из самых впечатляющих исторических мест региона.' },
+        { title: 'Золотой час', text: 'На рассвете парк особенно атмосферный: мало людей, мягкий свет и олени в тумане.' },
+        { title: 'Смотрите под ноги', text: 'В парке много оленей, поэтому лучше надеть удобную обувь и внимательно смотреть на дорожку.' },
+        { title: 'Удобная поездка из Осаки', text: 'Нара отлично подходит для полудневной вылазки из Осаки или Киото — дорога занимает меньше часа.' }
+      ],
+      phrases: ['Нара', 'Олень', 'Печенье для оленей']
+    },
+    default: {
+      bestSeason: 'Весна и осень',
+      duration: 'Гибко',
+      entry: 'Зависит от места',
+      transport: 'Местный поезд или автобус',
+      tips: [
+        { title: 'IC-карта', text: 'Купите Suica или Pasmo в аэропорту — они работают в поездах, автобусах и даже в магазинах.' },
+        { title: 'Карманный Wi‑Fi', text: 'Аренда карманного роутера в аэропорту сильно упростит навигацию, перевод и бронирования.' },
+        { title: 'Этикет', text: 'Говорите тише в общественных местах, стойте в очереди спокойно и не оставляйте чаевые.' },
+        { title: 'Наличные пригодятся', text: 'Во многих местах по-прежнему удобнее платить наличными. Банкоматы 7-Eleven особенно надёжны.' },
+        { title: 'Еда из конбини', text: 'Еда из магазинов у дома в Японии действительно вкусная — попробуйте онигири, сэндвичи и горячие закуски.' },
+        { title: 'Сезонные события', text: 'Проверяйте местные календари: фестивали и сезонные мероприятия проходят по всей стране круглый год.' }
+      ],
+      phrases: ['Спасибо', 'Извините', 'Где это?']
+    }
+  },
+  kz: {
+    1: {
+      bestSeason: 'Шілде — тамыз',
+      duration: '1–2 күн',
+      entry: 'Тегін (соқпақ алымы ¥1,000)',
+      transport: 'Shinjuku станциясынан автобус',
+      tips: [
+        { title: 'Ерте бастаңыз', text: 'Шыңға күн шығатын кезде жету үшін түн ортасында қозғалған ыңғайлы. Таңертең адам күрт көбейеді.' },
+        { title: 'Қабаттап киініңіз', text: 'Жаздың өзінде шыңда шамамен 5°C болады. Жел өткізбейтін күрте мен қолғап алыңыз.' },
+        { title: 'Су ішуді ұмытпаңыз', text: 'Суды 5-станциядан алып алған дұрыс — жоғарыда баға әлдеқайда қымбат болады.' },
+        { title: 'Ыңғайлы аяқ киім керек', text: 'Жанартаулық тас тайғақ келеді. Треккинг аяқ киімі немесе мықты кроссовка таңдаңыз.' },
+        { title: 'Өрмелеу маусымы', text: 'Ресми маусым тек шілде мен тамыз аралығы. Басқа уақытта соқпақтар мен үйлер жабық болады.' },
+        { title: 'Ауа райын бақылаңыз', text: 'Болжамды күн сайын тексеріңіз: шыңда найзағай мен қатты жел аяқ астынан пайда болуы мүмкін.' }
+      ],
+      phrases: ['Фудзи тауы', 'Шың', 'Соқпақ алымы']
+    },
+    2: {
+      bestSeason: 'Наурыз — мамыр, қазан — қараша',
+      duration: '2–3 сағат',
+      entry: 'Тегін',
+      transport: 'JR Inari станциясы (2 минут жаяу)',
+      tips: [
+        { title: 'Таңсәріде келіңіз', text: 'Ғибадатхана тәулік бойы ашық. Таңғы 7-ге дейін тории қақпалары бос әрі тыныш болады.' },
+        { title: 'Ыңғайлы аяқ киім киіңіз', text: 'Толық маршрут шамамен 4 км және тастан жасалған баспалдақтармен көтеріледі. Кроссовка қажет.' },
+        { title: 'Түлкі мүсіндерін байқаңыз', text: 'Кицунэ мүсіндері Инаридің елшісі саналады. Жол бойында қаншауын көретініңізге назар аударыңыз.' },
+        { title: 'Ең жақсы фото орны', text: 'Senbon Torii тоннелі әсіресе ерте таңда әдемі көрінеді: жарық жұмсақ, адамдар аз.' },
+        { title: 'Инари-суши көріңіз', text: 'Кіреберістегі дүңгіршектерде күріш салынған тофу қалташалары сатылады — бұл жергілікті танымал тағам.' },
+        { title: 'Асықпаңыз', text: 'Көп адам ерте қайтады. Жоғарырақ көтерілсеңіз, Киотоның көрінісі ашылып, тыныштық та көбейеді.' }
+      ],
+      phrases: ['Фусими Инари ғибадатханасы', 'Тории қақпасы', 'Ғибадатхана жолы']
+    },
+    3: {
+      bestSeason: 'Жыл бойы',
+      duration: '1–2 сағат',
+      entry: 'Тегін',
+      transport: 'Shibuya станциясы (барлық желі)',
+      tips: [
+        { title: 'Жоғарыдан көрініс', text: 'Әйгілі кадр үшін Starbucks 2-қабатына немесе Mag’s Park шатырына көтеріліңіз.' },
+        { title: 'Ең жақсы уақыт', text: 'Жұмыс күндері кешкі 17:00–20:00 аралығы ерекше әсерлі. Демалыста күн бойы адам көп.' },
+        { title: 'Ағынмен жүріңіз', text: 'Жасыл жанғанда адамдармен бірге жай жүре беріңіз — өткел өте тәртіппен жұмыс істейді.' },
+        { title: 'Shibuya 109-ға кіріңіз', text: 'Shibuya 109 сауда орталығы Токионың көше сәнін көруге тамаша орын.' },
+        { title: 'Хатико мүсіні', text: 'Станция жанындағы Хатико мүсіні — Токиодағы ең танымал кездесу орындарының бірі.' },
+        { title: 'Ауданды аралаңыз', text: 'Жақын маңда кафелер, музыка алаңдары мен винтаж дүкендері көп. Уақыт бөліп серуендеген жөн.' }
+      ],
+      phrases: ['Сибуя', 'Қиылыс', 'Кешіріңіз']
+    },
+    4: {
+      bestSeason: 'Наурыз — сәуір, қараша',
+      duration: 'Жарты күн',
+      entry: 'Тегін (тоғай)',
+      transport: 'Randen Arashiyama станциясы',
+      tips: [
+        { title: 'Тек ерте таң', text: 'Таңғы 9-дан кейін бамбук тоғайында адам көбейеді. Бос соқпақ үшін 7-ге дейін келген дұрыс.' },
+        { title: 'Өзенде қайық тебіңіз', text: 'Ои өзеніндегі қайық серуені айналаны тыныш әрі әдемі қырынан көруге мүмкіндік береді.' },
+        { title: 'Маймылдар паркі', text: 'Iwatayama Monkey Park — қысқа өрлеу мен Киотоға ашылатын керемет көрініс.' },
+        { title: 'Күзгі түстер', text: 'Қарашада төбелер қызыл және алтын реңкке боялып, бамбукпен керемет үйлеседі.' },
+        { title: 'Велосипед жалдаңыз', text: 'Бұл аудан велосипедпен аралауға өте қолайлы. Күндік жалдау сапарды әлдеқайда ыңғайлы етеді.' },
+        { title: 'Sagano шай үйі', text: 'Saga Toriimoto бойындағы дәстүрлі шай үйлерінің бірінде матча мен вагаси жеп көріңіз.' }
+      ],
+      phrases: ['Арасияма', 'Бамбук тоғайы', 'Ай көпірі']
+    },
+    5: {
+      bestSeason: 'Наурыз — сәуір, қараша',
+      duration: '2–3 сағат',
+      entry: '¥600 (музей)',
+      transport: 'Tanimachi 4-chome станциясы',
+      tips: [
+        { title: 'Сакура маусымы', text: 'Наурыздың соңында қамал маңында жүздеген сакура гүлдейді. Жақын жердегі қонақүйді ерте брондаңыз.' },
+        { title: 'Ішіндегі музей', text: 'Сегіз қабатты музей Осака тарихын баяндайды, ал жоғарғы қабаттан қала панорамасы ашылады.' },
+        { title: 'Кешкі жарық', text: 'Кей күндері қамал әдемі жарықтандырылады. Бармас бұрын маусымдық іс-шаралар кестесін тексеріңіз.' },
+        { title: 'Жақын маңдағы тағамдар', text: 'Shinsaibashi жағына барып, такояки мен басқа да Осака тағамдарын татып көріңіз.' },
+        { title: 'Nishinomaru бағы', text: 'Бұл бақтан қамал мұнарасына ашық әрі әдемі көрініс ашылады, әсіресе ашық күні.' },
+        { title: 'Аумағы тегін', text: 'Ақылы тек мұнара ішіндегі музей. Саябақ пен орды аралау тегін.' }
+      ],
+      phrases: ['Осака қамалы', 'Такояки', 'Намба ауданы']
+    },
+    6: {
+      bestSeason: 'Көктем және күз',
+      duration: 'Жарты күн',
+      entry: 'Тегін (парк)',
+      transport: 'JR Nara станциясы (15 минут жаяу)',
+      tips: [
+        { title: 'Бұғыға арналған печенье алыңыз', text: 'Shika-senbei барлық жерде сатылады. Бұғыға иілсеңіз, ол да иіліп жауап беруі мүмкін.' },
+        { title: 'Заттарыңызды қорғаңыз', text: 'Бұғылар сөмке мен тағамға қызығады. Тағамды жасырып, рюкзакты жауып жүрген дұрыс.' },
+        { title: 'Тодай-дзи храмы', text: 'Ұлы Будда залына міндетті түрде кіріңіз — аймақтың ең әсерлі орындарының бірі.' },
+        { title: 'Алтын сағат', text: 'Күн жаңа шыққан кезде парк ерекше әдемі: адам аз, жарық жұмсақ, атмосфера тыныш.' },
+        { title: 'Аяқ астына қараңыз', text: 'Парк ішінде бұғы көп болғандықтан, ыңғайлы аяқ киім киіп, жолға мұқият қараған жөн.' },
+        { title: 'Осакадан ыңғайлы сапар', text: 'Нара Осака мен Киотодан жарты күндік сапарға өте қолайлы — жол бір сағатқа да жетпейді.' }
+      ],
+      phrases: ['Нара', 'Бұғы', 'Бұғы печеньесі']
+    },
+    default: {
+      bestSeason: 'Көктем және күз',
+      duration: 'Икемді',
+      entry: 'Орынға байланысты',
+      transport: 'Жергілікті пойыз немесе автобус',
+      tips: [
+        { title: 'IC-карта', text: 'Әуежайдан Suica немесе Pasmo алыңыз — олар пойызда, автобуста және дүкендерде жарайды.' },
+        { title: 'Қалта Wi‑Fi', text: 'Әуежайдан қалта роутерін жалға алу навигация мен аудармаға көп көмектеседі.' },
+        { title: 'Этикет', text: 'Қоғамдық жерде дауысты бәсең ұстаңыз, кезекте сабырмен тұрыңыз және шайпұл қалдырмаңыз.' },
+        { title: 'Қолма-қол ақша керек болады', text: 'Көп жерде қолма-қол төлем ыңғайлырақ. 7-Eleven банкоматтары сенімді саналады.' },
+        { title: 'Konbini тағамы', text: 'Жапониядағы дүкен тағамы шынымен дәмді. Онигири, сэндвич және ыстық тағамдарды байқап көріңіз.' },
+        { title: 'Маусымдық шаралар', text: 'Жергілікті күнтізбені тексеріңіз: фестивальдер мен маусымдық шаралар жыл бойы өтеді.' }
+      ],
+      phrases: ['Рақмет', 'Кешіріңіз', 'Бұл қайда?']
+    }
+  }
+};
+
 // ─── State ───
 const API_BASE = '/api';
 let destData = null;
 let extraData = null;
 let isFav = false;
 let leafletMap = null;
+
+function t(key, fallback) {
+  return window.NihonI18n?.t ? window.NihonI18n.t(key, fallback) : fallback;
+}
+
+function currentLang() {
+  return window.NihonI18n?.getLang ? window.NihonI18n.getLang() : (localStorage.getItem('nihon-lang') || 'en');
+}
+
+function translateCategory(category) {
+  if (!category) return t('dest.dynamic.destination', 'Destination');
+  return t(`dest.cat.${category}`, category);
+}
+
+function getLocalizedDestination(baseDestination) {
+  if (!baseDestination) return null;
+
+  const translatedName = t(`dest.${baseDestination.id}.name`, baseDestination.name);
+  const translatedLocation = t(`dest.${baseDestination.id}.location`, baseDestination.location || t('dest.dynamic.japan', 'Japan'));
+  const translatedDescription = t(
+    `dest.${baseDestination.id}.desc`,
+    baseDestination.description || t('dest.page.defaultDesc', 'An incredible destination in Japan, waiting to be discovered.')
+  );
+
+  return {
+    ...baseDestination,
+    name: translatedName,
+    location: translatedLocation,
+    description: translatedDescription
+  };
+}
+
+function getLocalizedExtraData(destinationId, baseExtraData) {
+  const lang = currentLang();
+  const localized = DEST_DATA_I18N[lang]?.[destinationId] || DEST_DATA_I18N[lang]?.default;
+
+  if (!localized) {
+    return {
+      ...baseExtraData,
+      phrases: baseExtraData.phrases.map((phrase) => ({ ...phrase }))
+    };
+  }
+
+  return {
+    ...baseExtraData,
+    bestSeason: localized.bestSeason || baseExtraData.bestSeason,
+    duration: localized.duration || baseExtraData.duration,
+    entry: localized.entry || baseExtraData.entry,
+    transport: localized.transport || baseExtraData.transport,
+    tips: localized.tips || baseExtraData.tips,
+    phrases: baseExtraData.phrases.map((phrase, index) => ({
+      ...phrase,
+      en: localized.phrases?.[index] || phrase.en
+    }))
+  };
+}
 
 // ─── Init ───
 document.addEventListener('DOMContentLoaded', async () => {
@@ -1273,6 +1605,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     loader.classList.add('fade-out');
     setTimeout(() => loader.remove(), 500);
   }, 800);
+});
+
+document.addEventListener('nihon:langchange', () => {
+  if (!destData) return;
+  renderPage();
 });
 
 // ─── Load Destination ───
@@ -1310,8 +1647,13 @@ function renderPage() {
   }
   if (!extraData) extraData = DEFAULT_DATA;
 
-  document.title = `${d.name} — Nihon Travel`;
-  document.getElementById('breadcrumb-name').textContent = d.name;
+  const localizedDestination = getLocalizedDestination(d);
+  const localizedExtraData = getLocalizedExtraData(d.id, extraData);
+  const categoryLabel = translateCategory(d.category);
+  const locationLabel = localizedDestination.location || t('dest.dynamic.japan', 'Japan');
+
+  document.title = `${localizedDestination.name} — Nihon Travel`;
+  document.getElementById('breadcrumb-name').textContent = localizedDestination.name;
 
   // Hero
   let imgUrl = d.image_url || '';
@@ -1320,23 +1662,23 @@ function renderPage() {
     imgUrl += (imgUrl.includes('?') ? '&' : '?') + 'w=1920&q=95&fit=crop&auto=format';
   }
   document.getElementById('hero-bg').style.backgroundImage = `url('${imgUrl}')`;
-  document.getElementById('hero-title').textContent = d.name;
-  document.getElementById('hero-cat').textContent = d.category || 'destination';
-  document.getElementById('hero-loc').textContent = d.location || 'Japan';
+  document.getElementById('hero-title').textContent = localizedDestination.name;
+  document.getElementById('hero-cat').textContent = categoryLabel;
+  document.getElementById('hero-loc').textContent = locationLabel;
   document.getElementById('hero-rating').innerHTML = `<i class="fa-solid fa-star"></i> ${d.rating}`;
 
   // Description
-  document.getElementById('desc-title').textContent = d.name;
-  document.getElementById('desc-text').textContent = d.description || 'An incredible destination in Japan, waiting to be discovered.';
+  document.getElementById('desc-title').textContent = localizedDestination.name;
+  document.getElementById('desc-text').textContent = localizedDestination.description || t('dest.page.defaultDesc', 'An incredible destination in Japan, waiting to be discovered.');
 
   // Quick pills
   const pills = [
-    { icon: 'fa-solid fa-tag',             text: d.category },
-    { icon: 'fa-solid fa-location-dot',    text: d.location },
-    { icon: 'fa-solid fa-star',            text: `Rated ${d.rating}` },
-    { icon: 'fa-solid fa-spa',             text: extraData.bestSeason },
-    { icon: 'fa-solid fa-clock',           text: extraData.duration },
-    { icon: 'fa-solid fa-ticket',          text: extraData.entry },
+    { icon: 'fa-solid fa-tag',             text: categoryLabel },
+    { icon: 'fa-solid fa-location-dot',    text: locationLabel },
+    { icon: 'fa-solid fa-star',            text: `${t('dest.page.rated', 'Rated')} ${d.rating}` },
+    { icon: 'fa-solid fa-spa',             text: localizedExtraData.bestSeason },
+    { icon: 'fa-solid fa-clock',           text: localizedExtraData.duration },
+    { icon: 'fa-solid fa-ticket',          text: localizedExtraData.entry },
   ];
   document.getElementById('quick-info').innerHTML = pills.map(p => `
     <div class="quick-pill">
@@ -1346,12 +1688,12 @@ function renderPage() {
   `).join('');
 
   // Sidebar info
-  document.getElementById('info-location').textContent = d.location || 'Japan';
-  document.getElementById('info-category').textContent = capitalize(d.category) || '—';
-  document.getElementById('info-season').textContent = extraData.bestSeason;
-  document.getElementById('info-duration').textContent = extraData.duration;
-  document.getElementById('info-entry').textContent = extraData.entry;
-  document.getElementById('info-transport').textContent = extraData.transport;
+  document.getElementById('info-location').textContent = locationLabel;
+  document.getElementById('info-category').textContent = categoryLabel || '—';
+  document.getElementById('info-season').textContent = localizedExtraData.bestSeason;
+  document.getElementById('info-duration').textContent = localizedExtraData.duration;
+  document.getElementById('info-entry').textContent = localizedExtraData.entry;
+  document.getElementById('info-transport').textContent = localizedExtraData.transport;
 
   // Rating stars
   document.getElementById('sidebar-rating').textContent = d.rating;
@@ -1361,12 +1703,12 @@ function renderPage() {
     '<i class="fa-regular fa-star"></i>'.repeat(5 - filled);
 
   // Map
-  initMap(extraData.lat, extraData.lng, d.name, d.location);
-  document.getElementById('map-address').textContent = `${d.name}, ${d.location || 'Japan'}`;
+  initMap(extraData.lat, extraData.lng, localizedDestination.name, locationLabel);
+  document.getElementById('map-address').textContent = `${localizedDestination.name}, ${locationLabel}`;
   document.getElementById('map-coords').textContent = `${extraData.lat.toFixed(4)}°N, ${extraData.lng.toFixed(4)}°E`;
 
   // Tips
-  document.getElementById('tips-list').innerHTML = extraData.tips.map(tip => `
+  document.getElementById('tips-list').innerHTML = localizedExtraData.tips.map(tip => `
     <div class="tip-item">
       <div class="tip-icon"><i class="${tip.icon}"></i></div>
       <div class="tip-content">
@@ -1378,30 +1720,30 @@ function renderPage() {
 
   // Seasons
   const seasons = [
-    { key: 'spring', icon: 'fa-solid fa-spa',       name: 'Spring', months: 'Mar – May' },
-    { key: 'summer', icon: 'fa-solid fa-sun',        name: 'Summer', months: 'Jun – Aug' },
-    { key: 'autumn', icon: 'fa-solid fa-leaf',       name: 'Autumn', months: 'Sep – Nov' },
-    { key: 'winter', icon: 'fa-solid fa-snowflake',  name: 'Winter', months: 'Dec – Feb' },
+    { key: 'spring', icon: 'fa-solid fa-spa',       name: t('dest.dynamic.season.spring', 'Spring'), months: t('dest.dynamic.season.spring.months', 'Mar – May') },
+    { key: 'summer', icon: 'fa-solid fa-sun',       name: t('dest.dynamic.season.summer', 'Summer'), months: t('dest.dynamic.season.summer.months', 'Jun – Aug') },
+    { key: 'autumn', icon: 'fa-solid fa-leaf',      name: t('dest.dynamic.season.autumn', 'Autumn'), months: t('dest.dynamic.season.autumn.months', 'Sep – Nov') },
+    { key: 'winter', icon: 'fa-solid fa-snowflake', name: t('dest.dynamic.season.winter', 'Winter'), months: t('dest.dynamic.season.winter.months', 'Dec – Feb') },
   ];
   document.getElementById('seasons-grid').innerHTML = seasons.map(s => `
     <div class="season-card ${extraData.seasons[s.key] ? 'best' : ''}">
       <span class="season-icon"><i class="${s.icon}"></i></span>
       <div class="season-name">${s.name}</div>
       <div class="season-months">${s.months}</div>
-      ${extraData.seasons[s.key] ? '<span class="season-badge">Best</span>' : ''}
+      ${extraData.seasons[s.key] ? `<span class="season-badge">${t('dest.page.bestBadge', 'Best')}</span>` : ''}
     </div>
   `).join('');
 
   // Gallery
   document.getElementById('gallery-strip').innerHTML = extraData.gallery.map((src, i) => `
     <div class="gallery-strip-item" onclick="openLightbox('${src}')">
-      <img src="${src}" alt="Gallery ${i + 1}" loading="lazy">
+      <img src="${src}" alt="${t('dest.page.galleryAlt', 'Gallery')} ${i + 1}" loading="lazy">
       <div class="gallery-strip-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
     </div>
   `).join('');
 
   // Japanese phrases
-  document.getElementById('japanese-phrases').innerHTML = extraData.phrases.map(p => `
+  document.getElementById('japanese-phrases').innerHTML = localizedExtraData.phrases.map(p => `
     <div style="padding:0.75rem 0;border-bottom:1px solid var(--paper-dark)">
       <div style="display:flex;justify-content:space-between;align-items:baseline">
         <span style="font-family:var(--font-serif);font-size:1.3rem;color:var(--ink)">${p.jp}</span>
@@ -1412,6 +1754,7 @@ function renderPage() {
   `).join('');
 
   loadRelated();
+  updateFavUI();
 }
 
 // ─── Leaflet Map ───
@@ -1454,7 +1797,7 @@ function initMap(lat, lng, name, location) {
   marker.bindPopup(`
     <div style="font-family:'Shippori Mincho',serif;padding:0.3rem">
       <strong style="font-size:1rem;color:#1a1a2e">${name}</strong><br>
-      <span style="font-size:0.78rem;color:#8c8c8c"><i class="fa-solid fa-location-dot" style="color:#c0392b"></i> ${location || 'Japan'}</span>
+      <span style="font-size:0.78rem;color:#8c8c8c"><i class="fa-solid fa-location-dot" style="color:#c0392b"></i> ${location || t('dest.dynamic.japan', 'Japan')}</span>
     </div>
   `, { maxWidth: 200 }).openPopup();
 }
@@ -1481,18 +1824,18 @@ function updateFavUI() {
   const heroBtn = document.getElementById('hero-fav-btn');
   const sideBtn = document.getElementById('sidebar-fav-btn');
   if (heroBtn) heroBtn.innerHTML = isFav
-    ? '<i class="fa-solid fa-heart"></i> Saved'
-    : '<i class="fa-regular fa-heart"></i> Save to Favorites';
+    ? t('dest.page.fav-btn.saved', '<i class="fa-solid fa-heart"></i> Saved')
+    : t('dest.page.fav-btn', '<i class="fa-regular fa-heart"></i> Save to Favorites');
   if (sideBtn) sideBtn.innerHTML = isFav
-    ? '<i class="fa-solid fa-heart"></i> Saved to Favorites'
-    : '<i class="fa-regular fa-heart"></i> Add to Favorites';
+    ? t('dest.page.fav-add.saved', '<i class="fa-solid fa-heart"></i> Saved to Favorites')
+    : t('dest.page.fav-add', '<i class="fa-regular fa-heart"></i> Add to Favorites');
   if (sideBtn) sideBtn.classList.toggle('active', isFav);
 }
 
 async function toggleFavorite() {
   const token = localStorage.getItem('jt_token');
   if (!token) {
-    showToast('Please sign in to save favorites', 'error');
+    showToast(t('dest.toast.signin', 'Please sign in to save favorites'), 'error');
     return;
   }
   try {
@@ -1504,9 +1847,12 @@ async function toggleFavorite() {
     const data = await res.json();
     isFav = data.action === 'added';
     updateFavUI();
-    showToast(isFav ? 'Added to favorites' : 'Removed from favorites', isFav ? 'success' : 'info');
+    showToast(
+      isFav ? t('dest.toast.added', 'Added to favorites') : t('dest.toast.removed', 'Removed from favorites'),
+      isFav ? 'success' : 'info'
+    );
   } catch (err) {
-    showToast('Could not update favorites', 'error');
+    showToast(t('dest.toast.error', 'Could not update favorites'), 'error');
   }
 }
 
@@ -1528,17 +1874,20 @@ async function loadRelated() {
 }
 
 function renderRelated(destinations) {
-  document.getElementById('related-grid').innerHTML = destinations.map(d => `
-    <a href="/pages/destination.html?id=${d.id}" class="related-card">
-      <img src="${d.image_url}" alt="${d.name}" loading="lazy">
-      <div class="related-card-body">
-        <p class="related-card-cat">${d.category || 'destination'}</p>
-        <h4 class="related-card-name">${d.name}</h4>
-        <p class="related-card-loc"><i class="fa-solid fa-location-dot"></i> ${d.location || 'Japan'}</p>
-        <span class="related-card-link">Explore <i class="fa-solid fa-arrow-right"></i></span>
-      </div>
-    </a>
-  `).join('');
+  document.getElementById('related-grid').innerHTML = destinations.map(d => {
+    const localized = getLocalizedDestination(d);
+    return `
+      <a href="/pages/destination.html?id=${d.id}" class="related-card">
+        <img src="${d.image_url}" alt="${localized.name}" loading="lazy">
+        <div class="related-card-body">
+          <p class="related-card-cat">${translateCategory(d.category)}</p>
+          <h4 class="related-card-name">${localized.name}</h4>
+          <p class="related-card-loc"><i class="fa-solid fa-location-dot"></i> ${localized.location || t('dest.dynamic.japan', 'Japan')}</p>
+          <span class="related-card-link">${t('dest.explore.link', 'Explore')} <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+      </a>
+    `;
+  }).join('');
 }
 
 // ─── Nav Scroll ───
