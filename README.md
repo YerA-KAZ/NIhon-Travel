@@ -1,294 +1,106 @@
-# Nihon Travel
+# Nihon Travel 
+**Автор:** Рамазан Ерасыл
+**Жобаның аты:** Nihon Travel - Japan Travel Guide
+**Қысқаша сипаттама:** 
+`Nihon Travel` - бұл Жапонияға саяхат туралы гибридті full-stack веб-жоба. Жоба классикалық тәсілді (Vanilla JS + HTML) және заманауи тәсілді (React + Vite) біртұтас Node.js (Express) бэкендінің басқаруымен біріктіреді! Негізгі функционалға: жеке REST API, PostgreSQL базасы, пайдаланушыларды авторизациялау (JWT), пайдаланушы профилі, таңдаулылар жүйесі, қарау тарихы, кері байланыс формасы және толыққанды админ-панель кіреді.
 
-`Nihon Travel` — это full-stack веб-проект о путешествиях по Японии с собственным backend API, PostgreSQL, авторизацией, профилем пользователя, избранным, историей просмотров, формой сообщений и админ-панелью.
+---
 
-Проект использует:
-- `Node.js + Express` для backend
-- `PostgreSQL` для базы данных
-- `HTML + CSS + Vanilla JS` для frontend
-- `JWT` для авторизации
-- `Resend` для писем сброса пароля
+## Қолданылған технологиялар
+Жоба заманауи әрі сенімді технологияларды пайдаланады:
+- **Frontend (Классикалық):** HTML5, CSS3, Vanilla JS, AOS (Анимациялар), Leaflet (Карталар)
+- **Frontend (Заманауи):** React, Vite, React Router Dom
+- **Backend:** Node.js, Express (REST API)
+- **Database:** PostgreSQL (реляциялық мәліметтер қорын басқару жүйесі)
+- **Auth & Security:** JWT (JSON Web Tokens), bcrypt (құпиясөздерді хэштеу)
+- **Email Services:** Resend (құпиясөзді қалпына келтіру хаттарын жіберу үшін)
 
-## Что уже есть в проекте
+---
 
-- главная страница с hero-блоком, фильтрацией направлений и секцией контактов
-- отдельные страницы с гайдами: `destination`, `jr-pass`, `when-to-visit`, `etiquette`, `anime` и др.
-- мультиязычность через `frontend/js/i18n.js`
-- регистрация, вход, восстановление пароля
-- профиль пользователя
-- избранное и история просмотров
-- отправка сообщений
-- админ-панель для управления данными
+## Орнату нұсқаулығы
 
-## Стек
-
-| Слой | Технологии |
-|---|---|
-| Frontend | `HTML5`, `CSS3`, `Vanilla JS` |
-| Backend | `Node.js`, `Express` |
-| Database | `PostgreSQL` |
-| Auth | `JWT`, `bcrypt` |
-| Email | `Resend` |
-| UI/Effects | `AOS`, `Font Awesome`, `Leaflet` |
-
-## Структура проекта
-
-```text
-japan-travel/
-├─ backend/
-│  ├─ db/
-│  │  ├─ pool.js
-│  │  └─ schema.sql
-│  ├─ middleware/
-│  │  └─ auth.js
-│  ├─ routes/
-│  │  ├─ admin.js
-│  │  ├─ auth.js
-│  │  ├─ destinations.js
-│  │  ├─ favorites.js
-│  │  ├─ history.js
-│  │  ├─ messages.js
-│  │  └─ users.js
-│  ├─ utils/
-│  │  └─ sendEmail.js
-│  ├─ .env.example
-│  ├─ package.json
-│  └─ server.js
-├─ frontend/
-│  ├─ css/
-│  │  ├─ style.css
-│  │  ├─ profile.css
-│  │  └─ guides.css
-│  ├─ js/
-│  │  ├─ i18n.js
-│  │  └─ main.js
-│  ├─ pages/
-│  │  ├─ admin.html
-│  │  ├─ anime.html
-│  │  ├─ destination.html
-│  │  ├─ etiquette.html
-│  │  ├─ forgot-password.html
-│  │  ├─ jr-pass.html
-│  │  ├─ profile.html
-│  │  ├─ reset-password.html
-│  │  ├─ travel-tips.html
-│  │  ├─ visa-guide.html
-│  │  └─ when-to-visit.html
-│  └─ index.html
-├─ package.json
-└─ README.md
-```
-
-## Быстрый запуск
-
-### 1. Требования
-
+### 1. Қойылатын талаптар
 - `Node.js 18+`
 - `PostgreSQL 14+`
 
-### 2. Установка зависимостей backend
+### 2. Клондау және тәуелділіктерді орнату
+Жобаның ортақ түбірі болғандықтан, ыңғайлы болу үшін жылдам скрипт бапталған:
 
 ```bash
-cd backend
-npm install
+# Репозиторийді клондау
+git clone https://github.com/your-username/japan-travel.git
+cd japan-travel
+
+# Барлық пакеттерді орнату (backend және react-frontend)
+npm run build
 ```
 
-### 3. Создание базы данных
-
+### 3. Мәліметтер қорын баптау
+PostgreSQL-ге кіріп, мәліметтер қорын жасаңыз:
 ```sql
 CREATE DATABASE japan_travel;
 ```
-
-После этого импортируйте схему:
-
+Қордың схемасын импорттаңыз:
 ```bash
 psql -U postgres -d japan_travel -f backend/db/schema.sql
 ```
 
-Если вы уже находитесь в папке `backend`, используйте:
-
-```bash
-psql -U postgres -d japan_travel -f db/schema.sql
-```
-
-### 4. Настройка `.env`
-
-Скопируйте пример:
-
+### 4. Қоршаған орта айнымалыларын баптау (.env)
+Бэкенд баптауларының үлгісін көшіріп алыңыз:
 ```bash
 cd backend
-copy .env.example .env
+copy .env.example .env   # Windows үшін
+# немесе: cp .env.example .env (Mac/Linux үшін)
 ```
+`.env` файлында PostgreSQL-ге кіру мәліметтерін (`DB_USER`, `DB_PASSWORD`), сондай-ақ `JWT_SECRET` пен `RESEND_API_KEY` мәндерін міндетті түрде көрсетіңіз.
 
-Или создайте файл вручную по примеру из [backend/.env.example](/C:/Users/toph8/OneDrive/Desktop/japan-travel%20(4)%20%E2%80%94%20%D0%BA%D0%BE%D0%BF%D0%B8%D1%8F/japan-travel/backend/.env.example).
-
-### 5. Запуск сервера
-
-Режим разработки:
-
+### 5. Жобаны іске қосу (Бір командамен!)
+Жобаның түбірінде (japan-travel) мына команданы орындаңыз:
 ```bash
-cd backend
-npm run dev
-```
-
-Продакшн-запуск:
-
-```bash
-cd backend
 npm start
 ```
+*Сіздің серверіңіз `http://localhost:5000` мекенжайында іске қосылады. Ол ескі HTML-беттерді де, жаңа React-беттерді де (`/anime-atlas` роуты) автоматты түрде таратады.*
 
-### 6. Открыть сайт
+---
 
-После запуска сайт будет доступен по адресу:
+## Пайдалану нұсқаулығы
+Nihon Travel жобасына қош келдіңіз!
+1. **Басты бет (`/`):** Мұнда танымал бағыттарды көруге, оларды фильтрлеуге (Ғибадатханалар, Табиғат, Қалалар т.б.) және Жапония бойынша статистикамен танысуға болады.
+2. **Тіркелу / Кіру:** Аккаунт жасау үшін оң жақ жоғарғы бұрыштағы "Sign In" немесе "Join Free" түймесін басыңыз. Жүйеге кіргеннен кейін орындарды "Таңдаулыларға" қоса аласыз.
+3. **Anime бөлімі (React!):** Сайттың жоғарғы жағындағы "Anime" (жұлдызша белгісі бар) түймесін басыңыз. Сіз аниме жасаушыларды шабыттандырған шынайы өмірдегі локацияларды зерттеуге болатын интерактивті React-бетіне (`/anime-atlas` роуты) өтесіз.
+4. **Профиль:** Кіргеннен кейін "My Profile" бөліміне өтіңіз. Мұнда есімді өңдеуге, құпиясөзді ауыстыруға және таңдаулы локацияларды басқаруға болады.
+5. **Админ-панель:** Егер пайдаланушыңызға мәліметтер қорында `admin` рөлі берілсе, сіз `/pages/admin.html` бетіне қол жеткізесіз. Мұнда пайдаланушыларды модерациялауға, байланыс парақшасынан түскен хаттарды оқуға және жобаға жаңа туристік орындар қосуға болады.
 
-```text
-http://localhost:5000
-```
+## Скриншоттар
+![Басты бет](/japan-travel/photo/Nihon%20Travel%20Main%20Page.png)  
+*1-сурет: Басты бет — Дизайн, анимациялар және орындар тізімі.*
 
-Frontend в этом проекте отдается напрямую через Express, отдельный build-step не нужен.
+![React Модулі](/japan-travel/photo/Nihon%20Travel%20React%20Page.png)  
+*2-сурет: Интерактивті React (Anime Atlas) интерфейсі.*
 
-## Переменные окружения
+---
 
-Основные переменные:
+## API Құжаттамасы
+Жүйе қуатты REST API негізінде жұмыс істейді. **Барлық эндпоинттер деректерді JSON форматында қайтарады.**
 
-| Переменная | Описание |
-|---|---|
-| `PORT` | Порт backend-сервера |
-| `NODE_ENV` | Режим запуска |
-| `DB_HOST` | Хост PostgreSQL |
-| `DB_PORT` | Порт PostgreSQL |
-| `DB_NAME` | Имя базы |
-| `DB_USER` | Пользователь БД |
-| `DB_PASSWORD` | Пароль БД |
-| `JWT_SECRET` | Секрет для JWT |
-| `JWT_EXPIRES_IN` | Время жизни токена |
-| `FRONTEND_URL` | URL фронтенда для CORS и email-ссылок |
-| `RESEND_API_KEY` | API-ключ Resend |
-| `EMAIL_FROM` | Email отправителя |
+### Авторизация (Auth)
+- `POST /api/auth/register` — Аккаунт жасау (`name`, `email`, `password` қажет)
+- `POST /api/auth/login` — Жүйеге кіру (JWT токен қайтарады)
+- `GET /api/auth/me` — Ағымдағы пайдаланушының деректерін алу (JWT токен бойынша)
+- `POST /api/auth/reset-password` — Email арқылы құпиясөзді қалпына келтіру
 
-Пример файла уже есть в [backend/.env.example](/C:/Users/toph8/OneDrive/Desktop/japan-travel%20(4)%20%E2%80%94%20%D0%BA%D0%BE%D0%BF%D0%B8%D1%8F/japan-travel/backend/.env.example).
+### Бағыттар / Орындар (Destinations)
+- `GET /api/destinations` — Орындар тізімін алу. *`?category=temple` және `?search=Tokyo` сияқты сұраныс (query) параметрлерін қолдайды.*
+- `GET /api/destinations/:id` — Бір орын туралы толық ақпарат алу.
 
-## Основные скрипты
+### Таңдаулылар және Тарих (Favorites & History)
+- `GET /api/favorites` — Пайдаланушының сақталған орындарының тізімін қайтарады.
+- `POST /api/favorites` — Орынды таңдаулыларға қосу (`destination_id`).
+- `DELETE /api/favorites/:destination_id` — Орынды таңдаулылардан өшіру.
+- `GET /api/history` — Пайдаланушының қаралған орындар тарихын көру.
 
-Файл: [backend/package.json](/C:/Users/toph8/OneDrive/Desktop/japan-travel%20(4)%20%E2%80%94%20%D0%BA%D0%BE%D0%BF%D0%B8%D1%8F/japan-travel/backend/package.json)
-
-```json
-{
-  "start": "node server.js",
-  "dev": "nodemon server.js"
-}
-```
-
-## API
-
-### Auth
-
-- `POST /api/auth/register`
-- `POST /api/auth/login`
-- `GET /api/auth/me`
-- `POST /api/auth/forgot-password`
-- `POST /api/auth/reset-password`
-
-### Destinations
-
-- `GET /api/destinations`
-- `GET /api/destinations/:id`
-
-Поддерживаются:
-- `category`
-- `search`
-- `limit`
-- `offset`
-
-### Favorites
-
-- `GET /api/favorites`
-- `POST /api/favorites`
-- `DELETE /api/favorites/:destination_id`
-
-### History
-
-- `GET /api/history`
-- `POST /api/history`
-- `DELETE /api/history`
-
-### Messages
-
-- `POST /api/messages`
-- `GET /api/messages/my`
-
-### Users
-
-- `PUT /api/users/profile`
-- `PUT /api/users/password`
-
-### Admin
-
-- `GET /api/admin/stats`
-- `GET /api/admin/users`
-- `GET /api/admin/messages`
-- `GET /api/admin/destinations`
-- `POST /api/admin/destinations`
-- `PUT /api/admin/destinations/:id`
-- `DELETE /api/admin/destinations/:id`
-
-## Где что редактировать
-
-### Главная страница
-
-- разметка: [frontend/index.html](/C:/Users/toph8/OneDrive/Desktop/japan-travel%20(4)%20%E2%80%94%20%D0%BA%D0%BE%D0%BF%D0%B8%D1%8F/japan-travel/frontend/index.html)
-- стили: [frontend/css/style.css](/C:/Users/toph8/OneDrive/Desktop/japan-travel%20(4)%20%E2%80%94%20%D0%BA%D0%BE%D0%BF%D0%B8%D1%8F/japan-travel/frontend/css/style.css)
-- логика: [frontend/js/main.js](/C:/Users/toph8/OneDrive/Desktop/japan-travel%20(4)%20%E2%80%94%20%D0%BA%D0%BE%D0%BF%D0%B8%D1%8F/japan-travel/frontend/js/main.js)
-
-### Переводы
-
-- все строки интерфейса: [frontend/js/i18n.js](/C:/Users/toph8/OneDrive/Desktop/japan-travel%20(4)%20%E2%80%94%20%D0%BA%D0%BE%D0%BF%D0%B8%D1%8F/japan-travel/frontend/js/i18n.js)
-
-### Карточки направлений
-
-- seed-данные: [backend/db/schema.sql](/C:/Users/toph8/OneDrive/Desktop/japan-travel%20(4)%20%E2%80%94%20%D0%BA%D0%BE%D0%BF%D0%B8%D1%8F/japan-travel/backend/db/schema.sql)
-- API-нормализация описаний: [backend/routes/destinations.js](/C:/Users/toph8/OneDrive/Desktop/japan-travel%20(4)%20%E2%80%94%20%D0%BA%D0%BE%D0%BF%D0%B8%D1%8F/japan-travel/backend/routes/destinations.js)
-
-### Страница направления `destination.html`
-
-Файл: [frontend/pages/destination.html](/C:/Users/toph8/OneDrive/Desktop/japan-travel%20(4)%20%E2%80%94%20%D0%BA%D0%BE%D0%BF%D0%B8%D1%8F/japan-travel/frontend/pages/destination.html)
-
-Здесь лежат:
-- `const DEST_DATA` — галерея, координаты, советы, сезонность, фразы
-- `const DEST_DATA_I18N` — локализованные версии текстов
-- рендер карточек и блоков страницы
-
-Если нужно:
-- поменять фото в галерее направления — меняйте `gallery`
-- изменить советы — меняйте `tips`
-- обновить координаты карты — меняйте `lat/lng`
-- перевести контент — обновляйте `DEST_DATA_I18N`
-
-### Профиль и админка
-
-- [frontend/pages/profile.html](/C:/Users/toph8/OneDrive/Desktop/japan-travel%20(4)%20%E2%80%94%20%D0%BA%D0%BE%D0%BF%D0%B8%D1%8F/japan-travel/frontend/pages/profile.html)
-- [frontend/pages/admin.html](/C:/Users/toph8/OneDrive/Desktop/japan-travel%20(4)%20%E2%80%94%20%D0%BA%D0%BE%D0%BF%D0%B8%D1%8F/japan-travel/frontend/pages/admin.html)
-- [frontend/css/profile.css](/C:/Users/toph8/OneDrive/Desktop/japan-travel%20(4)%20%E2%80%94%20%D0%BA%D0%BE%D0%BF%D0%B8%D1%8F/japan-travel/frontend/css/profile.css)
-
-## Как сделать пользователя админом
-
-После регистрации обычного пользователя можно выдать права администратора вручную:
-
-```sql
-UPDATE users
-SET role = 'admin'
-WHERE email = 'your@email.com';
-```
-
-## Email и сброс пароля
-
-Сброс пароля реализован через `Resend`.
-
-Файлы:
-- [backend/routes/auth.js](/C:/Users/toph8/OneDrive/Desktop/japan-travel%20(4)%20%E2%80%94%20%D0%BA%D0%BE%D0%BF%D0%B8%D1%8F/japan-travel/backend/routes/auth.js)
-- [backend/utils/sendEmail.js](/C:/Users/toph8/OneDrive/Desktop/japan-travel%20(4)%20%E2%80%94%20%D0%BA%D0%BE%D0%BF%D0%B8%D1%8F/japan-travel/backend/utils/sendEmail.js)
-
-Если `RESEND_API_KEY` не настроен, функциональность отправки email работать корректно не будет.
-
-
+### Админ-Панель (Admin)
+*(Тек Authorization тақырыпшасы және Admin рөлі арқылы қолжетімді)*
+- `GET /api/admin/stats` — Статистика: пайдаланушылар, хабарламалар және орындар саны.
+- `POST /api/admin/destinations` — Жаңа карточка (бағыт) жасау.
+- `GET /api/admin/messages` — Пайдаланушылардан келген байланыс формаларын (хаттарды) оқу.

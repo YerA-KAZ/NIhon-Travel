@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: require('path').resolve(__dirname, '.env') });
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -21,8 +21,11 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from frontend
+// Serve static files from original frontend
 app.use(express.static(path.join(__dirname, '../frontend')));
+
+// Serve static files from React build
+app.use(express.static(path.join(__dirname, '../react-frontend/dist')));
 
 // API Routes
 app.use('/api/auth', require('./routes/auth'));
@@ -38,7 +41,13 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Japan Travel API is running', timestamp: new Date() });
 });
 
-// Serve frontend for all other routes (SPA)
+// Serve React Routes (add any new React paths here)
+const reactRoutes = ['/anime-atlas', '/AnimeAtlas', '/places', '/Places'];
+app.get(reactRoutes, (req, res) => {
+  res.sendFile(path.join(__dirname, '../react-frontend/dist/index.html'));
+});
+
+// Serve original frontend index.html for root or any other unhandled route
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });

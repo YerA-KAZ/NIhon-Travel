@@ -4,9 +4,9 @@
   "private": true,
   "description": "Root deployment helper for the Nihon Travel project",
   "scripts": {
-    "build": "cd backend && npm install",
+    "build": "npm install --prefix backend && npm install --prefix react-frontend && npm run build --prefix react-frontend",
     "start": "node backend/server.js",
-    "dev": "cd backend && npm run dev"
+    "dev": "npm run dev --prefix backend"
   },
   "engines": {
     "node": ">=20"

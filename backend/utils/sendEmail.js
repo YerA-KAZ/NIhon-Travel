@@ -11,7 +11,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
  */
 async function sendResetEmail(toEmail, resetLink) {
   await resend.emails.send({
-    from: process.env.EMAIL_FROM || 'hadofof260@fengnu.com',
+    from: process.env.EMAIL_FROM || '<anything>@kronuerga.resend.app',
     to: toEmail,
     subject: 'Password Reset — Nihon Travel',
     html: `
