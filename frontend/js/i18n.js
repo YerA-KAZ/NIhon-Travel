@@ -195,7 +195,7 @@
       'contact.opt4'       : 'Общий вопрос',   
 
       /* --- ГЛАВНАЯ — ФУТЕР --- */
-      'footer.desc'        : 'Ваш надежный гид по чудесам Японии. Создаем незабываемые путешествия с 2018 года.',
+      'footer.desc'        : 'Ваш надежный гид по чудесам Японии. Создаем незабываемые путешествия с 2026 года.',
       'footer.col.dest'    : 'Направления',
       'footer.col.explore' : 'Исследуйте',
       'footer.col.tips'    : 'Советы для путешествий',
@@ -207,7 +207,7 @@
       'footer.lnk.visa'    : 'Виза',
       'footer.lnk.jr'      : 'JR Pass',
       'footer.lnk.etq'     : 'Этикет',
-      'footer.copy'        : '© 2025 Nihon Travel. Создано с помощью <i class="fa-solid fa-heart"></i> для любителей Японии.',
+      'footer.copy'        : '© 2026 Nihon Travel. Создано с помощью <i class="fa-solid fa-heart"></i> для любителей Японии.',
       'footer.legal'       : 'Юридическая информация',
 
       /* --- ГЛАВНАЯ — МОДАЛКИ --- */
@@ -1117,7 +1117,7 @@
       'footer.lnk.visa'    : 'Виза',
       'footer.lnk.jr'      : 'JR Pass',
       'footer.lnk.etq'     : 'Этикет',
-      'footer.copy'        : '© 2025 Nihon Travel. Жапония әуесқойлары үшін жасалған. <i class="fa-solid fa-heart"></i>',
+      'footer.copy'        : '© 2026 Nihon Travel. Жапония әуесқойлары үшін жасалған. <i class="fa-solid fa-heart"></i>',
       'footer.legal'       : 'Құқықтық ақпарат',
 
       /* --- ГЛАВНАЯ — МОДАЛКИ --- */

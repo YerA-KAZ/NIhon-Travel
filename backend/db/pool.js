@@ -2,17 +2,17 @@ const { Pool } = require('pg');
 
 const poolConfig = process.env.DATABASE_URL
   ? {
-      connectionString: process.env.DATABASE_URL,
-      // Render может требовать SSL, но без проверки сертификата
-      ssl: { rejectUnauthorized: false }
-    }
+    connectionString: process.env.DATABASE_URL,
+    // Render может требовать SSL, но без проверки сертификата
+    ssl: { rejectUnauthorized: false }
+  }
   : {
-      host: process.env.DB_HOST || 'localhost',
-      port: process.env.DB_PORT || 5432,
-      database: process.env.DB_NAME || 'japan_travel',
-      user: process.env.DB_USER || 'postgres',
-      password: process.env.DB_PASSWORD || 'postgres',
-    };
+    host: process.env.DB_HOST || 'localhost',
+    port: process.env.DB_PORT || 5432,
+    database: process.env.DB_NAME || 'japan_travel',
+    user: process.env.DB_USER || 'postgres',
+    password: process.env.DB_PASSWORD || 'postgres',
+  };
 
 const pool = new Pool({
   ...poolConfig,
