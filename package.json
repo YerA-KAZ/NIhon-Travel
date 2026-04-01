@@ -1,5 +1,14 @@
 {
-  "dependencies": {
-    "bcrypt": "^6.0.0"
+  "name": "nihon-travel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Root deployment helper for the Nihon Travel project",
+  "scripts": {
+    "build": "cd backend && npm install",
+    "start": "node backend/server.js",
+    "dev": "cd backend && npm run dev"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }
