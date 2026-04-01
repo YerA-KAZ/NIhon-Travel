@@ -338,7 +338,7 @@ export default function AnimeAtlasPage({ language, setLanguage }) {
       {/* NAV */}
       <nav className={stuck ? "stuck" : ""}>
         <span className="nl">
-          <a href="http://localhost:5000"> <span style={{ fontFamily: "var(--fs)", fontSize: "1.8rem" }}>日</span>
+          <a href="/"> <span style={{ fontFamily: "var(--fs)", fontSize: "1.8rem" }}>日</span>
           NIHON TRAVEL</a>
         </span>
         <div className="nc">
