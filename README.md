@@ -72,10 +72,10 @@ Nihon Travel жобасына қош келдіңіз!
 5. **Админ-панель:** Егер пайдаланушыңызға мәліметтер қорында `admin` рөлі берілсе, сіз `/pages/admin.html` бетіне қол жеткізесіз. Мұнда пайдаланушыларды модерациялауға, байланыс парақшасынан түскен хаттарды оқуға және жобаға жаңа туристік орындар қосуға болады.
 
 ## Скриншоттар
-![Басты бет](japan-travel/photo/Nihon%20Travel%20Main%20Page.png)  
+![Басты бет](/japan-travel/photo/Nihon%20Travel%20Main%20Page.png)  
 *1-сурет: Басты бет — Дизайн, анимациялар және орындар тізімі.*
 
-![React Модулі](japan-travel/photo/Nihon%20Travel%20React%20Page.png)  
+![React Модулі](/japan-travel/photo/Nihon%20Travel%20React%20Page.png)  
 *2-сурет: Интерактивті React (Anime Atlas) интерфейсі.*
 
 ---
