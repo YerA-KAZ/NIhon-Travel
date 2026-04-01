@@ -130,13 +130,13 @@ router.get('/me', authMiddleware, async (req, res) => {
   }
 });
 
-// ═══════════════════════════════════════════════════════
+
 // POST /api/auth/forgot-password
-// ═══════════════════════════════════════════════════════
+
 // Generates a secure reset token, stores its SHA-256 hash
 // in the DB with a 30-minute TTL, and emails a reset link.
 // ALWAYS returns 200 to prevent user enumeration.
-// ═══════════════════════════════════════════════════════
+
 router.post('/forgot-password', async (req, res) => {
   const { email } = req.body;
 
@@ -196,13 +196,11 @@ router.post('/forgot-password', async (req, res) => {
   }
 });
 
-// ═══════════════════════════════════════════════════════
 // POST /api/auth/reset-password
-// ═══════════════════════════════════════════════════════
 // Validates the token, checks it hasn't expired or been
 // used, then hashes the new password with bcrypt and
 // updates the user record. Marks the token as used.
-// ═══════════════════════════════════════════════════════
+
 router.post('/reset-password', async (req, res) => {
   const { token, password } = req.body;
 

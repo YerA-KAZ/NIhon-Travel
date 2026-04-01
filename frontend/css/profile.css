@@ -1,6 +1,4 @@
-/* =====================================================
-   JAPAN TRAVEL — Profile & Admin Pages Stylesheet
-   ===================================================== */
+/* JAPAN TRAVEL — Profile & Admin Pages Stylesheet */
 
 @import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap');
 
@@ -93,9 +91,7 @@ html:hover::-webkit-scrollbar-thumb          { background: rgba(192, 57, 43, 0.5
 html.is-scrolling::-webkit-scrollbar-thumb   { background: rgba(192, 57, 43, 0.7);  }
 ::-webkit-scrollbar-thumb:hover              { background: rgba(192, 57, 43, 0.9) !important; }
 
-/* =====================================================
-   LAYOUT — Sidebar + Main
-   ===================================================== */
+/* LAYOUT — Sidebar + Main */
 
 .profile-layout {
   display: grid;
@@ -103,9 +99,7 @@ html.is-scrolling::-webkit-scrollbar-thumb   { background: rgba(192, 57, 43, 0.7
   min-height: 100vh;
 }
 
-/* =====================================================
-   SIDEBAR
-   ===================================================== */
+/* SIDEBAR */
 
 .profile-sidebar {
   background: var(--ink);
@@ -231,9 +225,7 @@ html.is-scrolling::-webkit-scrollbar-thumb   { background: rgba(192, 57, 43, 0.7
   border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-/* =====================================================
-   MAIN CONTENT
-   ===================================================== */
+/* MAIN CONTENT */
 
 .profile-main {
   background: var(--paper);
@@ -280,9 +272,7 @@ html.is-scrolling::-webkit-scrollbar-thumb   { background: rgba(192, 57, 43, 0.7
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
 
-/* =====================================================
-   OVERVIEW — Stat Cards
-   ===================================================== */
+/* OVERVIEW — Stat Cards */
 
 .profile-overview-grid {
   display: grid;
@@ -338,9 +328,7 @@ html.is-scrolling::-webkit-scrollbar-thumb   { background: rgba(192, 57, 43, 0.7
   letter-spacing: 0.12em;
 }
 
-/* =====================================================
-   FORM CARDS (Settings / Profile Edit)
-   ===================================================== */
+/* FORM CARDS (Settings / Profile Edit) */
 
 .profile-form-card {
   background: var(--white);
@@ -412,9 +400,7 @@ html.is-scrolling::-webkit-scrollbar-thumb   { background: rgba(192, 57, 43, 0.7
   gap: 1.2rem;
 }
 
-/* =====================================================
-   ITEMS GRID (Favorites & History)
-   ===================================================== */
+/* ITEMS GRID (Favorites & History)*/
 
 .items-grid {
   display: grid;
@@ -500,9 +486,7 @@ html.is-scrolling::-webkit-scrollbar-thumb   { background: rgba(192, 57, 43, 0.7
 
 .remove-fav-btn:hover { opacity: 0.7; }
 
-/* =====================================================
-   MESSAGES LIST
-   ===================================================== */
+/* MESSAGES LIST */
 
 .messages-list {
   display: flex;
@@ -550,9 +534,7 @@ html.is-scrolling::-webkit-scrollbar-thumb   { background: rgba(192, 57, 43, 0.7
   line-height: 1.7;
 }
 
-/* =====================================================
-   ACCOUNT DETAILS
-   ===================================================== */
+/* ACCOUNT DETAILS */
 
 .account-details-card {
   background: var(--white);
@@ -586,9 +568,7 @@ html.is-scrolling::-webkit-scrollbar-thumb   { background: rgba(192, 57, 43, 0.7
   font-weight: 500;
 }
 
-/* =====================================================
-   ADMIN — Data Table
-   ===================================================== */
+/* ADMIN — Data Table */
 
 .table-wrapper {
   overflow-x: auto;
@@ -725,9 +705,7 @@ html.is-scrolling::-webkit-scrollbar-thumb   { background: rgba(192, 57, 43, 0.7
 .admin-topbar { background: var(--vermilion) !important; }
 .admin-topbar .topbar-title { color: var(--white) !important; }
 
-/* =====================================================
-   MODAL
-   ===================================================== */
+/* MODAL*/
 
 .modal-overlay {
   position: fixed;
@@ -796,9 +774,7 @@ html.is-scrolling::-webkit-scrollbar-thumb   { background: rgba(192, 57, 43, 0.7
   line-height: 1.6;
 }
 
-/* =====================================================
-   BUTTONS
-   ===================================================== */
+/* BUTTONS */
 
 .btn {
   display: inline-flex;
@@ -873,9 +849,7 @@ html.is-scrolling::-webkit-scrollbar-thumb   { background: rgba(192, 57, 43, 0.7
   transform: none !important;
 }
 
-/* =====================================================
-   EMPTY STATE
-   ===================================================== */
+/* EMPTY STATE */
 
 .empty-state {
   text-align: center;
@@ -904,9 +878,7 @@ html.is-scrolling::-webkit-scrollbar-thumb   { background: rgba(192, 57, 43, 0.7
   margin: 0 auto;
 }
 
-/* =====================================================
-   TOAST NOTIFICATIONS
-   ===================================================== */
+/* TOAST NOTIFICATIONS */
 
 .toast-container {
   position: fixed;
@@ -940,9 +912,7 @@ html.is-scrolling::-webkit-scrollbar-thumb   { background: rgba(192, 57, 43, 0.7
 .toast.error   { border-left-color: var(--vermilion); }
 .toast.info    { border-left-color: var(--gold); }
 
-/* =====================================================
-   LOADER
-   ===================================================== */
+/* LOADER*/
 
 .loader {
   display: flex;
@@ -969,9 +939,7 @@ html.is-scrolling::-webkit-scrollbar-thumb   { background: rgba(192, 57, 43, 0.7
   40% { transform: scale(1.35); opacity: 1; }
 }
 
-/* =====================================================
-   UTILITY CLASSES
-   ===================================================== */
+/* UTILITY CLASSES */
 
 .text-center   { text-align: center; }
 .text-muted    { color: var(--stone); }
@@ -986,9 +954,7 @@ html.is-scrolling::-webkit-scrollbar-thumb   { background: rgba(192, 57, 43, 0.7
 .hidden        { display: none !important; }
 .w-full        { width: 100%; }
 
-/* =====================================================
-   RESPONSIVE
-   ===================================================== */
+/* RESPONSIVE */
 
 @media (max-width: 1100px) {
   .stat-cards {

@@ -80,6 +80,23 @@
     ('Kyoto Gion District', 'Wander cobblestone lanes lined with traditional machiya townhouses where geisha culture has been preserved for centuries.', 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800', 'culture', 'Kyoto', 4.9)
     ON CONFLICT DO NOTHING;
 
+    UPDATE destinations
+    SET description = CASE name
+        WHEN 'Mount Fuji' THEN 'Japan''s highest mountain at 3,776 meters and a UNESCO World Heritage site long revered as a sacred peak.'
+        WHEN 'Kyoto - Fushimi Inari' THEN 'Kyoto''s head Inari shrine is famous for its vermilion torii gates climbing Mount Inari.'
+        WHEN 'Tokyo - Shibuya Crossing' THEN 'A famous scramble crossing outside Shibuya Station, often cited as one of the world''s busiest.'
+        WHEN 'Arashiyama Bamboo Grove' THEN 'A celebrated bamboo grove district in western Kyoto known for seasonal scenery and calm morning walks.'
+        WHEN 'Osaka Castle' THEN 'A landmark first built in 1583; today''s restored main tower houses a museum overlooking Osaka.'
+        WHEN 'Nara Deer Park' THEN 'Nara Park is known for its free-roaming sika deer and nearby heritage sites such as Todai-ji Temple.'
+        WHEN 'Hiroshima Peace Memorial' THEN 'Hiroshima Peace Memorial Park and the Genbaku Dome commemorate the victims of the 1945 atomic bombing and stand as symbols of peace.'
+        WHEN 'Hakone Hot Springs' THEN 'A classic hot-spring getaway in Fuji-Hakone-Izu National Park, known for onsen, volcanic landscapes and, on clear days, views of Mount Fuji.'
+        WHEN 'Okinawa Beaches' THEN 'Okinawa''s subtropical islands are known for white-sand beaches, clear blue water and coral reefs popular for swimming, snorkeling and diving.'
+        WHEN 'Nikko Toshogu Shrine' THEN 'An ornate shrine complex in Nikko that enshrines Tokugawa Ieyasu, famed for lavish carvings including the Three Wise Monkeys.'
+        WHEN 'Sapporo Snow Festival' THEN 'Held each winter in Sapporo, this major festival fills the city with large snow sculptures, ice art and illuminated displays.'
+        WHEN 'Kyoto Gion District' THEN 'Kyoto''s historic geisha district is known for traditional machiya streets, teahouses and chances to glimpse geiko and maiko.'
+        ELSE description
+    END;
+
     -- Create admin user (password: admin123)
     INSERT INTO users (name, email, password, role) VALUES
     ('Admin', 'admin@japantravel.com', '$2b$10$rQZ3GfJqS5RJ5Z5Z5Z5Z5O5Z5Z5Z5Z5Z5Z5Z5Z5Z5Z5Z5Z5Z5Z5Z', 'admin')

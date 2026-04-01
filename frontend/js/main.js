@@ -89,6 +89,21 @@ function logout() {
   showToast('Signed out successfully', 'info');
 }
 
+function handleHeroPlanClick() {
+  if (state.user) {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+
+    window.location.hash = '#contact';
+    return;
+  }
+
+  openModal('register-modal');
+}
+
 // ═══════════════════════════════════════════════════
 //  API HELPERS
 // ═══════════════════════════════════════════════════
@@ -249,12 +264,12 @@ function renderDestinations(destinations) {
 
 function renderDemoDestinations(grid) {
   const demos = [
-    { id: 1, name: 'Mount Fuji', location: 'Shizuoka', category: 'nature', rating: 4.9, description: 'Japan\'s iconic sacred mountain, standing at 3,776m.', image_url: 'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=600' },
-    { id: 2, name: 'Fushimi Inari', location: 'Kyoto', category: 'temple', rating: 4.8, description: 'Thousands of vermilion torii gates winding through forested hillside.', image_url: 'https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=600' },
-    { id: 3, name: 'Shibuya Crossing', location: 'Tokyo', category: 'city', rating: 4.7, description: 'The world\'s busiest pedestrian crossing.', image_url: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600' },
-    { id: 4, name: 'Arashiyama', location: 'Kyoto', category: 'nature', rating: 4.8, description: 'A serene path through towering bamboo stalks.', image_url: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600' },
-    { id: 5, name: 'Osaka Castle', location: 'Osaka', category: 'history', rating: 4.6, description: 'Magnificent 16th-century castle surrounded by cherry trees.', image_url: 'https://images.unsplash.com/photo-1589952283406-b53a7d1347e8?w=600' },
-    { id: 6, name: 'Nara Deer Park', location: 'Nara', category: 'nature', rating: 4.7, description: 'Roam freely with over 1,200 sacred deer.', image_url: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=600' },
+    { id: 1, name: 'Mount Fuji', location: 'Shizuoka', category: 'nature', rating: 4.9, description: 'Japan\'s highest mountain at 3,776 meters and a UNESCO World Heritage site long revered as a sacred peak.', image_url: 'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=600' },
+    { id: 2, name: 'Fushimi Inari', location: 'Kyoto', category: 'temple', rating: 4.8, description: 'Kyoto\'s head Inari shrine is famous for its vermilion torii gates climbing Mount Inari.', image_url: 'https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=600' },
+    { id: 3, name: 'Shibuya Crossing', location: 'Tokyo', category: 'city', rating: 4.7, description: 'A famous scramble crossing outside Shibuya Station, often cited as one of the world\'s busiest.', image_url: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600' },
+    { id: 4, name: 'Arashiyama', location: 'Kyoto', category: 'nature', rating: 4.8, description: 'A celebrated bamboo grove district in western Kyoto known for seasonal scenery and calm morning walks.', image_url: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600' },
+    { id: 5, name: 'Osaka Castle', location: 'Osaka', category: 'history', rating: 4.6, description: 'A landmark first built in 1583; today\'s restored main tower houses a museum overlooking Osaka.', image_url: 'https://images.unsplash.com/photo-1589952283406-b53a7d1347e8?w=600' },
+    { id: 6, name: 'Nara Deer Park', location: 'Nara', category: 'nature', rating: 4.7, description: 'Nara Park is known for its free-roaming sika deer and nearby heritage sites such as Todai-ji Temple.', image_url: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=600' },
   ];
   grid.innerHTML = demos.map((dest, i) => createDestCard(dest, i)).join('');
   initFavButtons();
